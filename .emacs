@@ -11,5 +11,14 @@
 ;; Set theme
 (load-theme 'monokai t)
 
+;; No ~ files clutter
+(setq make-backup-files nil)
+
+;; tabs are spaces
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq indent-line-function 'insert-tab)
 
 
+;; show whitespace, breaks, etc
+(require 'whitespace)
