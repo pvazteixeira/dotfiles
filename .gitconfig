@@ -1,0 +1,16 @@
+[user]
+	name = pvt
+	email = pvazteixeira@gmail.com
+
+[core]
+  editor = emacs
+
+[merge]
+  tool = meld
+
+[color]
+  ui = auto
+
+[alias]
+  ci = commit
+  s = status
