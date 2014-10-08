@@ -1,5 +1,5 @@
 [user]
-	name = pvt
+	name = pvazteixeira
 	email = pvazteixeira@gmail.com
 
 [core]
@@ -14,3 +14,6 @@
 [alias]
   ci = commit
   s = status
+
+[push]
+	default = simple

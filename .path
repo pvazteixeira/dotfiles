@@ -1,0 +1,1 @@
+export PATH="$HOME/Workspace/julia-0.3:$PATH"
