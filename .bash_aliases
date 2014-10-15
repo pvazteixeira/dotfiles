@@ -10,6 +10,8 @@ alias dm='cd ~/Dropbox (MIT)'
 alias dp='cd ~/Dropbox'
 alias W='cd ~/Workspace'
 
+alias m='make'
+
 alias 15='cd ~/Dropbox\ \(MIT\)/15.093'
 
 alias ..='cd ..'
