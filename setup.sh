@@ -16,3 +16,11 @@ do
   fi
 done;
 unset FILE
+
+# terminator
+if [ -f "$HOME/.config/terminator/config" ]; then
+  echo "terminator config exists; skipping."
+else
+  echo "$terminator config does not exist; creating symbolic link."
+  ln -s "$CURRENTDIR/config" "$HOME/.config/terminator/config"   #absolute path
+fi
