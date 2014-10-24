@@ -18,9 +18,9 @@ done;
 unset FILE
 
 # terminator
-if [ -f "$HOME/.config/terminator/config" ]; then
+if [ -f "$HOME/.config/terminator/" ]; then
   echo "terminator config exists; skipping."
 else
   echo "$terminator config does not exist; creating symbolic link."
-  ln -s "$CURRENTDIR/config" "$HOME/.config/terminator/config"   #absolute path
+  ln -s "$CURRENTDIR/terminator" "$HOME/.config/terminator"   #absolute path
 fi

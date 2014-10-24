@@ -2,9 +2,11 @@
 [keybindings]
 [profiles]
   [[default]]
-    background_color = "#032733" # A comment
-    background_image = None
     copy_on_selection = True
+    use_system_font = False
+    font = Droid Sans Mono 11
+    background_color = "#032733"
+    background_image = None
 [layouts]
   [[default]]
     [[[child1]]]

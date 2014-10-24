@@ -12,6 +12,8 @@ alias W='cd ~/Workspace'
 
 alias m='make'
 
+alias e='emacs -nw'
+
 alias 15='cd ~/Dropbox\ \(MIT\)/15.093'
 
 alias ..='cd ..'
