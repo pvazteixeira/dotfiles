@@ -10,3 +10,5 @@ do
   export CLASSPATH="$HOME/Workspace/3dfls/$pod/pod-build/lcmtypes_$pod.jar:$CLASSPATH"
 done;
 unset pod;
+
+export CLASSPATH="$HOME/Workspace/perls/build/share/java/perls_lcmtypes.jar:$CLASSPATH"
