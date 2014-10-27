@@ -1,1 +1,12 @@
+# JULIA
 export PATH="$HOME/Workspace/julia-0.3:$PATH"
+
+# ogmapper lcm types
+export CLASSPATH="$HOME/Workspace/ogmapper/pod-build/lcmtypes_ogmapper.jar:$CLASSPATH"
+
+# 3dfls lcm types
+for pod in 3dfls blueview visualization
+do 
+  export CLASSPATH="$HOME/Workspace/3dfls/$pod/pod-build/lcmtypes_$pod.jar:$CLASSPATH"
+done;
+unset pod;
