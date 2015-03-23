@@ -11,6 +11,9 @@ alias dm='cd ~/Dropbox (MIT)'
 alias dp='cd ~/Dropbox'
 alias W='cd ~/Workspace'
 
+alias day='redshift -O 5500'
+alias night='redshift -O 3500'
+
 alias m='make'
 
 alias e='emacs -nw'
