@@ -12,7 +12,7 @@ alias dp='cd ~/Dropbox'
 alias W='cd ~/Workspace'
 
 alias day='redshift -O 5500'
-alias night='redshift -O 3500'
+alias night='redshift -O 2500'
 
 alias m='make'
 
