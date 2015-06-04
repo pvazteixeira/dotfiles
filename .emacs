@@ -20,5 +20,7 @@
 (setq indent-line-function 'insert-tab)
 
 ;; Set Linum-Mode on
-(global-linum-mode t)
- 
+;; (global-linum-mode 1)
+
+;; standard cut copy paste undo stuff
+(cua-mode 1)
