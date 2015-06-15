@@ -1,6 +1,9 @@
 [global_config]
 [keybindings]
-[profiles]
+  close_term = <Ctrl><Shift>D
+  split_horiz = <Ctrl><Shift>H
+  split_vert = <Ctrl><Shift>V
+  [profiles]
   [[default]]
     use_system_font = False
     font = Droid Sans Mono 11

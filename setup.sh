@@ -24,3 +24,6 @@ else
   echo "$terminator config does not exist; creating symbolic link."
   ln -s "$CURRENTDIR/terminator" "$HOME/.config/terminator"   #absolute path
 fi
+
+# sublime text 2
+ln -s "$CURRENTDIR/sublime/Preferences.sublime-settings" "$HOME/.config/sublime-text-2/Packages/User/Preferences.sublime-settings"
