@@ -14,7 +14,7 @@
     background_color = "#032733"
     scrollback_infinite = True
 [layouts]
-  [[default]] # 2 + 1
+  [[twoplusone]] # 2 + 1
     [[[child0]]]
     type = Window
     order = 0
