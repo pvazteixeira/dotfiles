@@ -3,7 +3,7 @@
 	email = pvazteixeira@gmail.com
 
 [core]
-  editor = emacs
+  editor = sublime
 
 [merge]
   tool = meld
