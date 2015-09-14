@@ -1,21 +1,23 @@
 {
-	// dictionaries and spell check
-	"spell_check": true,
+	"bold_folder_labels": true,
+	"caret_style": "phase",
 	"dictionary": "Packages/Language - English/en_US.dic",
-	"font_size": 10,
-
-	// exit stuff
-	"remember_open_files": false,
+	"font_size": 11,
+	"highlight_line": true,
 	"hot_exit": false,
-
-	// NO TABS
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"remember_open_files": false,
+	"rulers":
+	[
+		80,
+		120,
+		160
+	],
+	"spell_check": true,
 	"tab_size": 2,
 	"translate_tabs_to_spaces": true,
-	"trim_automatic_white_space": true,
-
-	// minor visual tweaks
-	"caret_style": "phase",
-	"highlight_line": true,
-	"bold_folder_labels": true,
-	"rulers": [80 ,120]
+	"trim_automatic_white_space": true
 }
