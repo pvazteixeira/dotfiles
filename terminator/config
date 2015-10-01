@@ -7,8 +7,6 @@
   split_vert = <Ctrl><Shift>V
 [profiles]
   [[default]]
-    use_system_font = False
-    font = Droid Sans Mono 10
     background_image = None
     copy_on_selection = True
     background_color = "#032733"
