@@ -3,8 +3,7 @@
 	email = pvazteixeira@gmail.com
 
 [core]
-  editor = sublime
-
+  editor = nano
 [merge]
   tool = meld
 
