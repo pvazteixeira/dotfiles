@@ -16,7 +16,7 @@ alias day='redshift -O 5500'
 alias night='redshift -O 3000'
 
 # development
-alias m='make'
+alias m='time make'
 alias e='emacs -nw'
 alias lcm-mute='export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0'
 alias lcm-unmute='export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1'
