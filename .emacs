@@ -23,4 +23,4 @@
 ;; (global-linum-mode 1)
 
 ;; standard cut copy paste undo stuff
-(cua-mode 1)
+;; (cua-mode 1)
