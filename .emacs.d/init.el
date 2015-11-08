@@ -7,6 +7,11 @@
 ;;; load and activate packages
 (package-initialize)
 
-;;; enable evil mode
-(require 'evil)
-(evil-mode t)
+;;; replace list-buffer with ibuffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;;; load monokai
+(load-theme 'monokai t)
+
+;;; enable ido minor mode
+(ido-mode 1)
