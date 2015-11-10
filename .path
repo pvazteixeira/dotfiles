@@ -15,5 +15,7 @@ export CLASSPATH="$HOME/Workspace/perls/build/share/java/perls_lcmtypes.jar:$CLA
 export CLASSPATH="$HOME/Workspace/ogmapper/pod-build/lcmtypes_ogmapper.jar:$CLASSPATH"
 export CLASSPATH="$HOME/Workspace/3dfls/april_tags_lcm/pod-build/lcmtypes_april_tags.jar:$CLASSPATH"
 
-source $HOME/Workspace/njord/njord_environment_base.sh
-source $HOME/Workspace/njord/njord_environment_robot.sh
+if [ -f "$HOME/Workspace/njord/" ]; then
+    source $HOME/Workspace/njord/njord_environment_base.sh
+    source $HOME/Workspace/njord/njord_environment_robot.sh
+fi
