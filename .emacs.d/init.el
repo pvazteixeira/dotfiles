@@ -15,3 +15,10 @@
 
 ;;; enable ido minor mode
 (ido-mode 1)
+
+;;; show line numbers
+(linum-mode 1)
+
+;;; k&r indentation, 2-space indentation
+(setq c-default-style "linux"
+      c-basic-offset 2)
