@@ -17,8 +17,14 @@
 (ido-mode 1)
 
 ;;; show line numbers
-(linum-mode 1)
+(global-linum-mode t)
+(setq linum-format "%d ")
 
 ;;; k&r indentation, 2-space indentation
 (setq c-default-style "linux"
       c-basic-offset 2)
+
+;;; AUCteX stuff
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
