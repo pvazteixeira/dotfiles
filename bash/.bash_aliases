@@ -1,6 +1,8 @@
 #!/bin/bash
 alias open="xdg-open"
 
+alias douche="du -sh"
+
 # ls aliases
 alias lash="ls -lash"
 alias ll="ls -la"
