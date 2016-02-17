@@ -4,7 +4,7 @@
 [keybindings]
   split_horiz = <Ctrl><Shift>H
   close_term = <Ctrl><Shift>D
-  split_vert = <Ctrl><Shift>V
+  split_vert = <Ctrl><Shift>E
 [profiles]
   [[default]]
     background_image = None
