@@ -3,13 +3,17 @@ cmake
 cmake-curses-gui
 emacs
 git
+graphviz
 htop
 ipython-notebook
 libboost-all-dev
 libopencv-dev
 mosh
 pkg-config
+python-numpy
 python-skimage
+python-skimage
+python-sklearn
 python-sklearn
 texlive-base
 texlive-extra-utils
