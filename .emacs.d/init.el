@@ -1,30 +1,20 @@
-;;; load the package manager
-(require 'package)
+(load "~/.emacs.d/elpa-init.el")
+(load "~/.emacs.d/keys.el")
 
-;;; add the MELPA repo to the package-archives variable
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-
-;;; load and activate packages
-(package-initialize)
-
-;;; replace list-buffer with ibuffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;;; load monokai
+;;; Load monokai theme
 (load-theme 'monokai t)
 
-;;; enable ido minor mode
-(ido-mode 1)
-
-;;; show line numbers
-(global-linum-mode t)
-(setq linum-format "%d ")
-
-;;; k&r indentation, 2-space indentation
-(setq c-default-style "linux"
-      c-basic-offset 2)
-
-;;; AUCteX stuff
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-master nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("0c49a9e22e333f260126e4a48539a7ad6e8209ddda13c0310c8811094295b3a3" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
