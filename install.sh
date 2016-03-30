@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/zsh
+
+# sudo apt-get update
 
 # install packages from list
-sudo apt-get -y install $(< install.txt)
+sudo apt-get  install $( sed '/^#/ d' < ~/dotfiles/install.txt)
+			   

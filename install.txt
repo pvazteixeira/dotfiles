@@ -1,22 +1,48 @@
 build-essential
 cmake
 cmake-curses-gui
+doxygen
 emacs
 git
 graphviz
 htop
-ipython-notebook
+
 libboost-all-dev
+libeigen3-dev
+libgoogle-glog-dev
+libgtk2.0-dev
+libmetis-dev
 libopencv-dev
+libsdl1.2-dev
+#libsuitesparse-dev # conflicts with libsuitesparse-metis-dev
+libsuitesparse-metis-dev
 mosh
 pkg-config
+
+subversion
+
+tmux
+zim
+
+
+# python
+ipython-notebook
+python-dev
 python-numpy
 python-skimage
-python-skimage
 python-sklearn
-python-sklearn
+
+# texlive
 texlive-base
 texlive-extra-utils
 texlive-latex-base
 texlive-latex-extra
-zim
+
+# terminal
+terminator
+tmux
+zsh
+
+# vcs
+git
+subversion
