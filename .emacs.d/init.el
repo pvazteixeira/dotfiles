@@ -1,4 +1,10 @@
+;;; setup package manager and install required packages
 (load "~/.emacs.d/elpa-init.el")
+
+;;; configure packages
+(load "~/.emacs.d/packages.el")
+
+;;; custom keybindings
 (load "~/.emacs.d/keys.el")
 
 ;;; Load monokai theme
