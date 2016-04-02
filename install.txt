@@ -19,15 +19,18 @@ libsuitesparse-metis-dev
 mosh
 pkg-config
 
-subversion
 
-tmux
+#utils
+redshift
+
+
 zim
 
 
 # python
 ipython-notebook
 python-dev
+python-gpgme
 python-numpy
 python-skimage
 python-sklearn
