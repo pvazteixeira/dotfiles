@@ -13,6 +13,7 @@
 ;; ===== Packages to be installed =====
 (setq required-package-list
       '(monokai-theme
+	helm
 	))
 
 ;;;
