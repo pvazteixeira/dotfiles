@@ -12,7 +12,9 @@ libeigen3-dev
 libgoogle-glog-dev
 libgtk2.0-dev
 libmetis-dev
+liboctomap-dev
 libopencv-dev
+libpcl-dev
 libsdl1.2-dev
 #libsuitesparse-dev # conflicts with libsuitesparse-metis-dev
 libsuitesparse-metis-dev
@@ -23,6 +25,7 @@ pkg-config
 #utils
 redshift
 
+openjdk-7-jdk
 
 zim
 
@@ -32,7 +35,9 @@ ipython-notebook
 python-dev
 python-gpgme
 python-numpy
+pyton-opencv
 python-skimage
+
 python-sklearn
 
 # texlive
