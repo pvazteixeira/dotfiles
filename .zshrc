@@ -83,5 +83,17 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
 export TERM=xterm-256color
+
+# Set environment variables (move to separate file soon)
+if [ -d "$HOME/Workspace/pyslam-pod" ]; then
+  export PYTHONPATH="$HOME/Workspace/pyslam-pod/build/lib:$PYTHONPATH"
+  # visualization: lcm/python 
+  export PYTHONPATH="$HOME/Workspace/pyslam-pod/externals/visualization-pod/lcmtypes/python:$PYTHONPATH"
+  # pyslam
+  export PYTHONPATH="$HOME/Workspace/pyslam-pod/python:$PYTHONPATH"
+fi
+
+if [ -d "$HOME/Workspace/ogmapper/lcmtypes/python" ]; then
+    export PYTHONPATH="$HOME/Workspace/ogmapper/lcmtypes/python:$PYTHONPATH"
+fi
