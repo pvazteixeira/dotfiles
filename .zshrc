@@ -53,7 +53,7 @@ plugins=(git ssh-agent)
 
 # User configuration
 
-  export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -97,3 +97,10 @@ fi
 if [ -d "$HOME/Workspace/ogmapper/lcmtypes/python" ]; then
     export PYTHONPATH="$HOME/Workspace/ogmapper/lcmtypes/python:$PYTHONPATH"
 fi
+
+# mute LCM by default
+export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
+
+# set aliases (move to separate file)
+# alias lcm-mute=export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0"
+# alias lcm-unmute="export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1"
