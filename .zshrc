@@ -82,6 +82,8 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias day="redshift -O 6500"
+alias night="redshift -O 2300"
 
 export TERM=xterm-256color
 
