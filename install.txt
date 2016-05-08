@@ -9,6 +9,7 @@ htop
 
 libboost-all-dev
 libeigen3-dev
+libglew-dev
 libgoogle-glog-dev
 libgtk2.0-dev
 libmetis-dev
@@ -23,6 +24,7 @@ pkg-config
 
 
 #utils
+pandoc
 redshift
 
 openjdk-7-jdk
