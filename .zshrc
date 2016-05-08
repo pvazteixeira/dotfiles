@@ -49,7 +49,7 @@ ZSH_THEME="blinks"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ssh-agent)
+plugins=(git ssh-agent debian)
 
 # User configuration
 
@@ -67,6 +67,8 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+export ALTERNATE_EDITOR=""
+export EDITOR='emacsclient -t'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
