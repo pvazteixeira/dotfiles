@@ -90,17 +90,28 @@ alias night="redshift -O 2300"
 export TERM=xterm-256color
 
 # Set environment variables (move to separate file soon)
-if [ -d "$HOME/Workspace/pyslam-pod" ]; then
-  export PYTHONPATH="$HOME/Workspace/pyslam-pod/build/lib:$PYTHONPATH"
+if [ -d "$HOME/Workspace/mrg/pyslam-pod" ]; then
+  export PYTHONPATH="$HOME/Workspace/mrg/pyslam-pod/build/lib:$PYTHONPATH"
   # visualization: lcm/python 
-  export PYTHONPATH="$HOME/Workspace/pyslam-pod/externals/visualization-pod/lcmtypes/python:$PYTHONPATH"
+  export PYTHONPATH="$HOME/Workspace/mrg/pyslam-pod/externals/visualization-pod/lcmtypes/python:$PYTHONPATH"
   # pyslam
-  export PYTHONPATH="$HOME/Workspace/pyslam-pod/python:$PYTHONPATH"
+  export PYTHONPATH="$HOME/Workspace/mrg/pyslam-pod/python:$PYTHONPATH"
 fi
 
+# lcmtypes - ogmapper
 if [ -d "$HOME/Workspace/ogmapper/lcmtypes/python" ]; then
+    echo "Adding ogmapper files to path"
     export PYTHONPATH="$HOME/Workspace/ogmapper/lcmtypes/python:$PYTHONPATH"
+    export CLASSPATH="$HOME/Workspace/ogmapper/pod-build/lcmtypes_ogmapper.jar:$CLASSPATH"
 fi
+
+# lcmtypes - 3dfls
+if [ -d "$HOME/Workspace/3dfls/3dfls/lcmtypes/python" ]; then
+    echo "Adding 3dfls files to path"
+    export PYTHONPATH="$HOME/Workspace/3dfls/3dfls/lcmtypes/python:$PYTHONPATH"
+    export CLASSPATH="$HOME/Workspace/3dfls/3dfls/pod-build/lcmtypes_3dfls.jar:$CLASSPATH"
+fi
+
 
 # mute LCM by default
 export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
@@ -108,3 +119,4 @@ export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
 # set aliases (move to separate file)
 # alias lcm-mute=export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0"
 # alias lcm-unmute="export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1"
+
