@@ -60,3 +60,4 @@ subversion
 freeglut3-dev
 
 libgeographic-dev
+pcl-tools
