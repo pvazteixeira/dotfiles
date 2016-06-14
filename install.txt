@@ -37,7 +37,7 @@ ipython-notebook
 python-dev
 python-gpgme
 python-numpy
-pyton-opencv
+python-opencv
 python-skimage
 
 python-sklearn
