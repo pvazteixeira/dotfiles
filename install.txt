@@ -56,3 +56,6 @@ zsh
 # vcs
 git
 subversion
+
+
+freeglut3-dev
