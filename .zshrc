@@ -98,18 +98,25 @@ if [ -d "$HOME/Workspace/mrg/pyslam-pod" ]; then
   export PYTHONPATH="$HOME/Workspace/mrg/pyslam-pod/python:$PYTHONPATH"
 fi
 
+echo "Adding to path:"
 # lcmtypes - ogmapper
 if [ -d "$HOME/Workspace/ogmapper/lcmtypes/python" ]; then
-    echo "Adding ogmapper files to path"
+    echo "- ogmapper"
     export PYTHONPATH="$HOME/Workspace/ogmapper/lcmtypes/python:$PYTHONPATH"
     export CLASSPATH="$HOME/Workspace/ogmapper/pod-build/lcmtypes_ogmapper.jar:$CLASSPATH"
 fi
 
 # lcmtypes - 3dfls
 if [ -d "$HOME/Workspace/3dfls/3dfls/lcmtypes/python" ]; then
-    echo "Adding 3dfls files to path"
+    echo "- 3dfls"
     export PYTHONPATH="$HOME/Workspace/3dfls/3dfls/lcmtypes/python:$PYTHONPATH"
     export CLASSPATH="$HOME/Workspace/3dfls/3dfls/pod-build/lcmtypes_3dfls.jar:$CLASSPATH"
+fi
+
+# lcmtypes - viewer
+if [ -d "$HOME/Workspace/marine/pods/visualization/pod-build" ]; then
+    echo "- viewer"
+    export CLASSPATH="$HOME/Workspace/marine/pods/visualization/pod-build/lcmtypes_visualization.jar:$CLASSPATH"
 fi
 
 
