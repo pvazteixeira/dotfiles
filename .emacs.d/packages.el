@@ -17,6 +17,9 @@
 (require 'undo-tree)
 (global-undo-tree-mode)
 
+;; CEDET
+(load "~/.emacs.d/setup-cedet.el")
+
 ;; yasnippet
 (require 'yasnippet)
 (yas-global-mode 1)
@@ -31,5 +34,3 @@
 ;; Helm
 (load "~/.emacs.d/setup-helm.el")
 
-;; CEDET
-(load "~/.emacs.d/setup-cedet.el")

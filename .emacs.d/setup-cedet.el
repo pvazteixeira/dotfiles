@@ -6,8 +6,8 @@
 (require 'semantic)
 
 (global-semanticdb-minor-mode 1)          ; enables global support for semantic db
-;; (global-semantic-highlight-func-mode 1)   ; highlight the first line of the current tag
-;; (global-semantic-stickyfunc-mode 1)       ; keep the first line of the current tag visible
+(global-semantic-highlight-func-mode 1)   ; highlight the first line of the current tag
+(global-semantic-stickyfunc-mode 1)       ; keep the first line of the current tag visible
 ;; (global-semantic-idle-local-symbol-highlight-mode 1)
 (global-semantic-idle-scheduler-mode 1)   ; automatic parsing of source code in idle time
 ;; (global-semantic-idle-completions-mode 1) ; displaying of possible name completions

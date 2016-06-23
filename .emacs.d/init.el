@@ -4,7 +4,6 @@
 ;;; configure packages
 (load "~/.emacs.d/packages.el")
 
-
 ;;; custom keybindings
 (load "~/.emacs.d/keys.el")
 
