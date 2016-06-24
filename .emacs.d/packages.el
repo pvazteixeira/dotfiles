@@ -31,6 +31,14 @@
 ;; (define-key c-mode-map  [(tab)] 'company-complete)
 ;; (define-key c++-mode-map  [(tab)] 'company-complete)
 
+;; company-jedi
+(defun my/python-mode-hook ()
+  (add-to-list 'company-backends 'company-jedi))
+
+(add-hook 'python-mode-hook 'my/python-mode-hook)
+
 ;; Helm
 (load "~/.emacs.d/setup-helm.el")
 
+;; other customizations
+(load "~/.emacs.d/setup-base.el")
