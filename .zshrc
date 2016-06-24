@@ -49,7 +49,7 @@ ZSH_THEME="blinks"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ssh-agent debian)
+plugins=(git ssh-agent debian svn python)
 
 # User configuration
 
@@ -86,6 +86,8 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias day="redshift -O 6500"
 alias night="redshift -O 2300"
+alias reloadzsh="source ~/.zshrc"
+
 
 export TERM=xterm-256color
 
