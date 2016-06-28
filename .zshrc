@@ -27,10 +27,10 @@ ZSH_THEME="blinks"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -102,10 +102,10 @@ fi
 
 echo "Adding to path:"
 # lcmtypes - ogmapper
-if [ -d "$HOME/Workspace/ogmapper/lcmtypes/python" ]; then
-    echo "- ogmapper"
-    export PYTHONPATH="$HOME/Workspace/ogmapper/lcmtypes/python:$PYTHONPATH"
-    export CLASSPATH="$HOME/Workspace/ogmapper/pod-build/lcmtypes_ogmapper.jar:$CLASSPATH"
+if [ -d "$HOME/Workspace/hauv-slam/ogmapper/lcmtypes/python" ]; then
+    echo "- hauv-slam/ogmapper"
+    export PYTHONPATH="$HOME/Workspace/hauv-slam/ogmapper/lcmtypes/python:$PYTHONPATH"
+    export CLASSPATH="$HOME/Workspace/hauv-slam/ogmapper/pod-build/lcmtypes_ogmapper.jar:$CLASSPATH"
 fi
 
 # lcmtypes - 3dfls
@@ -119,6 +119,11 @@ fi
 if [ -d "$HOME/Workspace/marine/pods/visualization/pod-build" ]; then
     echo "- viewer"
     export CLASSPATH="$HOME/Workspace/marine/pods/visualization/pod-build/lcmtypes_visualization.jar:$CLASSPATH"
+fi
+
+if [ -d "$HOME/Workspace/project-hauv/hauvlcm/pod-build" ]; then
+    echo "- hauvlcm"
+    export CLASSPATH="$HOME/Workspace/project-hauv/hauvlcm/pod-build/lcmtypes_hauvlcm.jar:$CLASSPATH"
 fi
 
 
