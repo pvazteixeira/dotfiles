@@ -143,6 +143,6 @@ fi
 export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
 
 # set aliases (move to separate file)
-# alias lcm-mute=export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0"
-# alias lcm-unmute="export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1"
+alias lcm-mute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0'
+alias lcm-unmute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1'
 
