@@ -58,6 +58,8 @@ git
 subversion
 
 freeglut3-dev
+libann-dev
+
 
 libgeographic-dev
 pcl-tools
