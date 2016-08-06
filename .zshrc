@@ -82,7 +82,7 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
+alias zshconfig="emacsclient -t ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias day="redshift -O 6500"
 alias night="redshift -O 2300"
