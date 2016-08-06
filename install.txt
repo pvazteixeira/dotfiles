@@ -1,12 +1,12 @@
+# BUILD
 build-essential
 cmake
 cmake-curses-gui
 doxygen
-emacs
-git
-graphviz
-htop
+pkg-config
 
+
+# LIBRARIES
 libboost-all-dev
 libeigen3-dev
 libglew-dev
@@ -19,47 +19,52 @@ libpcl-dev
 libsdl1.2-dev
 #libsuitesparse-dev # conflicts with libsuitesparse-metis-dev
 libsuitesparse-metis-dev
+libann-dev
+libgeographic-dev
+
+
+# UTILITIES
+emacs
+graphviz
+htop
+iotop
 mosh
-pkg-config
-
-
-#utils
 pandoc
 redshift
-
-openjdk-7-jdk
-
 zim
 
 
-# python
+# PYTHON
 ipython-notebook
 python-dev
 python-gpgme
 python-numpy
 python-opencv
 python-skimage
-
 python-sklearn
+virtualenv
+virtualenvwrapper
 
-# texlive
+
+# TEXLIVE
 texlive-base
 texlive-extra-utils
 texlive-latex-base
 texlive-latex-extra
 
-# terminal
+
+# TERMINAL
 terminator
 tmux
 zsh
 
-# vcs
+
+# VERSION CONTROL
 git
 subversion
 
+
+# OTHER
 freeglut3-dev
-libann-dev
-
-
-libgeographic-dev
+openjdk-7-jdk
 pcl-tools
