@@ -88,8 +88,12 @@ alias day="redshift -O 6500"
 alias night="redshift -O 2300"
 alias reloadzsh="source ~/.zshrc"
 
-
 export TERM=xterm-256color
+
+# virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Workspace
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
 # Set environment variables (move to separate file soon)
 if [ -d "$HOME/Workspace/mrg/pyslam-pod" ]; then
