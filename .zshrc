@@ -49,8 +49,9 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ssh-agent debian svn python)
+plugins=(git ssh-agent debian svn tmux python)
 
+ZSH_TMUX_AUTOSTART="true"
 # User configuration
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
