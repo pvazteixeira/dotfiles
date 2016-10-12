@@ -51,7 +51,7 @@ ENABLE_CORRECTION="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git git-flow ssh-agent debian svn tmux python)
 
-ZSH_TMUX_AUTOSTART="true"
+# ZSH_TMUX_AUTOSTART="true"
 # User configuration
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
@@ -84,17 +84,17 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 #
 # Example aliases
 alias zshconfig="emacsclient -t ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# alias ohmyzsh="emacsclient -t ~/.oh-my-zsh"
 alias day="redshift -O 6500"
 alias night="redshift -O 2300"
 alias reloadzsh="source ~/.zshrc"
 
 export TERM=xterm-256color
 
-# virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Workspace
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+# (mini)conda
+if [ -d "$HOME/miniconda2" ]; then
+    export PATH="$HOME/miniconda2/bin:$PATH"
+fi
 
 # Set environment variables (move to separate file soon)
 if [ -d "$HOME/Workspace/mrg/pyslam-pod" ]; then
