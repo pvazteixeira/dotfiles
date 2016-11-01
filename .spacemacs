@@ -31,31 +31,32 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     csv
-     javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     ;; csv
+     javascript
      helm
      auto-completion
      python
-     ;; better-defaults
+     ;; better-defaults ;; emacs-only!
      emacs-lisp
      git
      gtags
      markdown
      extra-langs
      latex
+     bibtex
      themes-megapack
-     ;; org
+     org
+     spell-checking
+     syntax-checking
+     ;; version-control
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     syntax-checking
-     ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -308,7 +309,14 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; latex layer - basic config
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+  ;; bibtex layer - basic configuration
+  (setq org-ref-default-bibliography '("~/Dropbox (MIT)/Library/references.bib")
+        org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
+        org-ref-bibliography-notes "~/Dropbox (MIT)/Library/notes.org")
+  
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
