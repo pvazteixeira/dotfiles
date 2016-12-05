@@ -77,17 +77,10 @@ export EDITOR='emacsclient -t'
 # ssh
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-alias zshconfig="emacsclient -t ~/.zshrc"
-# alias ohmyzsh="emacsclient -t ~/.oh-my-zsh"
-alias day="redshift -O 6500"
-alias night="redshift -O 2300"
-alias reloadzsh="source ~/.zshrc"
+if [ -e "$HOME/.aliases" ]; then
+    echo "Aliases set!"
+    source $HOME/.aliases
+fi
 
 export TERM=xterm-256color
 
@@ -143,11 +136,6 @@ if [ -d "$HOME/Workspace/project-hauv/hauvlcm/pod-build" ]; then
     export CLASSPATH="$HOME/Workspace/project-hauv/hauvlcm/pod-build/lcmtypes_hauvlcm.jar:$CLASSPATH"
 fi
 
-
 # mute LCM by default
 export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
-
-# set aliases (move to separate file)
-alias lcm-mute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0'
-alias lcm-unmute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1'
 
