@@ -37,7 +37,8 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ;; csv
-     c-c++
+     (c-c++ :variables c-c++-enable-clang-support t)
+     semantic
      javascript
      helm
      auto-completion
@@ -120,7 +121,7 @@ values."
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
    ;; dotspacemacs-startup-banner 'official
-   dotspacemacs-startup-banner nil
+   dotspacemacs-startup-banner 'doge 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -362,7 +363,8 @@ you should place your code here."
   ;; follow symlinks by default
   (setq vc-follow-symlinks t)
 
-  ;; org
+  ;; clang
+  (setq clang-format-style "Google")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
