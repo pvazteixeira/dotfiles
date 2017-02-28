@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -53,6 +54,7 @@ values."
      bibtex
      themes-megapack
      org
+     journal
      spell-checking
      syntax-checking
      ;; version-control
@@ -64,7 +66,8 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -146,7 +149,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 16
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.5)
@@ -345,10 +348,6 @@ you should place your code here."
   ;; latex layer - basic config
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
-  ;; bibtex layer - basic configuration
-  (setq org-ref-default-bibliography '("~/Dropbox (MIT)/Library/references.bib")
-        org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
-        org-ref-bibliography-notes "~/Dropbox (MIT)/Library/notes.org")
   
   (setq-default
    ;; tabs 
@@ -357,13 +356,25 @@ you should place your code here."
    dotspacemacs-default-theme 'spolsky
    )
 
-  ;; modes
-  (global-linum-mode 1)
-
   ;; follow symlinks by default
   (setq vc-follow-symlinks t)
 
-  ;; clang
+  ;; modes
+  ;; (global-linum-mode 1)
+
+  ;;   ;; bibtex layer - basic configuration
+  ;;   (setq org-ref-default-bibliography '("~/Dropbox (MIT)/Library/references.bib")
+  ;;         org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
+  ;;         org-ref-bibliography-notes "~/Dropbox (MIT)/Library/notes.org")
+  ;;   )
+
+  ;; clang 
+  ;; Bind clang-format-region to C-M-tab in all modes:
+  (global-set-key [C-M-tab] 'clang-format-region)
+  ;; Bind clang-format-buffer to tab on the c++-mode only:
+  (add-hook 'c++-mode-hook 'clang-format-bindings)
+  (defun clang-format-bindings ()
+    (define-key c++-mode-map [tab] 'clang-format-buffer))
   (setq clang-format-style "Google")
   )
 
