@@ -368,6 +368,9 @@ you should place your code here."
   ;;         org-ref-bibliography-notes "~/Dropbox (MIT)/Library/notes.org")
   ;;   )
 
+  ;; org
+  (setq org-agenda-files (list "~/todo.org" "~/read.org"))
+
   ;; clang 
   ;; Bind clang-format-region to C-M-tab in all modes:
   (global-set-key [C-M-tab] 'clang-format-region)
