@@ -2,20 +2,25 @@
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-alias zshconfig="emacsclient -t ~/.zshrc"
-# alias ohmyzsh="emacsclient -t ~/.oh-my-zsh"
 
 alias e='emacsclient --no-wait'
- 
+
+# zsh
+alias zshconfig="emacsclient -t ~/.zshrc"
+alias reloadzsh="source ~/.zshrc"
+# alias ohmyzsh="emacsclient -t ~/.oh-my-zsh"
+
+# redshift
 alias day="redshift -O 6500"
 alias night="redshift -O 2300"
-alias reloadzsh="source ~/.zshrc"
 
 # ls and the like
 alias lash="ls -lash"
 alias sz="du -sh * | sort -h"
+
+# projects
+alias mrg="cd ~/Workspace/mrg"
+alias rpl="cd ~/Workspace/rpl"
 
 # LCM mute/unmute
 alias lcm-mute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0'
