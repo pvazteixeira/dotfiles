@@ -149,10 +149,10 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 15
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.5)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -316,28 +316,48 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; Make evil-mode up/down operate in screen lines instead of logical lines
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
   ;; latex layer - basic config
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
   
-  (setq-default
-   ;; tabs 
-   tab-width 2
-   ;; themes
-   dotspacemacs-default-theme 'spolsky
-   )
+  ;; tabs 
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 2)
+
+  ;; themes
+  (setq-default dotspacemacs-default-theme 'spolsky )
 
   ;; follow symlinks by default
   (setq vc-follow-symlinks t)
 
-  ;; === org ===
+  ;; ## org
   (with-eval-after-load 'org
     ;; set files and directories
     (setq org-directory "~/Dropbox (MIT)/org")
-    (setq org-default-notes-file "~/Dropbox (MIT)/org/refile.org")
+    (setq org-default-notes-file "~/Dropbox (MIT)/org/notes.org")
     (setq org-agenda-files (quote ("~/Dropbox (MIT)/org")))
     
+    ;; ### refile
+    ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+    (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                     (org-agenda-files :maxlevel . 9))))
+    ;; Be sure to use the full path for refile setup
+    (setq org-refile-use-outline-path t)
+    (setq org-outline-path-complete-in-steps nil)
+
     ;; display properties
     (setq org-agenda-sticky t)
+
+    (setq org-todo-keywords
+          '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+            (sequence "WAITING(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" ))
+          )
 
     ;; enable mode line display of org-clock
     (setq spaceline-org-clock-p t)
