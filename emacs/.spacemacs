@@ -38,6 +38,7 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ;; csv
+     colors
      (c-c++ :variables c-c++-enable-clang-support t)
      semantic
      javascript
@@ -152,7 +153,7 @@ values."
                                :size 15
                                :weight normal
                                :width normal
-                               :powerline-scale 1.5)
+                               :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -265,7 +266,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -335,6 +336,19 @@ you should place your code here."
 
   ;; follow symlinks by default
   (setq vc-follow-symlinks t)
+  
+
+  ;; (defun dear-leader/swap-keys (key1 key2)
+  ;;   (let ((map1 (lookup-key spacemacs-default-map key1))
+  ;;         (map2 (lookup-key spacemacs-default-map key2)))
+  ;;     (spacemacs/set-leader-keys key1 map2 key2 map1)))
+  ;; (dear-leader/swap-keys "S" "d")
+
+  ;; (defun dear-leader/alias-of (key1 key2)
+  ;;   (let ((map (lookup-key spacemacs-default-map key2)))
+  ;;     (spacemacs/set-leader-keys key1 map)))
+  ;; (dear-leader/alias-of "é" "w")
+
 
   ;; ## org
   (with-eval-after-load 'org
