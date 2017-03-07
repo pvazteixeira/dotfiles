@@ -22,8 +22,17 @@ alias sz="du -sh * | sort -h"
 alias mrg="cd ~/Workspace/mrg"
 alias rpl="cd ~/Workspace/rpl"
 
+# 
+alias open="xdg-open"
+alias trash="gvfs-trash"
+
 # LCM mute/unmute
 alias lcm-mute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0'
 alias lcm-unmute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1'
+
+# dock
+# alias desk=""
+# alias dock=""
+alias undock="xrandr --output DP-1 --off --output DP-2 --off --output DP-3 --off --output VGA-1 --off"
 
 echo "Aliases set!"

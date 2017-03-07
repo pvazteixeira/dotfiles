@@ -1,6 +1,9 @@
 # Setting environmental variables
 echo "Adding to path:"
 
+
+export PATH=~/.local/bin:$PATH
+
 # (mini)conda
 if [ -d "$HOME/miniconda2" ]; then
     echo " - Miniconda"
