@@ -1,6 +1,18 @@
 [global_config]
   focus = system
+[keybindings]
 [profiles]
   [[default]]
+    use_system_font = False
+    font = Source Code Pro Medium 12
     background_color = "#032733"
-
+    background_image = None
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
