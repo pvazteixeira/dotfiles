@@ -31,37 +31,43 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ;; csv
-     colors
-     (c-c++ :variables c-c++-enable-clang-support t)
-     semantic
-     javascript
-     helm
      auto-completion
-     python
+     ;; bibtex
+     (c-c++ :variables
+            c-c++-enable-clang-support t)
+     colors
+     javascript
      ;; better-defaults ;; emacs-only!
      emacs-lisp
+     ;; ess
+     extra-langs
      git
      gtags
+     helm
+     ;; journal
+     (latex :variables
+            latex-build-command "LaTeX"
+            latex-enable-folding t)
      markdown
-     extra-langs
-     latex
-     bibtex
-     themes-megapack
      org
-     journal
-     spell-checking
-     syntax-checking
      ;; version-control
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+             shell-default-height 30
+             shell-default-position 'bottom)
+     python
+     (spell-checking :variables
+                     ;; enable-flyspell-auto-completion t
+                     spell-checking-enable-auto-dictionary t)
+     syntax-checking
+     semantic
+     themes-megapack
+     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -244,7 +250,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -317,17 +323,7 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; Make evil-mode up/down operate in screen lines instead of logical lines
-  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-  ;; Also in visual mode
-  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
-  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
-
-  ;; latex layer - basic config
-  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
-  
-  ;; tabs 
+  ;; === indentation === 
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 2)
 
@@ -336,7 +332,6 @@ you should place your code here."
 
   ;; follow symlinks by default
   (setq vc-follow-symlinks t)
-  
 
   ;; (defun dear-leader/swap-keys (key1 key2)
   ;;   (let ((map1 (lookup-key spacemacs-default-map key1))
@@ -350,31 +345,85 @@ you should place your code here."
   ;; (dear-leader/alias-of "é" "w")
 
 
-  ;; ## org
+  ;; === evil ===
+  ;; Make evil-mode up/down operate in screen lines instead of logical lines
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
+  ;;  === latex ===
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+  
+
+  ;; === org ===
+  ;; thanks to gjstein for inspiration
+  ;; https://github.com/gjstein/emacs.d/blob/master/config/gs-org.el
   (with-eval-after-load 'org
+
     ;; set files and directories
-    (setq org-directory "~/Dropbox (MIT)/org")
-    (setq org-default-notes-file "~/Dropbox (MIT)/org/notes.org")
-    (setq org-agenda-files (quote ("~/Dropbox (MIT)/org")))
+    (setq org-directory "~/org")
+    (setq org-default-notes-file "~/org/refile.org")
+    (defvar org-default-diary-file "~/org/diary.org")
+    (setq org-agenda-files (quote ("~/org")))
     
-    ;; ### refile
+    ;; == capture ==
+    (setq org-capture-templates
+          '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks" )
+             "* TODO %?\n %T\n %i\n %a\n")
+            ;; TODO: improve actual entry for things like duration and location
+            ("d" "Diary" entry (file+datetree+prompt org-default-diary-file "Appointments" )
+             "* %?\n %T\n %i\n %a\n")
+            ("j" "Journal" entry (file+datetree "~/org/journal.org")
+             "* %?\n Entered on %T\n  %a\n")
+            ("n" "Note" entry (file+headline org-default-notes-file "Notes")
+             "* %?\n %T\n %a\n")))
+
+    ;;  == refile ==
     ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
     (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                      (org-agenda-files :maxlevel . 9))))
     ;; Be sure to use the full path for refile setup
     (setq org-refile-use-outline-path t)
     (setq org-outline-path-complete-in-steps nil)
+    ;; Allow refile to create parent tasks with confirmation
+    (setq org-refile-allow-creating-parent-nodes 'confirm)
 
-    ;; display properties
-    (setq org-agenda-sticky t)
+    ;; == tags ==
+    (setq org-tag-alist '(;; places/contexts - where
+                          (:startgroup)
+                          ("@campus" . ?c)
+                          ("@home" . ?h)
+                          (:endgroup)
+                          ;; actions - what
+                          (:startgroup)
+                          ("read" . ?a)
+                          ("write" . ?w)
+                          ("watch" . ?v)
+                          ("program" . ?p)
+                          (:endgroup)
+                          ;; scope - why
+                          (:startgroup)
+                          ("phd" . ?d)
+                          ("personal" . ?o)
+                          ("skills" . ?s)
+                          ("growth" . ?g)
+                          (:endgroup)
+                          ;; everything else
+                          ))
 
+
+    ;; == workflows ==
     (setq org-todo-keywords
           '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-            (sequence "WAITING(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" ))
+            (sequence "WAITING(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
+            (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)"))
           )
 
     ;; enable mode line display of org-clock
     (setq spaceline-org-clock-p t)
+
     )
 
   ;; === clang === 
