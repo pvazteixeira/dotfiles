@@ -1,0 +1,20 @@
+#!/bin/bash
+# script to reduce the size of hauv logs by removing unnecessary channels
+
+# quit if the 'filtered folder already exists'
+[ ! -d filtered ] && mkdir filtered && mkdir original
+
+# list all log files (ignore jlps)
+logs=$(ls lcmlog* | grep -v "jlp") 
+for file in $logs
+do
+    dest="filtered/$file"
+    echo "Filtering $file to $dest"
+    # keep only HAUV_* and PROSILICA_* channels
+    bot-lcm-logfilter -v -c "(HAUV|PROSILICA)" $file $dest
+    echo "Moving $file to original/$file"
+    mv $file original/$file
+    echo "\n"
+    # rm $file
+done
+ 
