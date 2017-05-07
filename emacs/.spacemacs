@@ -54,6 +54,7 @@ values."
      (latex :variables
             latex-build-command "LaTeX"
             latex-enable-folding t)
+     bibtex
      markdown
      org
      ;; version-control
@@ -156,9 +157,13 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 15
-                               :weight normal
-                               :width normal
+   ;; dotspacemacs-default-font '("Droid Sans Mono"
+   ;; dotspacemacs-default-font '("Liberation Mono"
+                               :size 16
+                               ;; :weight light
+                               ;; :width normal
+                               ;; :height
+                               ;; :slant
                                :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -355,6 +360,11 @@ you should place your code here."
 
   ;;  === latex ===
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+  ;; === bibtex === 
+  (setq org-ref-default-bibliography '("~/Dropbox (MIT)/mendeley/library.bib"))
+  ;;       org-ref-pdf-directory "~/Papers/"
+  ;;       org-ref-bibliography-notes "~/Papers/notes.org") 
   
 
   ;; === org ===
@@ -373,10 +383,15 @@ you should place your code here."
           '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks" )
              "* TODO %?\n %T\n %i\n %a\n")
             ;; TODO: improve actual entry for things like duration and location
-            ("d" "Diary" entry (file+datetree+prompt org-default-diary-file "Appointments" )
+            ("r" "Reading" entry (file+headline org-default-notes-file "Read" )
+             "* TODO %?\n %T\n %i\n %a\n")
+            ;; appointment
+            ("a" "Appointment" entry (file+datetree+prompt org-default-diary-file "Appointments" )
              "* %?\n %T\n %i\n %a\n")
+            ;; journal - 
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %?\n Entered on %T\n  %a\n")
+            ;; notes - 
             ("n" "Note" entry (file+headline org-default-notes-file "Notes")
              "* %?\n %T\n %a\n")))
 
@@ -391,19 +406,20 @@ you should place your code here."
     (setq org-refile-allow-creating-parent-nodes 'confirm)
 
     ;; == tags ==
-    (setq org-tag-alist '(;; places/contexts - where
+    (setq org-tag-alist '(;; places/contexts - where ?
                           (:startgroup)
                           ("@campus" . ?c)
                           ("@home" . ?h)
                           (:endgroup)
-                          ;; actions - what
+                          ;; actions - what to do ?
                           (:startgroup)
-                          ("read" . ?a)
-                          ("write" . ?w)
-                          ("watch" . ?v)
+                          ("meet" . ?m)
                           ("program" . ?p)
+                          ("read" . ?a)
+                          ("watch" . ?v)
+                          ("write" . ?w)
                           (:endgroup)
-                          ;; scope - why
+                          ;; scope - why do it?
                           (:startgroup)
                           ("phd" . ?d)
                           ("personal" . ?o)
@@ -412,7 +428,6 @@ you should place your code here."
                           (:endgroup)
                           ;; everything else
                           ))
-
 
     ;; == workflows ==
     (setq org-todo-keywords
