@@ -28,6 +28,9 @@ alias mrg="cd ~/Workspace/mrg"
 alias rpl="cd ~/Workspace/rpl"
 alias perls="cd ~/Workspace/perl"
 
+# miniconda
+alias miniconda='noglob export PATH=$HOME/miniconda2/bin:$PATH'
+
 #  
 alias open="xdg-open"
 alias trash="gvfs-trash"
