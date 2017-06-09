@@ -3,7 +3,7 @@
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-alias e='emacsclient --no-wait'
+alias e='emacsclient -c --no-wait'
 
 alias julia='~/Downloads/julia/bin/julia'
 
