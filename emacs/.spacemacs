@@ -42,7 +42,7 @@ values."
      (c-c++ :variables
             c-c++-enable-clang-support t)
      colors
-     javascript
+     ;; javascript
      ;; better-defaults ;; emacs-only!
      emacs-lisp
      ;; ess
@@ -67,14 +67,13 @@ values."
      syntax-checking
      semantic
      themes-megapack
-     yaml
+     ;; yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(
-                                      )
+   dotspacemacs-additional-packages '()
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -123,15 +122,14 @@ values."
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
-   dotspacemacs-verbose-loading t
+   dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
    ;; banner, `random' chooses a random text banner in `core/banners'
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   ;;dotspacemacs-startup-banner 'official
-   dotspacemacs-startup-banner 'random
+   dotspacemacs-startup-banner 'official
    ;; dotspacemacs-startup-banner 'doge 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
@@ -157,13 +155,9 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-   ;; dotspacemacs-default-font '("Droid Sans Mono"
-   ;; dotspacemacs-default-font '("Liberation Mono"
                                :size 16
-                               ;; :weight light
-                               ;; :width normal
-                               ;; :height
-                               ;; :slant
+                               :weight normal
+                               :width normal
                                :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -372,9 +366,9 @@ you should place your code here."
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
   ;; === bibtex === 
-  ;; (setq org-ref-default-bibliography '("~/Dropbox (MIT)/mendeley/library.bib"))
-  ;;       org-ref-pdf-directory "~/Papers/"
-  ;;       org-ref-bibliography-notes "~/Papers/notes.org") 
+  (setq org-ref-default-bibliography '("~/Dropbox (MIT)/Library/library.bib")
+        org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
+        org-ref-bibliography-notes "~/Dropbox (MIT)/Library/notes.org")
   
 
   ;; === org ===
