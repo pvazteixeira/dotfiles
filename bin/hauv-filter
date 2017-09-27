@@ -14,7 +14,7 @@ do
     bot-lcm-logfilter -v -c "(HAUV|PROSILICA)" $file $dest
     echo "Moving $file to original/$file"
     mv $file original/$file
-    echo "\n"
+    echo ""
     # rm $file
 done
  
