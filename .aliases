@@ -36,7 +36,8 @@ alias miniconda='noglob export PATH=$HOME/miniconda2/bin:$PATH'
 
 #  
 alias open="xdg-open"
-alias trash="gvfs-trash"
+# alias trash="gvfs-trash" # superseded by trash-cli
+alias rm="trash"
 
 # LCM mute/unmute
 alias lcm-mute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0'
