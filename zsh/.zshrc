@@ -69,14 +69,10 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
-export ALTERNATE_EDITOR=""
-export EDITOR='emacsclient -t'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# ssh
-export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -88,3 +84,7 @@ fi
 
 # export TERM=xterm-256color
 
+# ROS
+if [ -e "/opt/ros/kinetic/setup.zsh" ]; then
+   source /opt/ros/kinetic/setup.zsh
+fi

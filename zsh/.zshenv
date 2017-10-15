@@ -16,3 +16,10 @@ export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
 # pyloc=`which python`
 # echo "python: $pyloc"
 # echo "PYTHONPATH: $PYTHONPATH"
+
+# ssh
+export SSH_KEY_PATH="~/.ssh/id_rsa"
+
+
+# export ALTERNATE_EDITOR=""
+export EDITOR='emacsclient -t'
