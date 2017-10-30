@@ -395,6 +395,9 @@ you should place your code here."
             ;; appointment
             ("a" "Appointment" entry (file+datetree+prompt org-default-diary-file "Appointments" )
              "* %?\n %T\n %i\n %a\n")
+            ;; log - 
+            ("l" "Log" entry (file+datetree "~/org/log.org")
+             "* %?\n Entered on %T\n  %a\n")
             ;; journal - 
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %?\n Entered on %T\n  %a\n")
@@ -416,6 +419,7 @@ you should place your code here."
     (setq org-tag-alist '(;; places/contexts - where ?
                           (:startgroup)
                           ("@campus" . ?c)
+                          ("@email" . ?e)
                           ("@home" . ?h)
                           (:endgroup)
                           ;; actions - what to do ?
