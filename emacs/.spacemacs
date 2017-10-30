@@ -57,7 +57,8 @@ values."
             latex-enable-folding t)
      bibtex
      markdown
-     org
+     (org :variables
+          org-projectile-file "~/org/todo.org")
      ;; version-control
      (shell :variables
              shell-default-height 30
@@ -446,6 +447,12 @@ you should place your code here."
     (setq spaceline-org-clock-p t)
 
     )
+
+  ;; === org-agenda ===
+  ;; required to get
+  ;; (with-eval-after-load 'org-agenda
+  ;;   (require 'org-projectile)
+  ;;   (push (org-projectile:todo-files) org-agenda-files))
 
   ;; === clang === 
   ;; Bind clang-format-region to C-M-tab in all modes:
