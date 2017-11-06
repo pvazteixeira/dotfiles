@@ -72,7 +72,7 @@ fi
 alias pv="pcl_viewer"
 
 # misc
-alias poke='ps aux | grep -i'
+alias probe='ps aux | grep -i'
 alias have='dpkg -l | grep -i'
 alias open="xdg-open"
 alias rm="trash" 
