@@ -87,4 +87,19 @@ fi
 # ROS
 if [ -e "/opt/ros/kinetic/setup.zsh" ]; then
    source /opt/ros/kinetic/setup.zsh
+   source ~/ros_catkin_ws/devel/setup.zsh
+   # turtlebot WiFi:
+   # export ROS_MASTER_URI=http://192.168.10.15:11311
+   # export ROS_MASTER_URI=http://192.168.10.4:11311
+   # localhost:
+   # export ROS_MASTER_URI=http://localhost:11311
+   # export ROS_HOSTNAME=localhost
+   # export ROS_IP=192.168.10.15
+   export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
 fi
+
+
+
+
+
+source "/home/pvt/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
