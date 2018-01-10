@@ -339,6 +339,8 @@ you should place your code here."
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 2)
 
+  (setq-default visual-line-mode t)
+
   ;; themes
   (setq-default dotspacemacs-default-theme 'spolsky )
 
@@ -368,11 +370,18 @@ you should place your code here."
   ;;  === latex ===
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
-  ;; === bibtex === 
+  ;; === org-ref === 
+  ;; TODO: replace library.bib with list of .bib files from git repo
+  (setq reftex-default-bibliography '("~/Dropbox (MIT)/Library/library.bib"))
+
   (setq org-ref-default-bibliography '("~/Dropbox (MIT)/Library/library.bib")
         org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
-        org-ref-bibliography-notes "~/Dropbox (MIT)/Library/notes.org")
+        org-ref-bibliography-notes "~/org/library.org")
   
+  ;; set evince as default pdf reader
+  (setq org-ref-open-pdf-function
+        (lambda (fpath)
+          (start-process "evince" "*helm-bibtex-evince*" "/usr/bin/evince" fpath)))
 
   ;; === org ===
   ;; thanks to gjstein for inspiration
@@ -418,22 +427,25 @@ you should place your code here."
     ;; == tags ==
     (setq org-tag-alist '(;; places/contexts - where ?
                           (:startgroup)
-                          ("@campus" . ?c)
-                          ("@email" . ?e)
+                          ("@anywhere" . ?a)
+                          ("@campus" . ?m)
+                          ("@email" . ?e) ;; is this really needed?
                           ("@home" . ?h)
+                          ("@online" . ?o)
                           (:endgroup)
                           ;; actions - what to do ?
                           (:startgroup)
-                          ("meet" . ?m)
-                          ("program" . ?p)
-                          ("read" . ?a)
-                          ("watch" . ?v)
+                          ("communicate" . ?c) ;; email, im, mail, phone 
+                          ("meet" . ?m) ;; meetings, calls
+                          ;;("program" . ?p)
+                          ("read" . ?r) ;; articles, books, papers
+                          ("travel" . ?t)
+                          ("watch" . ?v) ;; talks, shows
                           ("write" . ?w)
                           (:endgroup)
                           ;; scope - why do it?
                           (:startgroup)
                           ("phd" . ?d)
-                          ("personal" . ?o)
                           ("skills" . ?s)
                           ("growth" . ?g)
                           (:endgroup)
@@ -442,7 +454,7 @@ you should place your code here."
 
     ;; == workflows ==
     (setq org-todo-keywords
-          '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+          '((sequence "ACTIVE(a)" "TODO(t)" "NEXT(n)" "|" "DONE(d)")
             (sequence "WAITING(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
             (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)"))
           )
