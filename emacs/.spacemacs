@@ -60,17 +60,15 @@ values."
      (org :variables
           org-projectile-file "~/org/todo.org")
      ;; version-control
-     (shell :variables
-             shell-default-height 30
-             shell-default-position 'bottom)
+     ;; (shell :variables
+     ;;         shell-default-height 30
+     ;;         shell-default-position 'bottom)
      python
      (spell-checking :variables
                      ;; enable-flyspell-auto-completion t
                      spell-checking-enable-auto-dictionary t)
      syntax-checking
      semantic
-     themes-megapack
-     ;; yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -339,10 +337,10 @@ you should place your code here."
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 2)
 
-  (setq-default visual-line-mode t)
+  ;; (setq-default global-visual-line-mode t)
 
   ;; themes
-  (setq-default dotspacemacs-default-theme 'spolsky )
+  (setq-default dotspacemacs-default-theme 'monokai)
 
   ;; follow symlinks by default
   (setq vc-follow-symlinks t)
@@ -361,11 +359,11 @@ you should place your code here."
 
   ;; === evil ===
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
-  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  ;; (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  ;; (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
   ;; Also in visual mode
-  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
-  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+  ;; (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  ;; (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 
   ;;  === latex ===
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
@@ -454,9 +452,11 @@ you should place your code here."
 
     ;; == workflows ==
     (setq org-todo-keywords
-          '((sequence "ACTIVE(a)" "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+          '(
+            (sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
             (sequence "WAITING(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
-            (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)"))
+            ;;(sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)")
+            )
           )
 
     ;; enable mode line display of org-clock
