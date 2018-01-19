@@ -39,7 +39,7 @@ values."
      ;; ----------------------------------------------------------------
      ;; csv
      auto-completion
-     ;; bibtex
+     bibtex
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
@@ -48,28 +48,28 @@ values."
      ;; better-defaults ;; emacs-only!
      emacs-lisp
      ;; ess
-     extra-langs
+     ;; extra-langs
      git
-     gtags
+     ;; gtags
      helm
      (latex :variables
             latex-build-command "LaTeX"
             latex-enable-folding t)
-     bibtex
-     markdown
-     (org :variables
-          org-projectile-file "~/org/todo.org")
+     ;; markdown
+     ;; (org :variables
+     ;;      org-projectile-file "~/org/todo.org")
+     org
      ;; version-control
-     (shell :variables
-             shell-default-height 30
-             shell-default-position 'bottom)
-     python
-     (spell-checking :variables
-                     ;; enable-flyspell-auto-completion t
-                     spell-checking-enable-auto-dictionary t)
-     syntax-checking
-     semantic
-     themes-megapack
+     ;; (shell :variables
+     ;;         shell-default-height 30
+     ;;         shell-default-position 'bottom)
+     ;; python
+     ;; (spell-checking :variables
+     ;;                 ;; enable-flyspell-auto-completion t
+     ;;                 spell-checking-enable-auto-dictionary t)
+     ;; syntax-checking
+     ;; semantic
+     ;; themes-megapack
      ;; yaml
      )
    ;; List of additional packages that will be installed without being
