@@ -31,7 +31,6 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -43,7 +42,7 @@ values."
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
-     colors
+     ;; colors
      ;; javascript
      ;; better-defaults ;; emacs-only!
      emacs-lisp
@@ -390,29 +389,32 @@ you should place your code here."
 
     ;; set files and directories
     (setq org-directory "~/org")
-    (setq org-default-notes-file "~/org/refile.org")
+    (setq org-default-notes-file "~/org/inbox.org")
     (defvar org-default-diary-file "~/org/diary.org")
     (setq org-agenda-files (quote ("~/org")))
     
     ;; == capture ==
     (setq org-capture-templates
-          '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks" )
+          '(
+            ("t" "Todo" entry (file+headline org-default-notes-file "Tasks" )
              "* TODO %?\n %T\n %i\n %a\n")
             ;; TODO: improve actual entry for things like duration and location
-            ("r" "Reading" entry (file+headline org-default-notes-file "Read" )
-             "* TODO %?\n %T\n %i\n %a\n")
+            ;; ("r" "Reading" entry (file+headline org-default-notes-file "Read" )
+            ;;  "* TODO %?\n %T\n %i\n %a\n")
             ;; appointment
-            ("a" "Appointment" entry (file+datetree+prompt org-default-diary-file "Appointments" )
+            ("a" "Appointment" entry (file+datetree+prompt org-default-diary-file  )
              "* %?\n %T\n %i\n %a\n")
             ;; log - 
-            ("l" "Log" entry (file+datetree "~/org/log.org")
-             "* %?\n Entered on %T\n  %a\n")
+            ;; ("l" "Log" entry (file+datetree "~/org/log.org")
+            ;;  "* %?\n Entered on %T\n  %a\n")
             ;; journal - 
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %?\n Entered on %T\n  %a\n")
             ;; notes - 
-            ("n" "Note" entry (file+headline org-default-notes-file "Notes")
-             "* %?\n %T\n %a\n")))
+            ;; ("n" "Note" entry (file+headline org-default-notes-file "Notes")
+            ;;  "* %?\n %T\n %a\n")
+            )
+          )
 
     ;;  == refile ==
     ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
@@ -427,50 +429,38 @@ you should place your code here."
     ;; == tags ==
     (setq org-tag-alist '(;; places/contexts - where ?
                           (:startgroup)
-                          ("@anywhere" . ?a)
-                          ("@campus" . ?m)
-                          ("@email" . ?e) ;; is this really needed?
-                          ("@home" . ?h)
-                          ("@online" . ?o)
-                          (:endgroup)
-                          ;; actions - what to do ?
-                          (:startgroup)
-                          ("communicate" . ?c) ;; email, im, mail, phone 
-                          ("meet" . ?m) ;; meetings, calls
-                          ;;("program" . ?p)
-                          ("read" . ?r) ;; articles, books, papers
-                          ("travel" . ?t)
-                          ("watch" . ?v) ;; talks, shows
+                          ("call" . ?c) 
+                          ("email" . ?e) 
+                          ("meet" . ?m)
+                          ("read" . ?r) 
                           ("write" . ?w)
                           (:endgroup)
                           ;; scope - why do it?
                           (:startgroup)
-                          ("phd" . ?d)
-                          ("skills" . ?s)
-                          ("growth" . ?g)
+                          ("phd" . ?p)
                           (:endgroup)
-                          ;; everything else
                           ))
 
     ;; == workflows ==
     (setq org-todo-keywords
           '(
             (sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-            (sequence "WAITING(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
-            ;;(sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)")
+            ;; (sequence "WAITING(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
+            ;; (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)")
             )
           )
 
     ;; enable mode line display of org-clock
-    (setq spaceline-org-clock-p t)
+    ;;(setq spaceline-org-clock-p t)
+
+    ;; === org-agenda ===
+    ;; required to get
+    ;; (with-eval-after-load 'org-agenda
+    ;;   (require 'org-projectile)
+    ;;   (push (org-projectile:todo-files) org-agenda-files))
 
     )
 
-  ;; === org-agenda ===
-  ;; required to get
-  ;; (with-eval-after-load 'org-agenda
-  ;;   (require 'org-projectile)
-  ;;   (push (org-projectile:todo-files) org-agenda-files))
 
   ;; === clang === 
   ;; Bind clang-format-region to C-M-tab in all modes:
