@@ -8,7 +8,7 @@ export ZSH=/home/pvt/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+# ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -83,23 +83,5 @@ if [ -e "$HOME/.aliases" ]; then
 fi
 
 # export TERM=xterm-256color
-
-# ROS
-if [ -e "/opt/ros/kinetic/setup.zsh" ]; then
-   source /opt/ros/kinetic/setup.zsh
-   source ~/ros_catkin_ws/devel/setup.zsh
-   # turtlebot WiFi:
-   # export ROS_MASTER_URI=http://192.168.10.15:11311
-   # export ROS_MASTER_URI=http://192.168.10.4:11311
-   # localhost:
-   # export ROS_MASTER_URI=http://localhost:11311
-   # export ROS_HOSTNAME=localhost
-   # export ROS_IP=192.168.10.15
-   export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
-fi
-
-
-
-
 
 source "/home/pvt/.oh-my-zsh/custom/themes/spaceship.zsh-theme"

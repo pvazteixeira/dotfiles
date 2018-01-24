@@ -50,15 +50,15 @@ alias hauv="cd ~/Workspace/rpl/project-hauv"
 alias mk="make clean && make"
 
 # miniconda
-alias miniconda='noglob export PATH=$HOME/miniconda2/bin:$PATH'
+# alias miniconda='noglob export PATH=$HOME/miniconda2/bin:$PATH'
 
 # LCM mute/unmute
 alias lcm-mute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0'
 alias lcm-unmute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1'
 
-# w530 dock
 if [ "blackfish"==$HOST ]
 then
+    # w530 dock
     alias dock="xrandr --output LVDS-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-3 --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-2 --mode 1920x1080 --pos 3840x0 --rotate left --output DP-1 --off --output VGA-1 --off"
     # home desk, 2 screens
     alias home2="xrandr --output LVDS-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-3 --off --output DP-2 --off --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output VGA-1 --mode 1920x1080 --pos 0x0 --rotate normal"
@@ -76,5 +76,6 @@ alias probe='ps aux | grep -i'
 alias have='dpkg -l | grep -i'
 alias open="xdg-open"
 alias rm="trash" 
+alias icanhas="sudo apt install --no-install-recommends"
 
 # echo "Aliases set!"
