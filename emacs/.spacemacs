@@ -132,15 +132,13 @@ values."
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 'official
-   ;; dotspacemacs-startup-banner 'doge 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((bookmarks . 10)
-                                (recents . 5)
+   dotspacemacs-startup-lists '((recents . 5)
                                 (projects . 7))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
@@ -157,7 +155,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 16
+                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -191,7 +189,7 @@ values."
    dotspacemacs-retain-visual-state-on-shift t
    ;; If non-nil, J and K move lines up and down when in visual mode.
    ;; (default nil)
-   dotspacemacs-visual-line-move-text t
+   dotspacemacs-visual-line-move-text nil
    ;; If non nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
    ;; (default nil)
    dotspacemacs-ex-substitute-global nil
@@ -229,7 +227,7 @@ values."
    dotspacemacs-helm-use-fuzzy 'always
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-transient-state t
+   dotspacemacs-enable-paste-transient-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.1
@@ -251,7 +249,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -283,7 +281,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers nil
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -300,7 +298,7 @@ values."
    dotspacemacs-highlight-delimiters 'all
    ;; If non nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server t 
+   dotspacemacs-persistent-server nil
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
@@ -334,57 +332,8 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; === indentation === 
-  (setq-default indent-tabs-mode nil)
-  (setq-default tab-width 2)
-
-  ;; (setq-default global-visual-line-mode t)
-
-  ;; themes
-  (setq-default dotspacemacs-default-theme 'monokai)
-
-  ;; follow symlinks by default
-  (setq vc-follow-symlinks t)
-
-  ;; (defun dear-leader/swap-keys (key1 key2)
-  ;;   (let ((map1 (lookup-key spacemacs-default-map key1))
-  ;;         (map2 (lookup-key spacemacs-default-map key2)))
-  ;;     (spacemacs/set-leader-keys key1 map2 key2 map1)))
-  ;; (dear-leader/swap-keys "S" "d")
-
-  ;; (defun dear-leader/alias-of (key1 key2)
-  ;;   (let ((map (lookup-key spacemacs-default-map key2)))
-  ;;     (spacemacs/set-leader-keys key1 map)))
-  ;; (dear-leader/alias-of "é" "w")
-
-
-  ;; === evil ===
-  ;; Make evil-mode up/down operate in screen lines instead of logical lines
-  ;; (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-  ;; (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-  ;; Also in visual mode
-  ;; (define-key evil-visual-state-map "j" 'evil-next-visual-line)
-  ;; (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
-
-  ;;  === latex ===
-  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
-
-  ;; === org-ref === 
-  ;; TODO: replace library.bib with list of .bib files from git repo
-  (setq reftex-default-bibliography '("~/Dropbox (MIT)/Library/library.bib"))
-
-  (setq org-ref-default-bibliography '("~/Dropbox (MIT)/Library/library.bib")
-        org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
-        org-ref-bibliography-notes "~/org/library.org")
-  
-  ;; set evince as default pdf reader
-  (setq org-ref-open-pdf-function
-        (lambda (fpath)
-          (start-process "evince" "*helm-bibtex-evince*" "/usr/bin/evince" fpath)))
-
-  ;; === org ===
-  ;; thanks to gjstein for inspiration
-  ;; https://github.com/gjstein/emacs.d/blob/master/config/gs-org.el
+  ;; org
+  ;; thanks to gjstein for inspiration (https://github.com/gjstein/emacs.d/blob/master/config/gs-org.el)
   (with-eval-after-load 'org
 
     ;; set files and directories
@@ -392,21 +341,15 @@ you should place your code here."
     (setq org-default-notes-file "~/org/inbox.org")
     (defvar org-default-diary-file "~/org/diary.org")
     (setq org-agenda-files (quote ("~/org")))
-    
-    ;; == capture ==
+
+    ;; capture
     (setq org-capture-templates
           '(
             ("t" "Todo" entry (file+headline org-default-notes-file "Tasks" )
              "* TODO %?\n %T\n %i\n %a\n")
-            ;; TODO: improve actual entry for things like duration and location
-            ;; ("r" "Reading" entry (file+headline org-default-notes-file "Read" )
-            ;;  "* TODO %?\n %T\n %i\n %a\n")
             ;; appointment
             ("a" "Appointment" entry (file+datetree+prompt org-default-diary-file  )
              "* %?\n %T\n %i\n %a\n")
-            ;; log - 
-            ;; ("l" "Log" entry (file+datetree "~/org/log.org")
-            ;;  "* %?\n Entered on %T\n  %a\n")
             ;; journal - 
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %?\n Entered on %T\n  %a\n")
@@ -416,7 +359,16 @@ you should place your code here."
             )
           )
 
-    ;;  == refile ==
+    ;; ref/reftex
+    ;;(setq reftex-default-bibliography '("~/Dropbox (MIT)/Library/library.bib"))
+    (setq org-ref-open-pdf-function
+          (lambda (fpath)
+            (start-process "evince" "*helm-bibtex-evince*" "/usr/bin/evince" fpath)))
+    (setq org-ref-default-bibliography '("~/Dropbox (MIT)/Library/library.bib")
+          org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
+          org-ref-bibliography-notes "~/org/library.org")
+
+    ;; refile
     ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
     (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                      (org-agenda-files :maxlevel . 9))))
@@ -426,13 +378,14 @@ you should place your code here."
     ;; Allow refile to create parent tasks with confirmation
     (setq org-refile-allow-creating-parent-nodes 'confirm)
 
-    ;; == tags ==
+    ;; tags
     (setq org-tag-alist '(;; places/contexts - where ?
                           (:startgroup)
-                          ("call" . ?c) 
-                          ("email" . ?e) 
+                          ("call" . ?c)
+                          ("email" . ?e)
                           ("meet" . ?m)
-                          ("read" . ?r) 
+                          ("read" . ?r)
+                          ("travel" . ?t)
                           ("write" . ?w)
                           (:endgroup)
                           ;; scope - why do it?
@@ -441,7 +394,7 @@ you should place your code here."
                           (:endgroup)
                           ))
 
-    ;; == workflows ==
+    ;; todo
     (setq org-todo-keywords
           '(
             (sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -449,28 +402,52 @@ you should place your code here."
             ;; (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)")
             )
           )
+    );; org
 
-    ;; enable mode line display of org-clock
-    ;;(setq spaceline-org-clock-p t)
+  ;; clang
+  ;; ;; Bind clang-format-region to C-M-tab in all modes:
+  ;; (global-set-key [C-M-tab] 'clang-format-region)
+  ;; ;; Bind clang-format-buffer to tab on the c++-mode only:
+  ;; (add-hook 'c++-mode-hook 'clang-format-bindings)
+  ;; (defun clang-format-bindings ()
+  ;;   (define-key c++-mode-map [tab] 'clang-format-buffer))
+  ;; (setq clang-format-style "Google")
 
-    ;; === org-agenda ===
-    ;; required to get
-    ;; (with-eval-after-load 'org-agenda
-    ;;   (require 'org-projectile)
-    ;;   (push (org-projectile:todo-files) org-agenda-files))
-
-    )
-
-
-  ;; === clang === 
-  ;; Bind clang-format-region to C-M-tab in all modes:
-  (global-set-key [C-M-tab] 'clang-format-region)
-  ;; Bind clang-format-buffer to tab on the c++-mode only:
-  (add-hook 'c++-mode-hook 'clang-format-bindings)
-  (defun clang-format-bindings ()
-    (define-key c++-mode-map [tab] 'clang-format-buffer))
-  (setq clang-format-style "Google")
-)
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yasnippet-snippets realgud test-simple loc-changes load-relative helm-rtags helm-company helm-c-yasnippet google-c-style fuzzy disaster company-statistics company-rtags rtags company-c-headers company-auctex company cmake-mode cmake-ide levenshtein clang-format auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
