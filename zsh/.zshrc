@@ -8,7 +8,7 @@ export ZSH=/home/pvt/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-# ZSH_THEME="agnoster"
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -80,8 +80,18 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 if [ -e "$HOME/.aliases" ]; then
     source $HOME/.aliases
+else
+    # create symlink from dotfiles
 fi
 
 # export TERM=xterm-256color
 
-source "/home/pvt/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+# spaceship theme
+if [ -e "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme" ] ; then
+    source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+else
+    echo "installing spaceship theme"
+    git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+    echo "creating symbolic link"
+    ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+fi

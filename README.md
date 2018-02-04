@@ -1,4 +1,4 @@
-#dotfiles
+# dotfiles
 
 ## dependencies
 Most of the dependencies are handled by install.sh
@@ -8,8 +8,17 @@ Other than that, these are also required:
 
 ## notes
 
-### switching Caps Lock and Escape
+### Swapping Caps Lock and Escape
+
+To swap the two keys in the current session: 
 
 ```sh
 setxkbmap -option caps:swapescape
 ```
+
+To make this change persistent:
+
+```sh
+missing command
+```
+
