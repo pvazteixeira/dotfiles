@@ -1,4 +1,4 @@
-echo "Setting environment variables"
+# echo "Setting environment variables"
 
 # bins
 export PATH=~/.local/bin:$PATH
@@ -6,10 +6,10 @@ export PATH=~/dotfiles/bin:$PATH
 
 # (ana/mini)conda
 if [ -d "$HOME/miniconda2" ]; then
-    echo " - Miniconda"
+    # echo " - Miniconda"
     export PATH="$HOME/miniconda2/bin:$PATH"
 elif [ -d "$HOME/anaconda2" ]; then
-    echo " - Anaconda"
+    # echo " - Anaconda"
     export PATH="$HOME/anaconda2/bin:$PATH"
 fi
 
@@ -19,7 +19,7 @@ fi
 
 # ROS
 if [ -e "/opt/ros/kinetic/setup.zsh" ]; then
-    echo " - ROS"
+    # echo " - ROS"
     source /opt/ros/kinetic/setup.zsh
     if [ -e "$HOME/ros_catkin_ws/devel/setup.zsh" ]; then
         source ~/ros_catkin_ws/devel/setup.zsh
