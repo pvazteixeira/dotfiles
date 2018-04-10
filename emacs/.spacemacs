@@ -63,6 +63,7 @@ values."
      ;;         shell-default-height 30
      ;;         shell-default-position 'bottom)
      ;; python
+     spell-checking
      ;; (spell-checking :variables
      ;;                 ;; enable-flyspell-auto-completion t
      ;;                 spell-checking-enable-auto-dictionary t)
