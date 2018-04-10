@@ -43,11 +43,8 @@ alias ds="du -sh ."
 alias sha1list="find . -type f -exec sha1sum {} >> sha1sums \;"
 
 # projects
-alias mrg="cd ~/Workspace/mrg"
-alias rpl="cd ~/Workspace/rpl"
-alias perls="cd ~/Workspace/Perl"
-alias hauv="cd ~/Workspace/rpl/project-hauv"
-alias mk="make clean && make"
+alias mk="make -j4"
+alias mkc="make clean" 
 
 # miniconda
 # alias miniconda='noglob export PATH=$HOME/miniconda2/bin:$PATH'
