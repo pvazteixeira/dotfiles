@@ -49,7 +49,7 @@ values."
      ;; ess
      ;; extra-langs
      git
-     ;; gtags
+     gtags
      helm
      (latex :variables
             latex-build-command "LaTeX"
@@ -68,7 +68,7 @@ values."
      ;;                 ;; enable-flyspell-auto-completion t
      ;;                 spell-checking-enable-auto-dictionary t)
      ;; syntax-checking
-     ;; semantic
+     semantic
      ;; themes-megapack
      ;; yaml
      )
