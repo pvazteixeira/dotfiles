@@ -335,11 +335,19 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; org
+  ;; === evil ===
+  ;; Make evil-mode up/down operate in screen lines instead of logical lines
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
+  ;;  === org ===
   ;; thanks to gjstein for inspiration (https://github.com/gjstein/emacs.d/blob/master/config/gs-org.el)
   (with-eval-after-load 'org
 
-    ;; set files and directories
+    ;; files and directories
     (setq org-directory "~/org")
     (setq org-default-notes-file "~/org/inbox.org")
     (defvar org-default-diary-file "~/org/diary.org")
@@ -362,7 +370,16 @@ you should place your code here."
             )
           )
 
-    ;; ref/reftex
+    ;; todo
+    (setq org-todo-keywords
+          '(
+            (sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "|" "DONE(d)")
+            ;; (sequence "WAIT(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
+            ;; (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)")
+            )
+          )
+
+    ;; ref/reftex 
     ;;(setq reftex-default-bibliography '("~/Dropbox (MIT)/Library/library.bib"))
     (setq org-ref-open-pdf-function
           (lambda (fpath)
@@ -371,7 +388,7 @@ you should place your code here."
           org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
           org-ref-bibliography-notes "~/org/library.org")
 
-    ;; refile
+    ;; refile 
     ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
     (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                      (org-agenda-files :maxlevel . 9))))
@@ -397,15 +414,6 @@ you should place your code here."
                           (:endgroup)
                           ))
 
-    ;; todo
-    (setq org-todo-keywords
-          '(
-            (sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-            ;; (sequence "WAITING(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
-            ;; (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)")
-            )
-          )
-
     ;; enable mode line display of org-clock
     ;;(setq spaceline-org-clock-p t)
 
@@ -415,8 +423,7 @@ you should place your code here."
     ;;   (require 'org-projectile)
     ;;   (push (org-projectile:todo-files) org-agenda-files))
 
-    )
-
+    ) ;; end org
 
   ;; === clang === 
   ;; Bind clang-format-region to C-M-tab in all modes:
