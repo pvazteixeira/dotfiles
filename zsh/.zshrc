@@ -52,7 +52,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-flow ssh-agent svn tmux python)
+plugins=(debian emacs git git-flow python ssh-agent tmux)
 
 source $ZSH/oh-my-zsh.sh
 

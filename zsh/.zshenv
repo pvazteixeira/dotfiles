@@ -1,33 +1,56 @@
-# echo "Setting environment variables"
+# do NOT print/echo as it may cause issues when ssh/mosh-ing into a machine
 
 # bins
 export PATH=~/.local/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
 
-# (ana/mini)conda
-if [ -d "$HOME/miniconda2" ]; then
-    # echo " - Miniconda"
-    export PATH="$HOME/miniconda2/bin:$PATH"
-elif [ -d "$HOME/anaconda2" ]; then
-    # echo " - Anaconda"
-    export PATH="$HOME/anaconda2/bin:$PATH"
-else
-    # echo "conda not found!"
+# Conda
+function enable_conda() {
+    if [ -d "$HOME/miniconda2" ]; then
+        echo "Found miniconda!"
+        export PATH="$HOME/miniconda2/bin:$PATH"
+    elif [ -d "$HOME/anaconda2" ]; then
+        echo "Found anaconda!"
+        export PATH="$HOME/anaconda2/bin:$PATH"
+    else
+        echo "Conda not found!"
+    fi
+}
+
+if [ -e "$HOME/Downloads/firefox/firefox" ]; then
+    alias ffox="$HOME/Downloads/firefox/firefox"
 fi
 
+# LCM
 if [ -e "/usr/local/bin/lcm-gen" ]; then
     export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
-else
-    echo "lcm not found!"
 fi
 
-# ROS
-if [ -e "/opt/ros/kinetic/setup.zsh" ]; then
-    # ROS Kinetic (debian 8)
-    source /opt/ros/kinetic/setup.zsh
-    if [ -e "$HOME/ros_catkin_ws/devel/setup.zsh" ]; then
-        source ~/ros_catkin_ws/devel/setup.zsh
+# PCL
+if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
+    export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH" 
+fi
+
+
+function enable_ros() {
+    if [ -e "/opt/ros/kinetic/setup.zsh" ]; then
+        echo "Found ROS Kinetic!"
+        source /opt/ros/kinetic/setup.zsh
+        if [ -e "$HOME/ros_catkin_ws/devel/setup.zsh" ]; then
+            source ~/ros_catkin_ws/devel/setup.zsh
+        fi
+    elif [ -r "/opt/ros/lunar/setup.zsh" ]; then
+        echo "Found ROS Lunar!"
+        source /opt/ros/lunar/setup.zsh
+        if [ -e "$HOME/workspace/ros_catkin_ws/devel/setup.zsh" ]; then
+            source ~/ros_catkin_ws/devel/setup.zsh
+        fi
+    else
+        echo "ROS not found :("
     fi
+}
+# ROS
+    # ROS Kinetic (debian 8)
     # turtlebot WiFi:
     # export ROS_MASTER_URI=http://192.168.10.15:11311
     # export ROS_MASTER_URI=http://192.168.10.4:11311
@@ -35,21 +58,11 @@ if [ -e "/opt/ros/kinetic/setup.zsh" ]; then
     # export ROS_MASTER_URI=http://localhost:11311
     # export ROS_HOSTNAME=localhost
     # export ROS_IP=192.168.10.15
-    export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
-elif [ -r "/opt/ros/lunar/setup.zsh" ]; then
-    # ROS Lunar (debian 9)
-    # source /opt/ros/lunar/setup.zsh
-    # if [ -e "$HOME/workspace/ros_catkin_ws/devel/setup.zsh" ]; then
-    #     source ~/ros_catkin_ws/devel/setup.zsh
-    # fi
-else
-    # echo "ROS not found!"
-fi
+    # export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
 
-
-# ssh
+# SSH
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 # export ALTERNATE_EDITOR=""
-export EDITOR='emacsclient -t'
+export EDITOR='emacs'
 
