@@ -348,20 +348,24 @@ you should place your code here."
   (with-eval-after-load 'org
 
     ;; files and directories
-    (setq org-directory "~/org")
+    ;; (setq org-directory "~/org")
+    (setq org-agenda-files
+          '("~/org/projects.org"
+            "~/org/inbox.org"
+            "~/org/diary.org"
+            "~/org/library.org"
+            "~/org/journal.org"))
     (setq org-default-notes-file "~/org/inbox.org")
+    (setq org-agenda-include-diary t)
     (defvar org-default-diary-file "~/org/diary.org")
-    (setq org-agenda-files (quote ("~/org")))
 
     ;; capture
     (setq org-capture-templates
           '(
             ("t" "Todo" entry (file+headline org-default-notes-file "Tasks" )
-             "* TODO %?\n %T\n %i\n %a\n")
-            ;; appointment
+             "* TODO %?\n OPENED: %T\n %i\n %a\n")
             ("a" "Appointment" entry (file+datetree+prompt org-default-diary-file  )
              "* %?\n %T\n %i\n %a\n")
-            ;; journal - 
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %?\n Entered on %T\n  %a\n")
             ;; notes - 
@@ -369,18 +373,18 @@ you should place your code here."
             ;;  "* %?\n %T\n %a\n")
             )
           )
-
+    (setq org-link-search-must-match-exact-headline nil )
     ;; todo
     (setq org-todo-keywords
           '(
-            (sequence "TODO(t)" "NEXT(n)" "WAIT(w)" "|" "DONE(d)")
+            (sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCELED(c)")
             ;; (sequence "WAIT(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
             ;; (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)")
             )
           )
 
     ;; ref/reftex 
-    ;;(setq reftex-default-bibliography '("~/Dropbox (MIT)/Library/library.bib"))
+    (setq reftex-default-bibliography '("~/Dropbox (MIT)/Library/library.bib"))
     (setq org-ref-open-pdf-function
           (lambda (fpath)
             (start-process "evince" "*helm-bibtex-evince*" "/usr/bin/evince" fpath)))
@@ -401,12 +405,22 @@ you should place your code here."
     ;; tags
     (setq org-tag-alist '(;; places/contexts - where ?
                           (:startgroup)
-                          ("call" . ?c)
+                          ("anywhere" . ?a)
+                          ("campus" . ?c)
                           ("email" . ?e)
-                          ("meet" . ?m)
-                          ("read" . ?r)
-                          ("travel" . ?t)
-                          ("write" . ?w)
+                          ("online" . ?o)
+                          ;; ("meet" . ?m)
+                          ;; ("read" . ?r)
+                          ;; ("travel" . ?t)
+                          ;; ("write" . ?w)
+                          (:endgroup)
+                          ;; type of task
+                          (:startgroup)
+                          ("call" . ?C)
+                          ("meet" . ?M)
+                          ("read" . ?R)
+                          ("travel" . ?T)
+                          ("write" . ?W)
                           (:endgroup)
                           ;; scope - why do it?
                           (:startgroup)
@@ -415,7 +429,7 @@ you should place your code here."
                           ))
 
     ;; enable mode line display of org-clock
-    ;;(setq spaceline-org-clock-p t)
+    (setq spaceline-org-clock-p t)
 
     ;; === org-agenda ===
     ;; required to get

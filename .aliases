@@ -3,21 +3,17 @@
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-# emacs
-alias ed='emacs --daemon'
-alias e='emacsclient -c --no-wait'
+# emacs - handled by the emacs plugin for oh-my-zsh
 
 #firefox
 if [ -f ~/Downloads/firefox/firefox ]
 then
-    echo "Found firefox"
     alias firefox='~/Downloads/firefox/firefox'
 fi
 
 # julia
 if [ -f ~/Downloads/julia/bin/julia ]
 then
-    echo "Found julia"
     alias julia='~/Downloads/julia/bin/julia'
 fi
 
@@ -43,7 +39,7 @@ alias ds="du -sh ."
 alias sha1list="find . -type f -exec sha1sum {} >> sha1sums \;"
 
 # projects
-alias mk="make -j4"
+alias mk="make -j4 && notify-send 'build succeeded' || notify-send 'build failed' "
 alias mkc="make clean" 
 
 # miniconda
