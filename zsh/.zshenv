@@ -40,17 +40,22 @@ function enable_ros() {
     if [ -e "/opt/ros/kinetic/setup.zsh" ]; then
         echo "Found ROS Kinetic!"
         source /opt/ros/kinetic/setup.zsh
-        if [ -e "$HOME/ros_catkin_ws/devel/setup.zsh" ]; then
-            source ~/ros_catkin_ws/devel/setup.zsh
-        fi
+        # if [ -e "$HOME/ros_catkin_ws/devel/setup.zsh" ]; then
+        #     source ~/ros_catkin_ws/devel/setup.zsh
+        # fi
     elif [ -r "/opt/ros/lunar/setup.zsh" ]; then
         echo "Found ROS Lunar!"
         source /opt/ros/lunar/setup.zsh
-        if [ -e "$HOME/workspace/ros_catkin_ws/devel/setup.zsh" ]; then
-            source ~/ros_catkin_ws/devel/setup.zsh
-        fi
+        # if [ -e "$HOME/workspace/ros_catkin_ws/devel/setup.zsh" ]; then
+        #     source ~/ros_catkin_ws/devel/setup.zsh
+        # fi
     else
         echo "ROS not found :("
+    fi
+
+    if [ -r "$HOME/workspace/ros/devel/setup.zsh" ]; then
+        echo "Found ROS workspace under $HOME/workspace/ros"
+        source "$HOME/workspace/ros/devel/setup.zsh"
     fi
 }
 # ROS

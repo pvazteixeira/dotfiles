@@ -49,6 +49,7 @@ values."
      ;; ess
      extra-langs
      git
+     github
      gtags
      helm
      (latex :variables
