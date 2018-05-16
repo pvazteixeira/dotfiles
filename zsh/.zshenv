@@ -21,6 +21,10 @@ if [ -e "$HOME/Downloads/firefox/firefox" ]; then
     alias ffox="$HOME/Downloads/firefox/firefox"
 fi
 
+if [ -e "$HOME/Downloads/julia/julia" ]; then
+    alias julia="$HOME/Downloads/julia/julia"
+fi
+
 # LCM
 if [ -e "/usr/local/bin/lcm-gen" ]; then
     export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"

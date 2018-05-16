@@ -47,7 +47,7 @@ values."
      ;; better-defaults ;; emacs-only!
      emacs-lisp
      ;; ess
-     ;; extra-langs
+     extra-langs
      git
      gtags
      helm
