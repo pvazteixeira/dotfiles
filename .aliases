@@ -53,8 +53,9 @@ then
 fi
 
 # make
-alias mk="make -j4 && notify-send 'build succeeded' || notify-send 'build failed' "
-alias mkc="make clean" 
+export nthreads="$((`nproc --all`-2))" # leave two out
+alias mk="make -j$nthreads && notify-send 'build succeeded' || notify-send 'build failed' "
+alias mkc="make clean"
 
 # miniconda
 # alias miniconda='noglob export PATH=$HOME/miniconda2/bin:$PATH'
@@ -84,5 +85,10 @@ alias have='dpkg -l | grep -i'
 alias open="xdg-open"
 alias rm="trash" 
 alias icanhas="sudo apt install --no-install-recommends"
+
+# ssh 
+# ssh into liljon w/ X forwarding; attach to tmux session 0 (create it if it doesn't exist)
+alias liljon="ssh pvt@mrg-liljon.csail.mit.edu -X -t tmux new-session -A -s 0"
+
 
 # echo "Aliases set!"
