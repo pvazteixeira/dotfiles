@@ -10,6 +10,7 @@ export ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="spaceship"
 
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -52,7 +53,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(debian emacs git git-flow python ssh-agent tmux)
+plugins=(debian emacs git git-flow python ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
 

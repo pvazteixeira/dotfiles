@@ -159,7 +159,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 11
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -360,6 +360,8 @@ you should place your code here."
     (setq org-agenda-include-diary t)
     (defvar org-default-diary-file "~/org/diary.org")
 
+    (setq org-log-into-drawer t)
+
     ;; capture
     (setq org-capture-templates
           '(
@@ -378,7 +380,7 @@ you should place your code here."
     ;; todo
     (setq org-todo-keywords
           '(
-            (sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCELED(c)")
+            (sequence "TODO(t!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
             ;; (sequence "WAIT(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
             ;; (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)")
             )

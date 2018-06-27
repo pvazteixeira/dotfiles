@@ -28,6 +28,7 @@ then
     alias day="redshift -O 6500"
     alias sunrise="redshift -O 3200"
     alias night="redshift -O 2300"
+    alias rso="redshift -o"
 fi
 
 # ls and the like
@@ -39,6 +40,19 @@ alias ds="du -sh ."
 alias sha1list="find . -type f -exec sha1sum {} >> sha1sums \;"
 
 # projects
+if [ -d ~/workspace/projects/project-hauv ]
+then
+    alias phauv='cd ~/workspace/projects/project-hauv/'
+    alias bhauv='cd ~/workspace/projects/project-hauv/build/bin'
+fi
+
+if [ -d ~/workspace/projects/project-bluerov2 ]
+then
+    alias pbrov2='cd ~/workspace/projects/project-bluerov2/'
+    alias bbrov2='cd ~/workspace/projects/project-bluerov2/build/bin'
+fi
+
+# make
 alias mk="make -j4 && notify-send 'build succeeded' || notify-send 'build failed' "
 alias mkc="make clean" 
 
