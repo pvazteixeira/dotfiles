@@ -1,0 +1,26 @@
+"*":
+  core:
+    disabledPackages: [
+      "vim-mode-plus"
+    ]
+    telemetryConsent: "no"
+  editor:
+    fontSize: 12
+    scrollPastEnd: true
+    showIndentGuide: true
+    showInvisibles: true
+    softWrap: true
+  "exception-reporting":
+    userId: "b108caee-a0a1-4a8c-9bb0-94ac632859e5"
+  "julia-client":
+    firstBoot: false
+    juliaPath: "$HOME/Downloads/julia/bin/julia"
+    uiOptions:
+      enableMenu: true
+      enableToolBar: true
+  minimap:
+    plugins:
+      "git-diff": true
+      "git-diffDecorationsZIndex": 0
+  welcome:
+    showOnStartup: false
