@@ -140,9 +140,9 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((agenda)
-                                (bookmarks . 10)
+   dotspacemacs-startup-lists '(
                                 (recents . 5)
+                                (bookmarks . 5)
                                 (projects . 7))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
@@ -343,6 +343,9 @@ you should place your code here."
   ;; Also in visual mode
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
+  ;; === vcs ===
+  (setq vc-follow-symlinks t)
 
   ;;  === org ===
   ;; thanks to gjstein for inspiration (https://github.com/gjstein/emacs.d/blob/master/config/gs-org.el)
