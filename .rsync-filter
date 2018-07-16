@@ -1,0 +1,7 @@
+- .*
+- .*/
+- anaconda2
+- Data
+- Downloads
+- workspace/data
+- workspace/libraries
