@@ -253,7 +253,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -352,16 +352,15 @@ you should place your code here."
   (with-eval-after-load 'org
 
     ;; files and directories
-    ;; (setq org-directory "~/org")
-    (setq org-agenda-files
-          '("~/org/projects.org"
-            "~/org/inbox.org"
-            "~/org/diary.org"
-            "~/org/library.org"
-            "~/org/journal.org"))
+    (setq org-directory "~/org")
     (setq org-default-notes-file "~/org/inbox.org")
-    (setq org-agenda-include-diary t)
     (defvar org-default-diary-file "~/org/diary.org")
+
+    ;; agenda
+    (setq org-agenda-include-diary t)
+    (setq org-agenda-files (quote ("~/org")))
+
+    (setq org-agenda-sticky t)
 
     (setq org-log-into-drawer t)
 
@@ -436,6 +435,11 @@ you should place your code here."
 
     ;; enable mode line display of org-clock
     (setq spaceline-org-clock-p t)
+
+    ;; habits
+    ;; (require 'org-habit)
+    ;; (setq org-modules '(org-habit))
+    ;; (setq org-habit-show-habits-only-for-today t)
 
     ;; === org-agenda ===
     ;; required to get
