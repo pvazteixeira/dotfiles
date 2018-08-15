@@ -75,3 +75,12 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # export ALTERNATE_EDITOR=""
 export EDITOR='emacs'
 
+# attach/create tmux session 0 locally (remotely via ssh -X if host provided)
+function stm() {
+    if (( $# == 1 ))
+    then
+        ssh pvt@$1 -X -t tmux new-session -A -s 0
+    else
+        tmux new-session -A -s 0
+    fi
+}
