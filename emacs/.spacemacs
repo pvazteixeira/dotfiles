@@ -373,7 +373,7 @@ you should place your code here."
             ("t" "Todo" entry (file+headline org-default-notes-file "Tasks" )
              "* TODO %?\n OPENED: %T\n %i\n %a\n")
             ("a" "Appointment" entry (file+datetree+prompt org-default-diary-file  )
-             "* %?\n %T\n %i\n %a\n")
+             "* %?\n %T\n %^{LOCATION}p %i\n %a\n")
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %?\n Entered on %T\n  %a\n")
             ;; notes - 
@@ -435,6 +435,9 @@ you should place your code here."
                           ("phd" . ?p)
                           (:endgroup)
                           ))
+
+    ;; columns
+    (setq org-columns-default-format "%50ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM %16TIMESTAMP_IA")
 
     ;; enable mode line display of org-clock
     (setq spaceline-org-clock-p t)
