@@ -51,11 +51,14 @@ values."
      git
      github
      gtags
+     ;; (julia :variables
+     ;;        julia-mode-enable-lsp t
+     ;;        julia-mode-enable-ess nil)
      helm
      (latex :variables
             latex-build-command "LaTeX"
             latex-enable-folding t)
-     ;; markdown
+     markdown
      ;; (org :variables
      ;;      org-projectile-file "~/org/todo.org")
      org
@@ -63,7 +66,7 @@ values."
      ;; (shell :variables
      ;;         shell-default-height 30
      ;;         shell-default-position 'bottom)
-     ;; python
+     python
      spell-checking
      ;; (spell-checking :variables
      ;;                 ;; enable-flyspell-auto-completion t
