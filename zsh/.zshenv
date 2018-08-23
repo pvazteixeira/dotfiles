@@ -17,12 +17,12 @@ function enable_conda() {
     fi
 }
 
-if [ -e "$HOME/Downloads/firefox/firefox" ]; then
-    alias ffox="$HOME/Downloads/firefox/firefox"
+if [ -e "$HOME/Applications/firefox/firefox" ]; then
+    alias ffox="$HOME/Applications/firefox/firefox"
 fi
 
-if [ -e "$HOME/Downloads/julia/julia" ]; then
-    alias julia="$HOME/Downloads/julia/julia"
+if [ -e "$HOME/Applications/julia/bin/julia" ]; then
+    alias julia="$HOME/Applications/julia/bin/julia"
 fi
 
 # LCM
@@ -37,21 +37,20 @@ fi
 
 
 function enable_ros() {
-    if [ -e "/opt/ros/kinetic/setup.zsh" ]; then
+    if [ -r "/opt/ros/kinetic/setup.zsh" ]; then
         echo "Found ROS Kinetic!"
         source /opt/ros/kinetic/setup.zsh
-        # if [ -e "$HOME/ros_catkin_ws/devel/setup.zsh" ]; then
-        #     source ~/ros_catkin_ws/devel/setup.zsh
-        # fi
     elif [ -r "/opt/ros/lunar/setup.zsh" ]; then
         echo "Found ROS Lunar!"
         source /opt/ros/lunar/setup.zsh
-        # if [ -e "$HOME/workspace/ros_catkin_ws/devel/setup.zsh" ]; then
-        #     source ~/ros_catkin_ws/devel/setup.zsh
-        # fi
+    elif [ -r "/opt/ros/melodic/setup.zsh" ]; then
+        echo "Found ROS Melodic!"
+        source /opt/ros/melodic/setup.zsh
     else
         echo "ROS not found :("
     fi
+
+    # TODO: determine and export ip
 
     if [ -r "$HOME/workspace/ros/devel/setup.zsh" ]; then
         echo "Found ROS workspace under $HOME/workspace/ros"
@@ -75,7 +74,7 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # export ALTERNATE_EDITOR=""
 export EDITOR='emacs'
 
-# attach/create tmux session 0 locally (remotely via ssh -X if host provided)
+# create/attach tmux session 0 locally (remotely via ssh -X if host provided)
 function stm() {
     if (( $# == 1 ))
     then
