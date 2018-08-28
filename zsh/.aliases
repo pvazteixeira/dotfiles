@@ -6,13 +6,17 @@
 # emacs - handled by the emacs plugin for oh-my-zsh
 
 #firefox
-if [ -f ~/Downloads/firefox/firefox ]; then
-    alias ffox='~/Downloads/firefox/firefox'
+if [ -f ~/applications/firefox/firefox ]; then
+    alias ffox='~/applications/firefox/firefox'
 fi
 
 # julia
-if [ -f ~/Downloads/julia/bin/julia ]; then
-    alias julia='~/Downloads/julia/bin/julia'
+if [ -f ~/applications/julia-0.6.4/bin/julia ]; then
+    alias julia='~/applications/julia-0.6.4/bin/julia'
+    alias jlibs='cd ~/.julia/v0.6/'
+elif [ -f ~/applications/julia-1.0.0/bin/julia ]; then
+    alias julia='~/applications/julia-1.0.0/bin/julia'
+    alias jlibs='cd ~/.julia/v1.0/'
 fi
 
 # zsh
@@ -60,17 +64,10 @@ alias mkc="make clean"
 alias lcm-mute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0'
 alias lcm-unmute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1'
 
-if [ "blackfish"==$HOST ]; then 
-    # w530 dock
-    alias dock="xrandr --output LVDS-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-3 --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-2 --mode 1920x1080 --pos 3840x0 --rotate left --output DP-1 --off --output VGA-1 --off"
-    # home desk, 2 screens
-    alias home2="xrandr --output LVDS-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-3 --off --output DP-2 --off --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output VGA-1 --mode 1920x1080 --pos 0x0 --rotate normal"
-    # home desk, 3 screens
-    alias home3="xrandr --output LVDS-1 --mode 1920x1080 --pos 3840x0 --rotate normal --output DP-3 --off --output DP-2 --off --output DP-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output VGA-1 --mode 1920x1080 --pos 0x0 --rotate normal"
-    # disconnect external monitors
-    alias undock="xrandr --output DP-1 --off --output DP-2 --off --output DP-3 --off --output VGA-1 --off"
-elif [ "rhinoptera"==$HOST ]; then 
-
+if [ "blackfish"==$HOST ]; then
+#
+elif [ "xps13"==$HOST ]; then
+#
 fi
 
 # pcl
