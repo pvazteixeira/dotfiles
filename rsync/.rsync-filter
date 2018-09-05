@@ -1,9 +1,10 @@
 - .*
 - .*/
 - anaconda2
+- Applications
 - Data
 - Downloads
 - workspace/data
 - workspace/libraries
 - dropbox
-- Dropbox\ (MIT)
+- Dropbox (MIT)
