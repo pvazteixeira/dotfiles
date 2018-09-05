@@ -14,7 +14,7 @@
     userId: "b108caee-a0a1-4a8c-9bb0-94ac632859e5"
   "julia-client":
     firstBoot: false
-    juliaPath: "$HOME/Downloads/julia/bin/julia"
+    juliaPath: "$HOME/applications/julia-0.6.4/bin/julia"
     uiOptions:
       enableMenu: true
       enableToolBar: true
