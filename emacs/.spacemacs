@@ -43,7 +43,6 @@ values."
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
      ;; colors
-     ;; javascript
      ;; better-defaults ;; emacs-only!
      emacs-lisp
      ;; ess
@@ -55,6 +54,7 @@ values."
      ;;        julia-mode-enable-lsp t
      ;;        julia-mode-enable-ess nil)
      helm
+     javascript
      (latex :variables
             latex-build-command "LaTeX"
             latex-enable-folding t)
@@ -62,18 +62,18 @@ values."
      ;; (org :variables
      ;;      org-projectile-file "~/org/todo.org")
      org
-     ;; version-control
+     python
      ;; (shell :variables
      ;;         shell-default-height 30
      ;;         shell-default-position 'bottom)
-     python
      spell-checking
      ;; (spell-checking :variables
      ;;                 ;; enable-flyspell-auto-completion t
      ;;                 spell-checking-enable-auto-dictionary t)
-     ;; syntax-checking
+     syntax-checking
      semantic
      ;; themes-megapack
+     ;; version-control
      ;; yaml
      )
    ;; List of additional packages that will be installed without being
@@ -162,7 +162,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Variable"
-                               :size 10.0
+                               :size 09.0
                                :weight light
                                :width normal
                                :powerline-scale 1.1)
@@ -288,7 +288,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers `t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -363,31 +363,37 @@ you should place your code here."
     (setq org-agenda-include-diary t)
     (setq org-agenda-files (quote ("~/org")))
 
-    (setq org-agenda-sticky t)
+    (setq org-agenda-sticky t) ;; ?
 
-    (setq org-log-into-drawer t)
+    (setq org-log-into-drawer t) ;; log clock inside drawer.
 
     ;; capture
     (setq org-capture-templates
           '(
             ("t" "Todo" entry (file+headline org-default-notes-file "Tasks" )
-             "* TODO %?\n OPENED: %T\n %i\n %a\n")
+             "* TODO %?\n %i\n %a\n")
             ("a" "Appointment" entry (file+datetree+prompt org-default-diary-file  )
              "* %?\n %T\n %^{LOCATION}p %i\n %a\n")
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %?\n Entered on %T\n  %a\n")
-            ;; notes - 
+            ("n" "Notes" entry (file+headline org-default-notes-file "Notes")
+             "* NOTE %?\n Entered on %T\n %i\n %a\n")
+            ;; notes -
             ;; ("n" "Note" entry (file+headline org-default-notes-file "Notes")
             ;;  "* %?\n %T\n %a\n")
             )
           )
     (setq org-link-search-must-match-exact-headline nil )
+
+    ;; habit
+    (add-to-list 'org-modules 'org-habit)
+
     ;; todo
     (setq org-todo-keywords
           '(
             (sequence "TODO(t!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
             ;; (sequence "WAIT(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
-            ;; (sequence "BUG(b)" "KNOWNCAUSE(k)" "FIXED(f)")
+            (sequence "ISSUE(i!)" "KNOWNCAUSE(k!)" "|" "FIXED(f!)")
             )
           )
 
