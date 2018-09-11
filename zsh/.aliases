@@ -40,6 +40,14 @@ alias ds="du -sh ."
 # checksums
 alias sha1list="find . -type f -exec sha1sum {} >> sha1sums \;"
 
+# places
+alias dbx='cd ~/Dropbox (MIT)/'
+alias dl='cd ~/Downloads'
+alias ws='cd ~/workspace'
+alias wsl='cd ~/workspace/libraries'
+alias wsp='cd ~/workspace/projects'
+alias wss='cd ~/workspace/sandbox'
+
 # projects
 if [ -d ~/workspace/projects/project-hauv ]
 then
@@ -70,8 +78,6 @@ elif [ "xps13"==$HOST ]; then
 #
 fi
 
-# pcl
-alias pv="pcl_viewer"
 
 # misc
 alias probe='ps aux | grep -i'
@@ -86,5 +92,6 @@ alias liljon="ssh pvt@mrg-liljon.csail.mit.edu -X -t tmux new-session -A -s 0"
 
 alias myip="curl ipinfo.io/ip"
 
+alias gdbp="gdb -ex  run --args"
 
 # echo "Aliases set!"

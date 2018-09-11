@@ -30,3 +30,5 @@
             
 [merge]
 	tool = meld
+[github]
+	user = pvazteixeira
