@@ -1,8 +1,13 @@
-- .*
-- .*/
+- .cache
+- .dropbox
+- .dropbox-dist
+- .emacs.d
+- .julia
+- .local/share
+- .mozilla
 - anaconda2
-- Applications
-- Data
+- applications
+- data
 - Downloads
 - workspace/data
 - workspace/libraries
