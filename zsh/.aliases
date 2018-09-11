@@ -92,5 +92,6 @@ alias liljon="ssh pvt@mrg-liljon.csail.mit.edu -X -t tmux new-session -A -s 0"
 
 alias myip="curl ipinfo.io/ip"
 
+alias gdbp="gdb -ex  run --args"
 
 # echo "Aliases set!"
