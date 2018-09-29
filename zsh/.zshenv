@@ -17,12 +17,12 @@ function enable_conda() {
     fi
 }
 
-if [ -e "$HOME/Applications/firefox/firefox" ]; then
-    alias ffox="$HOME/Applications/firefox/firefox"
+if [ -e "$HOME/applications/firefox/firefox" ]; then
+    alias ffox="$HOME/applications/firefox/firefox"
 fi
 
-if [ -e "$HOME/Applications/julia/bin/julia" ]; then
-    alias julia="$HOME/Applications/julia/bin/julia"
+if [ -e "$HOME/applications/julia/bin/julia" ]; then
+    alias julia="$HOME/applications/julia/bin/julia"
 fi
 
 # LCM
@@ -50,12 +50,14 @@ function enable_ros() {
         echo "ROS not found :("
     fi
 
-    # TODO: determine and export ip
-
-    if [ -r "$HOME/workspace/ros/devel/setup.zsh" ]; then
-        echo "Found ROS workspace under $HOME/workspace/ros"
-        source "$HOME/workspace/ros/devel/setup.zsh"
+    if [ -r "devel/setup.zsh" ]; then
+        echo "Found ROS workspace in local directory!"
+        source "devel/setup.zsh"
     fi
+
+    # TODO: determine and export ip (or use ros_hostname instead)
+    export ROS_HOSTNAME=`hostname`.local
+    export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
 }
 # ROS
     # ROS Kinetic (debian 8)
@@ -67,6 +69,17 @@ function enable_ros() {
     # export ROS_HOSTNAME=localhost
     # export ROS_IP=192.168.10.15
     # export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
+
+function rsm() {
+    if (( $# == 1 ))
+    then
+        export ROS_MASTER_URI=http://$1:11311
+    else
+        export ROS_MASTER_URI=http://`hostname`.local:11311
+    fi
+    echo "ROS master: $ROS_MASTER_URI"
+}
+
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/id_rsa"
