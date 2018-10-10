@@ -12,6 +12,9 @@ function enable_conda() {
     elif [ -d "$HOME/anaconda2" ]; then
         echo "Found anaconda!"
         export PATH="$HOME/anaconda2/bin:$PATH"
+    elif [ -d "$HOME/anaconda3" ]; then
+        echo "Found anaconda!"
+        export PATH="$HOME/anaconda3/bin:$PATH"
     else
         echo "Conda not found!"
     fi
