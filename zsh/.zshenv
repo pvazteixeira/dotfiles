@@ -24,10 +24,6 @@ if [ -e "$HOME/applications/firefox/firefox" ]; then
     alias ffox="$HOME/applications/firefox/firefox"
 fi
 
-if [ -e "$HOME/applications/julia/bin/julia" ]; then
-    alias julia="$HOME/applications/julia/bin/julia"
-fi
-
 # LCM
 if [ -e "/usr/local/bin/lcm-gen" ]; then
     export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
@@ -99,3 +95,11 @@ function stm() {
         tmux new-session -A -s 0
     fi
 }
+
+function dot2png() {
+    sfdp -Tpng $1 -o $2
+}
+
+# ruby/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"

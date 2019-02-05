@@ -11,12 +11,9 @@ if [ -f ~/applications/firefox/firefox ]; then
 fi
 
 # julia
-if [ -f ~/applications/julia-0.6.4/bin/julia ]; then
-    alias julia='~/applications/julia-0.6.4/bin/julia'
-    alias jlibs='cd ~/.julia/v0.6/'
-elif [ -f ~/applications/julia-1.0.0/bin/julia ]; then
-    alias julia='~/applications/julia-1.0.0/bin/julia'
-    alias jlibs='cd ~/.julia/v1.0/'
+if [ -e "$HOME/applications/julia-1.0.3/bin/julia" ]; then
+    alias julia="$HOME/applications/julia-1.0.3/bin/julia"
+    alias jlibs='cd ~/.julia/v1.0'
 fi
 
 # zsh
@@ -78,6 +75,8 @@ elif [ "xps13"==$HOST ]; then
 #
 fi
 
+alias pcv="pcl_viewer -ax 1 -ps 5"
+alias pcne="pcl_normal_estimation"
 
 # misc
 alias probe='ps aux | grep -i'
