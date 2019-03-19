@@ -31,32 +31,30 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     javascript
-     python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; csv
      auto-completion
+     ;; better-defaults ;; emacs-only!
      bibtex
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
      ;; colors
-     ;; better-defaults ;; emacs-only!
+     ;; csv
      emacs-lisp
      ;; ess
      extra-langs
      git
      github
      gtags
+     helm
+     javascript
      ;; (julia :variables
      ;;        julia-mode-enable-lsp t
      ;;        julia-mode-enable-ess nil)
-     helm
-     javascript
      (latex :variables
             latex-build-command "LaTeX"
             latex-enable-folding t)
@@ -65,15 +63,14 @@ values."
      ;;      org-projectile-file "~/org/todo.org")
      org
      python
-     ;; (shell :variables
-     ;;         shell-default-height 30
-     ;;         shell-default-position 'bottom)
-     spell-checking
+     semantic
+     (shell :variables
+             shell-default-height 30
+             shell-default-position 'bottom)
      ;; (spell-checking :variables
      ;;                 ;; enable-flyspell-auto-completion t
      ;;                 spell-checking-enable-auto-dictionary t)
      syntax-checking
-     semantic
      ;; themes-megapack
      ;; version-control
      ;; yaml
@@ -164,8 +161,8 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Variable"
-                               :size 09.0
-                               :weight light
+                               :size 10.0
+                               :weight normal
                                :width normal
                                :powerline-scale 1.1)
    ;; The leader key
@@ -369,6 +366,9 @@ you should place your code here."
 
     (setq org-log-into-drawer t) ;; log clock inside drawer.
 
+    ;; wrap lines
+    (setq org-startup-truncated nil)
+
     ;; capture
     (setq org-capture-templates
           '(
@@ -393,13 +393,13 @@ you should place your code here."
     ;; todo
     (setq org-todo-keywords
           '(
-            (sequence "TODO(t!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
+            (sequence "TODO(t!)" "NEXT(n!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
             ;; (sequence "WAIT(w)" "INACTIVE(i)" "|" "CANCELLED(c)" "MEETING(m)" )
             (sequence "ISSUE(i!)" "KNOWNCAUSE(k!)" "|" "FIXED(f!)")
             )
           )
 
-    ;; ref/reftex 
+    ;; ref/reftex
     (setq reftex-default-bibliography '("~/Dropbox (MIT)/Library/library.bib"))
     (setq org-ref-open-pdf-function
           (lambda (fpath)
@@ -408,42 +408,54 @@ you should place your code here."
           org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
           org-ref-bibliography-notes "~/org/library.org")
 
-    ;; refile 
+    ;; refile
     ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
     (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                      (org-agenda-files :maxlevel . 9))))
     ;; Be sure to use the full path for refile setup
     (setq org-refile-use-outline-path t)
     (setq org-outline-path-complete-in-steps nil)
+
     ;; Allow refile to create parent tasks with confirmation
     (setq org-refile-allow-creating-parent-nodes 'confirm)
 
     ;; tags
     (setq org-tag-alist '(;; places/contexts - where ?
                           (:startgroup)
-                          ("anywhere" . ?a)
-                          ("campus" . ?c)
-                          ("email" . ?e)
-                          ("online" . ?o)
-                          ;; ("meet" . ?m)
-                          ;; ("read" . ?r)
-                          ;; ("travel" . ?t)
-                          ;; ("write" . ?w)
+                          ("@anywhere" . ?a) ;; does this even make sense?
+                          ("@campus"  . ?c)
+                          ("@email"   . ?e)
+                          ("@home"    . ?h)
+                          ("@office"  . ?o)
+                          ("@phone"   . ?p)
+                          ("@sdr"     . ?s)
                           (:endgroup)
                           ;; type of task
-                          (:startgroup)
-                          ("call" . ?C)
-                          ("meet" . ?M)
-                          ("read" . ?R)
-                          ("travel" . ?T)
-                          ("write" . ?W)
-                          (:endgroup)
+                          ;; (:startgroup)
+                          ;; ("call" . ?C)
+                          ;; ("meet" . ?M)
+                          ;; ("read" . ?R)
+                          ;; ("travel" . ?T)
+                          ;; ("write" . ?W)
+                          ;; (:endgroup)
                           ;; scope - why do it?
                           (:startgroup)
-                          ("phd" . ?p)
+                          ("!phd" . ?P)
                           (:endgroup)
                           ))
 
+    ;; (setq org-tag-alist '(;; places/contexts - where ?
+    ;;                       (:startgroup)
+    ;;                       ("acoustics" . ?a)
+    ;;                       ("bathymetry" . ?b)
+    ;;                       ("control" . ?c)
+    ;;                       ("localization" . ?l)
+    ;;                       ("mapping" . ?m)
+    ;;                       ("navigation" . ?n)
+    ;;                       ("planning" . ?p)
+    ;;                       ("underwater" . ?u)
+    ;;                       (:endgroup)
+    ;;                       ))
     ;; columns
     (setq org-columns-default-format "%50ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM %16TIMESTAMP_IA")
 
@@ -475,3 +487,17 @@ you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-c-headers company-auctex company auto-yasnippet ac-ispell auto-complete pos-tip flycheck xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org thrift stickyfunc-enhance stan-mode srefactor spaceline smeargle scad-mode restart-emacs rainbow-delimiters qml-mode popwin persp-mode pcre2el paradox orgit org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode matlab-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint julia-mode json-mode js2-refactor js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md ggtags flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump disaster diminish define-word column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-highlight-symbol auto-dictionary auto-compile auctex arduino-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#272822")) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C")))))
