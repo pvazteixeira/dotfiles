@@ -103,3 +103,49 @@ function dot2png() {
 # ruby/gems
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
+
+# function rmenv() {
+#     if (( $# == 2 ))
+#     then
+#         tpath=
+#         # echo $PATH | perl -pe 's|:(.*pcl.*?:)|:|' | grep -i pcl
+#     else
+#         echo "usage: rmenv <env-var> <substring>"
+#         echo "example: rmenv PATH pcl"
+#     fi
+# }
+
+# how to print an environment variable from name
+# function pv(){
+# }
+
+function topside() {
+    if [ -d ~/workspace/projects/topside_ros_ws ]; then
+        cd ~/workspace/projects/topside_ros_ws/
+        enable_ros
+    fi
+}
+
+function roscfg() {
+    printenv | grep ROS
+}
+
+function commands() {
+    awk '{a[$2]++}END{for(i in a){print a[i] " " i}}'
+}
+
+alias topten="history | commands | sort -rn | head -n20"
+
+function mk() {
+    # lazy make
+    if [ -f ".catkin_workspace" ]; then
+        # catkin workspace: run catkin make
+        catkin_make
+    elif [ -f "Makefile" ]; then
+        # run alias for make -j...
+        # mkj
+        make -j$nthreads  #&& notify-send 'build succeeded' || notify-send 'build failed' "
+    else
+        echo "no build info found!\n"
+    fi
+}
