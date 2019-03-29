@@ -11,10 +11,10 @@ if [ -f ~/applications/firefox/firefox ]; then
 fi
 
 # julia
-if [ -e "$HOME/applications/julia-1.0.3/bin/julia" ]; then
-    alias julia="$HOME/applications/julia-1.0.3/bin/julia"
-    alias jlibs='cd ~/.julia/v1.0'
-fi
+# if [ -e "$HOME/applications/julia-1.0.3/bin/julia" ]; then
+#     alias julia="$HOME/applications/julia-1.0.3/bin/julia"
+#     alias jlibs='cd ~/.julia/v1.0'
+# fi
 
 # zsh
 alias zshconfig="emacsclient -t ~/.zshrc"
@@ -59,7 +59,7 @@ fi
 
 # make
 export nthreads="$((`nproc --all`-2))" # leave two out
-alias mk="make -j$nthreads && notify-send 'build succeeded' || notify-send 'build failed' "
+# alias mk="make -j$nthreads && notify-send 'build succeeded' || notify-send 'build failed' "
 alias mkc="make clean"
 
 # miniconda
@@ -75,7 +75,8 @@ elif [ "xps13"==$HOST ]; then
 #
 fi
 
-alias pcv="pcl_viewer -ax 1 -ps 5"
+alias pcv="pcl_viewer -ax 1 -ps 5 -shading phong -use_point_picking -immediate_rendering 1"
+alias pcw="pcl_viewer  -ps 5 -shading phong -use_point_picking -immediate_rendering 1 -bc 1,1,1"
 alias pcne="pcl_normal_estimation"
 
 # misc
