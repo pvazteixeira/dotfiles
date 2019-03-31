@@ -1,3 +1,4 @@
+- .atom
 - .cache
 - .dropbox
 - .dropbox-dist
@@ -9,7 +10,9 @@
 - applications
 - data
 - Downloads
-- workspace/data
-- workspace/libraries
 - dropbox
 - Dropbox (MIT)
+- miniconda2
+- public_html
+- workspace/data
+- workspace/libraries
