@@ -483,6 +483,10 @@ you should place your code here."
   (defun clang-format-bindings ()
     (define-key c++-mode-map [tab] 'clang-format-buffer))
   (setq clang-format-style "Google")
+  ;; stackoverflow fix for namespace indent
+  (defun my-c-setup ()
+    (c-set-offset 'innamespace [0]))
+  (add-hook 'c++-mode-hook 'my-c-setup)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
