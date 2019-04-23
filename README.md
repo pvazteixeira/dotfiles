@@ -33,3 +33,11 @@ To make this change persistent:
 missing command
 ```
 
+To permanently swap escape to caps lock using `dconf-editor`
+([source](https://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc)):
+
+- get it: `sudo apt-get install dconf-tools`
+- open and navigate to: *org* >> *gnome* >> *desktop* >> *input-sources*
+- inside `xkb-options` add: `'caps:swapescape'`
+
+
