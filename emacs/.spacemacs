@@ -344,7 +344,14 @@ you should place your code here."
   (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
   ;; Also in visual mode
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+  (setq-default evil-escape-key-sequence "jk")
+
+  ;; === gnuplot ===
+  ;; (require 'gnuplot-mode)
+  (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode))
+
 
   ;; === vcs ===
   (setq vc-follow-symlinks t)
