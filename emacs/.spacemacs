@@ -67,6 +67,7 @@ values."
      (shell :variables
              shell-default-height 30
              shell-default-position 'bottom)
+     (spell-checking :variables enable-flyspell-auto-completion t)
      ;; (spell-checking :variables
      ;;                 ;; enable-flyspell-auto-completion t
      ;;                 spell-checking-enable-auto-dictionary t)
@@ -338,6 +339,11 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; Add "SPC o w" to open file in new window
+  (spacemacs/declare-prefix "o" "own-menu")
+  (spacemacs/set-leader-keys "ow" `ido-find-file-other-frame)
+  (spacemacs/set-leader-keys "oc" `count-words-region)
+
   ;; === evil ===
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
@@ -346,7 +352,7 @@ you should place your code here."
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
 
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
-  (setq-default evil-escape-key-sequence "jk")
+  (setq-default evil-escape-key-sequence "fj")
 
   ;; === gnuplot ===
   ;; (require 'gnuplot-mode)
