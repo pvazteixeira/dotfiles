@@ -10,12 +10,6 @@ if [ -f ~/applications/firefox/firefox ]; then
     alias ffox='~/applications/firefox/firefox'
 fi
 
-# julia
-# if [ -e "$HOME/applications/julia-1.0.3/bin/julia" ]; then
-#     alias julia="$HOME/applications/julia-1.0.3/bin/julia"
-#     alias jlibs='cd ~/.julia/v1.0'
-# fi
-
 # zsh
 alias zshconfig="emacsclient -t ~/.zshrc"
 alias reloadzsh="source ~/.zshrc"
@@ -44,6 +38,8 @@ alias ws='cd ~/workspace'
 alias wsl='cd ~/workspace/libraries'
 alias wsp='cd ~/workspace/projects'
 alias wss='cd ~/workspace/sandbox'
+alias lib='cd ~/Dropbox (MIT)/Library'
+alias pub='cd ~/workspace/publications'
 
 # projects
 if [ -d ~/workspace/projects/project-hauv ]
@@ -69,6 +65,8 @@ alias mkc="make clean"
 alias lcm-mute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=0'
 alias lcm-unmute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1'
 
+alias howmany="ls -lash | wc -l"
+
 if [ "blackfish"==$HOST ]; then
 #
 elif [ "xps13"==$HOST ]; then
@@ -83,7 +81,7 @@ alias pcne="pcl_normal_estimation"
 alias probe='ps aux | grep -i'
 alias have='dpkg -l | grep -i'
 alias open="xdg-open"
-alias rm="trash" 
+alias rm="trash"
 alias icanhas="sudo apt install --no-install-recommends"
 
 # ssh
@@ -94,4 +92,3 @@ alias myip="curl ipinfo.io/ip"
 
 alias gdbp="gdb -ex  run --args"
 
-# echo "Aliases set!"

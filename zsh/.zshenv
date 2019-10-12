@@ -4,6 +4,11 @@
 export PATH=~/.local/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
 
+# add /opt/bin to path
+if [ -d "/opt/bin" ]; then
+    export PATH=/opt/bin:$PATH
+fi
+
 # Conda
 function enable_conda() {
     if [ -d "$HOME/miniconda2" ]; then
@@ -20,9 +25,6 @@ function enable_conda() {
     fi
 }
 
-if [ -e "$HOME/applications/firefox/firefox" ]; then
-    alias ffox="$HOME/applications/firefox/firefox"
-fi
 
 # LCM
 if [ -e "/usr/local/bin/lcm-gen" ]; then
@@ -31,7 +33,7 @@ fi
 
 # PCL
 if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
-    export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH" 
+    export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH"
 fi
 
 
@@ -43,7 +45,7 @@ function enable_ros() {
         echo "Found ROS Lunar!"
         source /opt/ros/lunar/setup.zsh
     elif [ -r "/opt/ros/melodic/setup.zsh" ]; then
-        echo "Found ROS Melodic!"
+        echo "ros version: melodic"
         source /opt/ros/melodic/setup.zsh
     else
         echo "ROS not found :("
@@ -56,19 +58,14 @@ function enable_ros() {
 
     # TODO: determine and export ip (or use ros_hostname instead)
     export ROS_HOSTNAME=`hostname`.local
+    export ROS_MASTER_URI="http://${ROS_HOSTNAME}:11311"
     export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
-}
-# ROS
-    # ROS Kinetic (debian 8)
-    # turtlebot WiFi:
-    # export ROS_MASTER_URI=http://192.168.10.15:11311
-    # export ROS_MASTER_URI=http://192.168.10.4:11311
-    # localhost:
-    # export ROS_MASTER_URI=http://localhost:11311
-    # export ROS_HOSTNAME=localhost
-    # export ROS_IP=192.168.10.15
-    # export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
 
+    echo "hostname:    $ROS_HOSTNAME"
+    echo "master_uri:  $ROS_MASTER_URI"
+}
+
+# set ros master
 function rsm() {
     if (( $# == 1 ))
     then
@@ -78,6 +75,9 @@ function rsm() {
     fi
     echo "ROS master: $ROS_MASTER_URI"
 }
+
+
+export GTAGSLIBPATH="$HOME/.gtags"
 
 
 # SSH
@@ -115,10 +115,6 @@ export PATH="$HOME/gems/bin:$PATH"
 #     fi
 # }
 
-# how to print an environment variable from name
-# function pv(){
-# }
-
 function topside() {
     if [ -d ~/workspace/projects/topside_ros_ws ]; then
         cd ~/workspace/projects/topside_ros_ws/
@@ -134,6 +130,7 @@ function commands() {
     awk '{a[$2]++}END{for(i in a){print a[i] " " i}}'
 }
 
+# print the most used commands
 alias topten="history | commands | sort -rn | head -n20"
 
 function mk() {
@@ -143,9 +140,8 @@ function mk() {
         catkin_make
     elif [ -f "Makefile" ]; then
         # run alias for make -j...
-        # mkj
         make -j$nthreads  #&& notify-send 'build succeeded' || notify-send 'build failed' "
     else
-        echo "no build info found!\n"
+        echo "No build info found!\n"
     fi
 }
