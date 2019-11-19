@@ -37,6 +37,14 @@ if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
 fi
 
 
+function enable_ros2() {
+    if [ -r "/opt/ros/dashing/setup.zsh" ]; then
+        source /opt/ros/dashing/setup.zsh
+    else
+        echo "ROS 2 not found :("
+    fi
+}
+
 function enable_ros() {
     if [ -r "/opt/ros/kinetic/setup.zsh" ]; then
         echo "Found ROS Kinetic!"
@@ -63,6 +71,12 @@ function enable_ros() {
 
     echo "hostname:    $ROS_HOSTNAME"
     echo "master_uri:  $ROS_MASTER_URI"
+}
+
+function mbs() {
+    # move to projects/mb_system and setup ROS and the WS
+    cd '/home/pvt/workspace/projects/mb_system/'
+    enable_ros
 }
 
 # set ros master
