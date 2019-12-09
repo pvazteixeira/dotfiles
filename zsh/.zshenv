@@ -25,7 +25,6 @@ function enable_conda() {
     fi
 }
 
-
 # LCM
 if [ -e "/usr/local/bin/lcm-gen" ]; then
     export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
@@ -34,6 +33,12 @@ fi
 # PCL
 if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
     export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH"
+fi
+
+# UEI
+if [ -d "/home/pvt/workspace/utils/ueipac-3.4.3/powerpc-604-linux-gnu/bin" ]; then
+    export PATH=$PATH:"/home/pvt/workspace/toolchains/uei/ueipac-3.4.3/powerpc-604-linux-gnu/bin"
+    export UEIPACROOT="/home/pvt/workspace/toolchains/uei/ueipac-3.4.3"
 fi
 
 
@@ -79,6 +84,11 @@ function mbs() {
     enable_ros
 }
 
+function rex() {
+    cd '/home/pvt/workspace/projects/seagrant_rex/'
+    enable_ros
+}
+
 # set ros master
 function rsm() {
     if (( $# == 1 ))
@@ -91,6 +101,7 @@ function rsm() {
 }
 
 
+# GNU GLOBAL
 export GTAGSLIBPATH="$HOME/.gtags"
 
 
