@@ -31,6 +31,10 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     javascript
+     markdown
+     html
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -45,28 +49,27 @@ values."
      ;; colors
      ;; csv
      emacs-lisp
-     ;; ess
      extra-langs
      git
      github
      gtags
      helm
-     javascript
+     ;; javascript
      ;; (julia :variables
      ;;        julia-mode-enable-lsp t
      ;;        julia-mode-enable-ess nil)
      (latex :variables
             latex-build-command "LaTeX"
             latex-enable-folding t)
-     markdown
+     ;; markdown
      ;; (org :variables
      ;;      org-projectile-file "~/org/todo.org")
      org
      python
      semantic
-     (shell :variables
-             shell-default-height 30
-             shell-default-position 'bottom)
+     ;; (shell :variables
+     ;;         shell-default-height 30
+     ;;         shell-default-position 'bottom)
      (spell-checking :variables enable-flyspell-auto-completion t)
      ;; (spell-checking :variables
      ;;                 ;; enable-flyspell-auto-completion t
@@ -358,7 +361,6 @@ you should place your code here."
   ;; (require 'gnuplot-mode)
   (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode))
 
-
   ;; === vcs ===
   (setq vc-follow-symlinks t)
 
@@ -387,7 +389,7 @@ you should place your code here."
           '(
             ("t" "Todo" entry (file+headline org-default-notes-file "Tasks" )
              "* TODO %?\n %i\n %a\n")
-            ("a" "Appointment" entry (file+datetree+prompt org-default-diary-file  )
+            ("a" "Appointment" entry (file+datetree+prompt  "~/org/journal.org" )
              "* %?\n %T\n %^{LOCATION}p %i\n %a\n")
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %?\n Entered on %T\n  %a\n")
