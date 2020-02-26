@@ -36,10 +36,10 @@ if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
 fi
 
 # UEI
-if [ -d "/home/pvt/workspace/utils/ueipac-3.4.3/powerpc-604-linux-gnu/bin" ]; then
-    export PATH=$PATH:"/home/pvt/workspace/toolchains/uei/ueipac-3.4.3/powerpc-604-linux-gnu/bin"
-    export UEIPACROOT="/home/pvt/workspace/toolchains/uei/ueipac-3.4.3"
-fi
+# if [ -d "/home/pvt/workspace/toolchains/uei/ueipac-3.4.3/powerpc-604-linux-gnu/bin" ]; then
+#     export PATH=$PATH:"/home/pvt/workspace/toolchains/uei/ueipac-3.4.3/powerpc-604-linux-gnu/bin"
+#     export UEIPACROOT="/home/pvt/workspace/toolchains/uei/ueipac-3.4.3"
+# fi
 
 
 function enable_ros2() {
@@ -86,6 +86,11 @@ function mbs() {
 
 function rex() {
     cd '/home/pvt/workspace/projects/seagrant_rex/'
+    enable_ros
+}
+
+function mariner() {
+    cd '/home/pvt/workspace/projects/mariner_ws/'
     enable_ros
 }
 

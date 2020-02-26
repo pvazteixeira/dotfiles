@@ -3,15 +3,18 @@
 - .dropbox
 - .dropbox-dist
 - .emacs.d
+- .gtags
 - .julia
 - .local/share
 - .mozilla
+- .steam
 - anaconda2
 - applications
 - data
 - Downloads
 - dropbox
 - Dropbox (MIT)
+- gems
 - miniconda2
 - public_html
 - workspace/data
