@@ -30,6 +30,7 @@ alias ds="du -sh ."
 
 # checksums
 alias sha1list="find . -type f -exec sha1sum {} >> sha1sums \;"
+alias sha1check="sha1sum -c sha1sums"
 
 # places
 alias dbx='cd ~/Dropbox (MIT)/'

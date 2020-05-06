@@ -94,6 +94,17 @@ function mariner() {
     enable_ros
 }
 
+
+# trim logs created by dumping ppstest to file
+function trimlog () {
+    if (( $# == 1 ))
+    then
+        sed -i "s/.*assert //g" $1
+        sed -i "s/sequence: //g" $1
+        sed -i "s/ - clear.*//g" $1
+    fi
+}
+
 # set ros master
 function rsm() {
     if (( $# == 1 ))
