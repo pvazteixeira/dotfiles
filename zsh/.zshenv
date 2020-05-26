@@ -116,16 +116,18 @@ function rsm() {
     echo "ROS master: $ROS_MASTER_URI"
 }
 
-
 # GNU GLOBAL
 export GTAGSLIBPATH="$HOME/.gtags"
-
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 # export ALTERNATE_EDITOR=""
 export EDITOR='emacs'
+
+# ruby/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
 
 # create/attach tmux session 0 locally (remotely via ssh -X if host provided)
 function stm() {
@@ -141,9 +143,6 @@ function dot2png() {
     sfdp -Tpng $1 -o $2
 }
 
-# ruby/gems
-export GEM_HOME="$HOME/gems"
-export PATH="$HOME/gems/bin:$PATH"
 
 # function rmenv() {
 #     if (( $# == 2 ))
@@ -155,13 +154,6 @@ export PATH="$HOME/gems/bin:$PATH"
 #         echo "example: rmenv PATH pcl"
 #     fi
 # }
-
-function topside() {
-    if [ -d ~/workspace/projects/topside_ros_ws ]; then
-        cd ~/workspace/projects/topside_ros_ws/
-        enable_ros
-    fi
-}
 
 function roscfg() {
     printenv | grep ROS
@@ -178,7 +170,7 @@ function mk() {
     # lazy make
     if [ -f ".catkin_workspace" ]; then
         # catkin workspace: run catkin make
-        catkin_make
+        catkin_make -DCMAKE_BUILD_TYPE=Debug
     elif [ -f "Makefile" ]; then
         # run alias for make -j...
         make -j$nthreads  #&& notify-send 'build succeeded' || notify-send 'build failed' "
