@@ -84,6 +84,12 @@ function mbs() {
     enable_ros
 }
 
+function hydra() {
+    # move to projects/mb_system and setup ROS and the WS
+    cd '/home/pvt/workspace/projects/hydra/'
+    enable_ros
+}
+
 function rex() {
     cd '/home/pvt/workspace/projects/seagrant_rex/'
     enable_ros
