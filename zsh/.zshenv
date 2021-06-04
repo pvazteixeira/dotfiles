@@ -1,12 +1,39 @@
 # do NOT print/echo as it may cause issues when ssh/mosh-ing into a machine
 
+######################
+### EXPORT CONTROL ###
+######################
+
 # bins
 export PATH=~/.local/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
 
+# GNU GLOBAL
+export GTAGSLIBPATH="$HOME/.gtags"
+
+# SSH
+export SSH_KEY_PATH="~/.ssh/id_rsa"
+
+# export ALTERNATE_EDITOR=""
+export EDITOR='emacs'
+
+# ruby/gems
+if [ -d "$HOME/gems/bin:$PATH" ]; then
+    export GEM_HOME="$HOME/gems"
+    export PATH="$HOME/gems/bin:$PATH"
+fi
+
 # add /opt/bin to path
 if [ -d "/opt/bin" ]; then
     export PATH=/opt/bin:$PATH
+fi
+
+if [ -e "/usr/local/bin/lcm-gen" ]; then
+    export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
+fi
+
+if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
+    export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH"
 fi
 
 # Conda
@@ -25,23 +52,6 @@ function enable_conda() {
     fi
 }
 
-# LCM
-if [ -e "/usr/local/bin/lcm-gen" ]; then
-    export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
-fi
-
-# PCL
-if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
-    export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH"
-fi
-
-# UEI
-# if [ -d "/home/pvt/workspace/toolchains/uei/ueipac-3.4.3/powerpc-604-linux-gnu/bin" ]; then
-#     export PATH=$PATH:"/home/pvt/workspace/toolchains/uei/ueipac-3.4.3/powerpc-604-linux-gnu/bin"
-#     export UEIPACROOT="/home/pvt/workspace/toolchains/uei/ueipac-3.4.3"
-# fi
-
-
 function enable_ros2() {
     for release in dashing; do
         if [ -r "/opt/ros/$release/setup.zsh" ]; then
@@ -57,6 +67,19 @@ function enable_ros2() {
     # fi
 }
 
+# set ros master
+function rsm() {
+    export ROS_HOSTNAME=`hostname`.local
+    if (( $# == 1 ))
+    then
+        export ROS_MASTER_URI=http://$1:11311
+    else
+        export ROS_MASTER_URI="http://${ROS_HOSTNAME}:11311"
+    fi
+    echo "ROS hostname:    $ROS_HOSTNAME"
+    echo "ROS master_uri:  $ROS_MASTER_URI"
+}
+
 function enable_ros() {
     for release in noetic melodic lunar kinetic; do
         if [ -r "/opt/ros/$release/setup.zsh" ]; then
@@ -66,15 +89,7 @@ function enable_ros() {
         fi
     done
 
-
-    # TODO: determine and export ip (or use ros_hostname instead)
-    # TODO: move outside - this may be project dependent
-    export ROS_HOSTNAME=`hostname`.local
-    export ROS_MASTER_URI="http://${ROS_HOSTNAME}:11311"
     export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
-
-    echo "hostname:    $ROS_HOSTNAME"
-    echo "master_uri:  $ROS_MASTER_URI"
 }
 
 function sb(){
@@ -101,6 +116,7 @@ function cdrosws(){
 
     cd $1
     enable_ros
+    rsm
 
     if [ -r "devel/setup.zsh" ]; then
         source "devel/setup.zsh"
@@ -117,28 +133,24 @@ function mbs() {
 
 function hydra() {
     # move to projects/mb_system and setup ROS and the WS
-    cd '/home/pvt/workspace/projects/hydra/'
-    enable_ros
+    cdrosws '/home/pvt/workspace/projects/hydra/'
 }
 
 function rex() {
-    cd '/home/pvt/workspace/projects/seagrant_rex/'
-    enable_ros
+    cdrosws '/home/pvt/workspace/projects/seagrant_rex/'
 }
 
 function mariner() {
-    cd '/home/pvt/workspace/projects/mariner_ws/'
-    enable_ros
+    cdrosws '/home/pvt/workspace/projects/mariner_ws/'
 }
 
 function tb3() {
-    cd '/home/pvt/workspace/projects/killerbot/'
-    enable_ros
+    cdrosws '/home/pvt/workspace/projects/killerbot/'
 }
 
 
 # trim logs created by dumping ppstest to file
-function trimlog () {
+function trimppslog () {
     if (( $# == 1 ))
     then
         sed -i "s/.*assert //g" $1
@@ -147,32 +159,10 @@ function trimlog () {
     fi
 }
 
-# set ros master
-function rsm() {
-    if (( $# == 1 ))
-    then
-        export ROS_MASTER_URI=http://$1:11311
-    else
-        export ROS_MASTER_URI=http://`hostname`.local:11311
-    fi
-    echo "ROS master: $ROS_MASTER_URI"
-}
 
-# GNU GLOBAL
-export GTAGSLIBPATH="$HOME/.gtags"
 
-# SSH
-export SSH_KEY_PATH="~/.ssh/id_rsa"
-
-# export ALTERNATE_EDITOR=""
-export EDITOR='emacs'
-
-# ruby/gems
-export GEM_HOME="$HOME/gems"
-export PATH="$HOME/gems/bin:$PATH"
-
-# create/attach tmux session 0 locally (remotely via ssh -X if host provided)
 function stm() {
+    # create/attach tmux session 0 locally (remotely via ssh -X if host provided)
     if (( $# == 1 ))
     then
         ssh pvt@$1 -X -t tmux new-session -A -s 0
@@ -184,7 +174,6 @@ function stm() {
 function dot2png() {
     sfdp -Tpng $1 -o $2
 }
-
 
 # function rmenv() {
 #     if (( $# == 2 ))
@@ -209,19 +198,28 @@ function commands() {
 alias topten="history | commands | sort -rn | head -n20"
 
 function mk() {
-    # lazy make
+    # make dispatcher: catkin_make for ros workspaces, regular make for makefiles, cmake+make for OOS builds
     if [ -f ".catkin_workspace" ]; then
         # catkin workspace: run catkin make
         catkin_make -DCMAKE_BUILD_TYPE=Debug
     elif [ -f "Makefile" ]; then
         # run alias for make -j...
         make -j$nthreads  #&& notify-send 'build succeeded' || notify-send 'build failed' "
+    elif [ -f "CMakeLists.txt" ]; then
+        # kinda dangerous... 
+        if ! [ -d "build" ]; then
+            mkdir build
+        fi
+        cd build
+        cmake ..
+        make -j$nthreads
     else
         echo "No build info found!\n"
     fi
 }
 
 function roscustominstall(){
+    # Script to add packages to a custom ROS install (e.g. RPi)
     if (( $# == 1 ))
     then
         echo "please provide at least one package to install"
@@ -243,5 +241,4 @@ function roscustominstall(){
 
     # make & install
     sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/melodic
-
 }
