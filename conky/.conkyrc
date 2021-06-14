@@ -62,28 +62,34 @@ conky.config = {
 conky.text = [[
 # ${scroll 16 $nodename - $sysname $kernel on $machine | }
 # $hr
+Power
 ${color grey}Up:$color    $uptime
 ${color grey}Rem:$color   $battery_time
 ${color grey}Batt:        $battery
-${color grey}Freq.:$color $freq MHz
-${color grey}CPU :$color  $cpu% ${cpubar 4}
-${color grey}RAM:$color   $mem/$memmax - $memperc% ${membar 4}
-${color grey}Swap:$color  $swap/$swapmax - $swapperc% ${swapbar 4}
-${color grey}Processes:$color $processes  ${color grey}Running:$color $running_processes
 $hr
-${color grey}/dev/nvme0:
- / $color${fs_used /}/${fs_size /} ${fs_bar 6 /}
+CPU $cpu%
+${color grey}Freq.:$color $freq MHz
+$cpugraph ${cpu cpu0 -l -t}
+$hr
+RAM $mem/$memmax
+${membar 8}
+# ${color grey}Swap:$color  $swap/$swapmax - $swapperc% ${swapbar 4}
+$hr
+Disk
+${color grey}/dev/nvme0: / $color${fs_used /}/${fs_size /} 
+${fs_bar 8 /}
+$hr
 ## NETWORK
+Net
 ${color grey}wlan U/D:$color ${upspeed wlp58s0} / $color ${downspeed wlp58s0}
 addr: ${addr wlp58s0} 
 ${downspeedgraph wlps8s0 -l -t}
-$hr
-## CPU
-$cpugraph ${cpu cpu0 -l -t}
-${color grey}Name              PID   CPU%   MEM%
-${color lightgrey} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
-${color lightgrey} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
-${color lightgrey} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
-${color lightgrey} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
-$hr
+# $hr
+# ${color grey}Processes:$color $processes  ${color grey}Running:$color $running_processes
+# ${color grey}Name              PID   CPU%   MEM%
+# ${color lightgrey} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+# ${color lightgrey} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+# ${color lightgrey} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+# ${color lightgrey} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+# $hr
 ]]
