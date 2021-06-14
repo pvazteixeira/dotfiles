@@ -17,13 +17,22 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # export ALTERNATE_EDITOR=""
 export EDITOR='emacs'
 
+# goby3 + course
+if [ -d "$HOME/workspace/libraries/goby3" ]; then
+    PATH="$HOME/workspace/libraries/goby3/build/bin:${PATH}"
+    PATH="$HOME/workspace/libraries/goby3/scripts:${PATH}"
+    if [ -d "$HOME/workspace/courses/goby3-course" ]; then
+        PATH="$HOME/workspace/courses/goby3-course/build/bin:${PATH}"
+    fi
+    export PATH
+fi
+
 # ruby/gems
 if [ -d "$HOME/gems/bin:$PATH" ]; then
     export GEM_HOME="$HOME/gems"
     export PATH="$HOME/gems/bin:$PATH"
 fi
 
-# add /opt/bin to path
 if [ -d "/opt/bin" ]; then
     export PATH=/opt/bin:$PATH
 fi
@@ -36,7 +45,7 @@ if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
     export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH"
 fi
 
-# Conda
+
 function enable_conda() {
     if [ -d "$HOME/miniconda2" ]; then
         echo "Found miniconda!"
@@ -55,23 +64,30 @@ function enable_conda() {
 function enable_ros2() {
     for release in dashing; do
         if [ -r "/opt/ros/$release/setup.zsh" ]; then
-            echo "found release: $release"
+            echo "ROS release: $release"
             source "/opt/ros/$release/setup.zsh"
             break
         fi
     done
-    # if [ -r "/opt/ros/dashing/setup.zsh" ]; then
-    #     source /opt/ros/dashing/setup.zsh
-    # else
-    #     echo "ROS 2 not found :("
-    # fi
 }
 
-# set ros master
+
+function enable_ros() {
+    for release in noetic melodic lunar kinetic; do
+        if [ -r "/opt/ros/$release/setup.zsh" ]; then
+            source "/opt/ros/$release/setup.zsh"
+            break
+        fi
+    done
+    export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
+}
+
+enable_ros
+
 function rsm() {
+    # set ros hostname, master_uri
     export ROS_HOSTNAME=`hostname`.local
-    if (( $# == 1 ))
-    then
+    if (( $# == 1 )); then
         export ROS_MASTER_URI=http://$1:11311
     else
         export ROS_MASTER_URI="http://${ROS_HOSTNAME}:11311"
@@ -80,92 +96,79 @@ function rsm() {
     echo "ROS master_uri:  $ROS_MASTER_URI"
 }
 
-function enable_ros() {
-    for release in noetic melodic lunar kinetic; do
-        if [ -r "/opt/ros/$release/setup.zsh" ]; then
-            echo "found release: $release"
-            source "/opt/ros/$release/setup.zsh"
-            break
-        fi
-    done
-
-    export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
-}
-
-function sb(){
-    for release in noetic melodic lunar kinetic; do
-        if [ -r "/opt/ros/$release/setup.zsh" ]; then
-            echo "found release: $release"
-            source "/opt/ros/$release/setup.zsh"
-            break
-        fi
-    done
-}
-
 function cdrosws(){
-    # cd into a ros workspace if it exists and source
+    # cd into a ros workspace if it exists and source local cfg
     if (( $# != 1 )); then
         echo "missing argument; syntax: cdrosws(<dir>)"
-        return
+        return 1
     fi
 
     if ! [ -d $1 ]; then
         echo "directory $1 not found!"
-        return
+        return 1
     fi
 
-    cd $1
     enable_ros
-    rsm
+    cd "$1"
 
     if [ -r "devel/setup.zsh" ]; then
         source "devel/setup.zsh"
     else
         echo "local directory does not appear to be a ROS workspace"
     fi
+
+    return 0
 }
 
 
 function mbs() {
-    # move to projects/mb_system and setup ROS and the WS
-    cdrosws '/home/pvt/workspace/projects/mb_system/'
+    if (cdrosws "/home/pvt/workspace/projects/mb_system/"); then
+        rsm
+    else
+        echo "!"
+    fi
 }
 
 function hydra() {
-    # move to projects/mb_system and setup ROS and the WS
-    cdrosws '/home/pvt/workspace/projects/hydra/'
+    if ( cdrosws "/home/pvt/workspace/projects/hydra/" ); then
+        rsm
+    fi
 }
 
 function rex() {
     cdrosws '/home/pvt/workspace/projects/seagrant_rex/'
+    rsm
 }
 
 function mariner() {
     cdrosws '/home/pvt/workspace/projects/mariner_ws/'
+    if (( $# == 1 )); then
+        rsm $1
+    else
+        rsm
+    fi
+    return 0
 }
 
 function tb3() {
     cdrosws '/home/pvt/workspace/projects/killerbot/'
+    rsm
 }
 
-
-# trim logs created by dumping ppstest to file
 function trimppslog () {
-    if (( $# == 1 ))
-    then
+    # trim logs created by dumping ppstest to file
+    if (( $# == 1 )); then
         sed -i "s/.*assert //g" $1
         sed -i "s/sequence: //g" $1
         sed -i "s/ - clear.*//g" $1
     fi
 }
 
-
-
 function stm() {
     # create/attach tmux session 0 locally (remotely via ssh -X if host provided)
     if (( $# == 1 ))
     then
-        ssh pvt@$1 -X -t tmux new-session -A -s 0
+        ssh $1 -X -t tmux new-session -A -s 0
     else
         tmux new-session -A -s 0
     fi
@@ -206,7 +209,7 @@ function mk() {
         # run alias for make -j...
         make -j$nthreads  #&& notify-send 'build succeeded' || notify-send 'build failed' "
     elif [ -f "CMakeLists.txt" ]; then
-        # kinda dangerous... 
+        echo "DANGER ZONE"
         if ! [ -d "build" ]; then
             mkdir build
         fi
