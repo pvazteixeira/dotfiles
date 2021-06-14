@@ -1,15 +1,15 @@
 # dotfiles
 
 ## dependencies
-Most of the dependencies are handled by install.sh
+Most of the dependencies are handled by `install.sh`
 Other than that, these are also required:
-* ohmyzsh
+* [ohmyzsh](https://ohmyz.sh/)
 * tmux plugin manager (tpm)
 * gnu stow
 
 ## setup/usage
 
-Run stow, e.g.:
+Run `stow`, e.g.:
 
 ```sh
 stow zsh
