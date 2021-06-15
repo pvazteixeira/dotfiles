@@ -351,12 +351,12 @@ you should place your code here."
 
     ;; files and directories
     (setq org-directory "~/org")
-    (setq org-default-notes-file "~/org/inbox.org")
-    (defvar org-default-diary-file "~/org/diary.org")
+    (setq org-default-notes-file "~/Dropbox/org/inbox.org")
+    (defvar org-default-diary-file "~/Dropbox/org/diary.org")
 
     ;; agenda
     (setq org-agenda-include-diary t)
-    (setq org-agenda-files (quote ("~/org")))
+    (setq org-agenda-files (quote ("~/Dropbox/org")))
     (setq org-agenda-start-on-weekday 1)
     (setq org-agenda-sticky t) ;; ?
     (setq org-agenda-skip-scheduled-if-done t);; don't show scheduled tasks that have been completed
@@ -440,9 +440,9 @@ you should place your code here."
 
   ;; BEGIN - ref/reftex
   ;; default locations
-  (setq org-ref-default-bibliography '("~/Dropbox (MIT)/Library/library.bib")
-        org-ref-pdf-directory "~/Dropbox (MIT)/Library/"
-        org-ref-bibliography-notes "~/org/library.org")
+  (setq org-ref-default-bibliography '("~/Dropbox/library/library.bib")
+        org-ref-pdf-directory "~/Dropbox/library/"
+        org-ref-bibliography-notes "~/Dropbox/org/library.org")
   ;; open pdf
   (setq org-ref-open-pdf-function
         (lambda (fpath)
