@@ -1,6 +1,6 @@
 [user]
 	name = pvazteixeira
-	email = pvt@mit.edu
+	email = pvazteixeira@gmail.com
 
 [push]
 	default = simple
@@ -15,7 +15,6 @@
 
 [core]
         editor = emacsclient -nw
-
 
 [alias]
         # from SO: https://stackoverflow.com/questions/1838873/visualizing-branch-topology-in-git/34467298#34467298
