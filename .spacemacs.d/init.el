@@ -47,6 +47,7 @@ This function should only modify configuration layer settings."
      ;; markdown
      multiple-cursors
      (org :variables
+          org-enable-roam-support t
           org-want-todo-bindings t)
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -54,6 +55,7 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
+     python
      treemacs)
 
 

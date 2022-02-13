@@ -5,7 +5,6 @@
         org-default-notes-file "~/org/inbox.org")
   (defvar org-default-diary-file "~/org/diary.org")
 
-
   ;; agenda
   (setq org-agenda-include-diary t)
   (setq org-agenda-files (quote ("~/org")))
@@ -14,6 +13,10 @@
   (setq org-agenda-skip-scheduled-if-done t);; don't show scheduled tasks that have been completed
 
   (setq org-log-into-drawer t) ;; log clock inside drawer.
+
+
+  ;; roam
+  (setq org-roam-directory "~/org/")
 
   ;;(setq org-deadline-warning-days 0)
 
@@ -105,4 +108,12 @@
                                  ("DROP" . (:background "dim gray" :foreground "white" :weight bold))
                                  ("NOTE" . (:background "dim gray" :foreground "white" :weight bold))
                                  ))
+
+  ;; refile
+  ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+  (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                   (org-agenda-files :maxlevel . 9)))
+        ;; Allow refile to create parent tasks with confirmation
+        org-refile-allow-creating-parent-nodes 'confirm
+        )
 )
