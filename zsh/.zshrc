@@ -67,6 +67,7 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(ag
          autojump
+         debian
          emacs
          jira
          python
@@ -75,16 +76,18 @@ plugins=(ag
          copyfile
          copypath
          dirhistory
+         extract
          git
          git-auto-fetch
+         git-extras
          git-flow
          history
          rsync
          sudo
          ubuntu
          web-search
-         #zsh-autosuggestions
-         )
+         zsh-autosuggestions
+        )
 
 source $ZSH/oh-my-zsh.sh
 
@@ -116,23 +119,24 @@ else
     # TODO: create symlink from dotfiles
 fi
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/pvt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/pvt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/pvt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/pvt/anaconda3/bin:$PATH"
+        export PATH="$HOME/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 
