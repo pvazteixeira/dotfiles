@@ -27,6 +27,12 @@ if [ -d "$HOME/workspace/libraries/goby3" ]; then
     export PATH
 fi
 
+if [ -d "/usr/share/doc/fzf/examples/" ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+    source /usr/share/doc/fzf/examples/completion.zsh
+fi
+
+
 # ruby/gems
 if [ -d "$HOME/gems/bin:$PATH" ]; then
     export GEM_HOME="$HOME/gems"
