@@ -17,21 +17,11 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # export ALTERNATE_EDITOR=""
 export EDITOR='emacs'
 
-# goby3 + course
-if [ -d "$HOME/workspace/libraries/goby3" ]; then
-    PATH="$HOME/workspace/libraries/goby3/build/bin:${PATH}"
-    PATH="$HOME/workspace/libraries/goby3/scripts:${PATH}"
-    if [ -d "$HOME/workspace/courses/goby3-course" ]; then
-        PATH="$HOME/workspace/courses/goby3-course/build/bin:${PATH}"
-    fi
-    export PATH
-fi
-
+# fuzzy finder
 if [ -d "/usr/share/doc/fzf/examples/" ]; then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
     source /usr/share/doc/fzf/examples/completion.zsh
 fi
-
 
 # ruby/gems
 if [ -d "$HOME/gems/bin:$PATH" ]; then
@@ -43,132 +33,18 @@ if [ -d "/opt/bin" ]; then
     export PATH=/opt/bin:$PATH
 fi
 
-if [ -e "/usr/local/bin/lcm-gen" ]; then
-    export LCM_DEFAULT_URL="udpm://239.255.76.67:7667?ttl=0"
-fi
 
 if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
     export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH"
 fi
 
-
-function enable_conda() {
-    if [ -d "$HOME/miniconda2" ]; then
-        echo "Found miniconda!"
-        export PATH="$HOME/miniconda2/bin:$PATH"
-    elif [ -d "$HOME/anaconda2" ]; then
-        echo "Found anaconda!"
-        export PATH="$HOME/anaconda2/bin:$PATH"
-    elif [ -d "$HOME/anaconda3" ]; then
-        echo "Found anaconda!"
-        export PATH="$HOME/anaconda3/bin:$PATH"
-    else
-        echo "Conda not found!"
-    fi
-}
-
-function enable_ros2() {
-    for release in dashing; do
-        if [ -r "/opt/ros/$release/setup.zsh" ]; then
-            echo "ROS release: $release"
-            source "/opt/ros/$release/setup.zsh"
-            break
-        fi
-    done
-}
+# 2021.09.27 - bypassing 'enable_ros' to troubleshoot things
+if [ -d "/opt/ros/melodic" ]; then
+    source "/opt/ros/melodic/setup.zsh"
+fi
 
 
-function enable_ros() {
-    for release in noetic melodic lunar kinetic; do
-        if [ -r "/opt/ros/$release/setup.zsh" ]; then
-            source "/opt/ros/$release/setup.zsh"
-            break
-        fi
-    done
-    export ROS_PARALLEL_JOBS=-j4  # let's not jam the machine
-}
 
-enable_ros
-
-function rsm() {
-    # set ros hostname, master_uri
-    export ROS_HOSTNAME=`hostname`.local
-    if (( $# == 1 )); then
-        export ROS_MASTER_URI=http://$1:11311
-    else
-        export ROS_MASTER_URI="http://${ROS_HOSTNAME}:11311"
-    fi
-    echo "ROS hostname:    $ROS_HOSTNAME"
-    echo "ROS master_uri:  $ROS_MASTER_URI"
-}
-
-function cdrosws(){
-    # cd into a ros workspace if it exists and source local cfg
-    if (( $# != 1 )); then
-        echo "missing argument; syntax: cdrosws(<dir>)"
-        return 1
-    fi
-
-    if ! [ -d $1 ]; then
-        echo "directory $1 not found!"
-        return 1
-    fi
-
-    enable_ros
-    cd "$1"
-
-    if [ -r "devel/setup.zsh" ]; then
-        source "devel/setup.zsh"
-    else
-        echo "local directory does not appear to be a ROS workspace"
-    fi
-
-    return 0
-}
-
-
-function mbs() {
-    if (cdrosws "/home/pvt/workspace/projects/mb_system/"); then
-        rsm
-    else
-        echo "!"
-    fi
-}
-
-function hydra() {
-    if ( cdrosws "/home/pvt/workspace/projects/hydra/" ); then
-        rsm
-    fi
-}
-
-function rex() {
-    cdrosws '/home/pvt/workspace/projects/seagrant_rex/'
-    rsm
-}
-
-function mariner() {
-    cdrosws '/home/pvt/workspace/projects/mariner_ws/'
-    if (( $# == 1 )); then
-        rsm $1
-    else
-        rsm
-    fi
-    return 0
-}
-
-function tb3() {
-    cdrosws '/home/pvt/workspace/projects/killerbot/'
-    rsm
-}
-
-function trimppslog () {
-    # trim logs created by dumping ppstest to file
-    if (( $# == 1 )); then
-        sed -i "s/.*assert //g" $1
-        sed -i "s/sequence: //g" $1
-        sed -i "s/ - clear.*//g" $1
-    fi
-}
 
 function stm() {
     # create/attach tmux session 0 locally (remotely via ssh -X if host provided)
@@ -227,27 +103,14 @@ function mk() {
     fi
 }
 
-function roscustominstall(){
-    # Script to add packages to a custom ROS install (e.g. RPi)
-    if (( $# == 1 ))
-    then
-        echo "please provide at least one package to install"
-    else
-        # populate $PACKAGES with arguments
-    fi
-
-    cd ~/workspace/ros_catkin_ws
-
-    # regen install file
-    rosinstall_generator ${PACKAGES} --rosdistro melodic --deps --wet-only --tar > melodic-custom_ros.rosinstall
-
-    # update file
-    wstool merge -t src melodic-custom_ros.rosinstall
-    wstool update -t src
-
-    # install dependencies
-    rosdep install --from-paths src --ignore-src --rosdistro melodic -y -r --os=debian:buster
-
-    # make & install
-    sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/melodic
+# tmux reset display - this resets the DISPLAY environment variable
+function trd(){
+    export DISPLAY="`tmux show-env | sed -n 's/^DISPLAY=//p'`"
 }
+
+
+# export CC=/usr/bin/clang
+# export CXX=/usr/bin/clang++
+
+
+
