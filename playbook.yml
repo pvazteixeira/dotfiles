@@ -1,0 +1,41 @@
+# credit to https://phelipetls.github.io/posts/introduction-to-ansible/ for the inspiration
+
+- name: basic setup for local machine
+  hosts: localhost
+
+  tasks: 
+  - name: install APT packages 
+    become: yes
+    ansible.builtin.apt:
+      name:
+        - autojump
+        - chrony
+        - fzf
+        - git
+        - htop
+        - mosh
+        - rsync
+        - stow
+        - tmux
+        - zsh
+      state: present
+
+        #  - name: Change default shell to zsh
+        #    ansible.builtin.command:
+        #      cmd: chsh -s $(which zsh) $USER
+
+  - name: tmux plugin manager
+    ansible.builtin.git:
+      repo: 'https://github.com/tmux-plugins/tpm.git'
+      dest: ~/.tmux/plugins/tpm
+  - name: zsh-autosuggestions
+    ansible.builtin.git:
+      repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
+      dest: -~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  - name: powerlevel10k
+    ansible.builtin.git:
+      repo: 'https://github.com/romkatv/powerlevel10k.git'
+      dest: -~/.oh-my-zsh/custom/plugins/powerlevel10k
+
+# TODO: stow
+# TODO: clone and build emacs
