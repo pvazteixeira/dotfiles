@@ -1,3 +1,6 @@
+# clean shell prompt required for use with emacs tramp
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -88,6 +91,9 @@ plugins=(ag
          web-search
          zsh-autosuggestions
         )
+
+zstyle :omz:plugins:ssh-agent quiet yes
+# zstyle :omz:plugins:ssh-agent lazy yes
 
 source $ZSH/oh-my-zsh.sh
 

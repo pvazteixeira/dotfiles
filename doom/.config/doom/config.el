@@ -58,7 +58,6 @@
       org-default-notes-file "~/org/inbox.org")
 (defvar org-default-diary-file "~/org/diary.org")
 (setq org-agenda-files (quote ("~/org" "~/org/personal" "~/org/work")))
-(setq org-roam-directory "~/org/")
 
 (load! "org.el")
 
