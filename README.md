@@ -1,21 +1,19 @@
 # dotfiles
 
-## dependencies
-Most of the dependencies are handled by `install.sh`
-Other than that, these are also required:
-* [ohmyzsh](https://ohmyz.sh/)
-* tmux plugin manager (tpm)
-* gnu stow
 
-## setup/usage
+## setup
 
-Run `stow`, e.g.:
+Clone this repo, install `ansible` (`apt install ansible`), and run the playbook:
 
 ```sh
-stow zsh
+git clone https://github.com/pvazteixeira/dotfiles.git
+sudo apt install ansible
+cd dotfiles
+ansible-playbook --ask-become-pass playbook.yml
 ```
 
-this will create symlinks in `$HOME` for the files in `dotfiles/zsh`
+This sets up most things - the remainder is work-in-progress.
+
 
 ## notes
 
