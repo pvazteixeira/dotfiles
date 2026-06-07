@@ -7,20 +7,17 @@
 # bins
 export PATH=~/.local/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
+export PATH=~/.pixi/bin:$PATH
 
 # GNU GLOBAL
-export GTAGSLIBPATH="$HOME/.gtags"
+# export GTAGSLIBPATH="$HOME/.gtags"
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
-# export ALTERNATE_EDITOR=""
-export EDITOR='emacs'
-
-# fuzzy finder
-if [ -d "/usr/share/doc/fzf/examples/" ]; then
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-    source /usr/share/doc/fzf/examples/completion.zsh
+# fuzzy finder (installed via pixi; --zsh emits key-bindings + completion)
+if command -v fzf >/dev/null; then
+    source <(fzf --zsh)
 fi
 
 # ruby/gems
@@ -33,43 +30,27 @@ if [ -d "/opt/bin" ]; then
     export PATH=/opt/bin:$PATH
 fi
 
-
 if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
     export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH"
 fi
 
-# 2021.09.27 - bypassing 'enable_ros' to troubleshoot things
-if [ -d "/opt/ros/melodic" ]; then
-    source "/opt/ros/melodic/setup.zsh"
+if [ -d "$HOME/bin/" ]; then
+  export PATH="$HOME/bin:$PATH"
 fi
 
-
-
-
 function stm() {
-    # create/attach tmux session 0 locally (remotely via ssh -X if host provided)
+    # create/attach zellij session "main" locally (remotely via ssh -X if host provided)
     if (( $# == 1 ))
     then
-        ssh $1 -X -t tmux new-session -A -s 0
+        ssh $1 -X -t zellij attach -c main
     else
-        tmux new-session -A -s 0
+        zellij attach -c main
     fi
 }
 
 function dot2png() {
     sfdp -Tpng $1 -o $2
 }
-
-# function rmenv() {
-#     if (( $# == 2 ))
-#     then
-#         tpath=
-#         # echo $PATH | perl -pe 's|:(.*pcl.*?:)|:|' | grep -i pcl
-#     else
-#         echo "usage: rmenv <env-var> <substring>"
-#         echo "example: rmenv PATH pcl"
-#     fi
-# }
 
 function roscfg() {
     printenv | grep ROS
@@ -103,14 +84,13 @@ function mk() {
     fi
 }
 
-# tmux reset display - this resets the DISPLAY environment variable
-function trd(){
-    export DISPLAY="`tmux show-env | sed -n 's/^DISPLAY=//p'`"
-}
-
-
 # export CC=/usr/bin/clang
 # export CXX=/usr/bin/clang++
 
-
-
+function setup_focus() {
+    source "/opt/ros/jazzy/setup.zsh"
+    export RMW_IMPLEMENTATION="rmw_cyclonedds_cpp"
+    export CYCLONEDDS_URI="file:///home/pvt/workspace/focus_ros_ws/cyclonedds.xml"
+    source "/home/pvt/workspace/focus_ros_ws/install/setup.zsh"
+}
+. "$HOME/.cargo/env"

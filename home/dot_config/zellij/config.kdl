@@ -1,0 +1,26 @@
+// zellij configuration — carried over from the previous tmux.conf.
+
+// run zsh inside panes
+default_shell "zsh"
+
+// session persistence — replaces tmux-resurrect + tmux-continuum
+// (`@continuum-restore 'on'`): sessions survive restarts and can be reattached.
+session_serialization true
+serialize_pane_viewport true
+
+// Single-chord navigation in normal mode — no Ctrl-p/Ctrl-t prefix:
+//   Ctrl-h / Ctrl-l  → focus pane left / right, or hop to prev / next tab at the edge
+//   Ctrl-j / Ctrl-k  → focus pane down / up
+// MoveFocusOrTab on h/l reaches side panes (which plain directional focus would
+// miss) while still switching tabs at the left/right edge — closer to tmux's
+// index-cycling select-pane than a pure directional move.
+// Trade-off (same as under tmux's `bind -n`): the shell no longer sees these
+// chords inside zellij, e.g. Ctrl-l won't clear the screen.
+keybinds {
+    normal {
+        bind "Ctrl h" { MoveFocusOrTab "Left"; }
+        bind "Ctrl l" { MoveFocusOrTab "Right"; }
+        bind "Ctrl j" { MoveFocus "Down"; }
+        bind "Ctrl k" { MoveFocus "Up"; }
+    }
+}

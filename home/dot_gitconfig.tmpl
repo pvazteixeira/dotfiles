@@ -1,6 +1,6 @@
 [user]
-	name = pvazteixeira
-	email = pvazteixeira@gmail.com
+	name = {{ .git_name }}
+	email = {{ .git_email }}
 
 [push]
 	default = simple
@@ -30,4 +30,4 @@
 [merge]
 	tool = meld
 [github]
-	user = pvazteixeira
+	user = {{ .github_user }}

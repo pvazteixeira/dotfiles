@@ -1,0 +1,110 @@
+---
+- name: Basic setup for local machine
+  hosts: localhost
+
+  vars:
+    # System / root / bootstrap packages stay on apt. User CLIs (ripgrep, fd,
+    # fzf, duf, ncdu, htop, tig, ranger, zoxide) are installed via pixi below.
+    packages_to_install:
+      - apt-file
+      - apt-transport-https  #
+      - ca-certificates      #
+      - chrony               # ntp+ptp
+      - curl                 #
+      - fonts-powerline      #
+      - git                  #
+      - mtr                  # 
+      - mosh                 #
+      - powertop             #
+      - rsync                #
+      - trash-cli            #
+      - wget
+      - zsh
+
+    # User CLIs installed via `pixi global` (idempotent; just add to the list).
+    pixi_globals:
+      - btop
+      - duf
+      - fd-find
+      - fzf
+      - ncdu
+      - ranger-fm
+      - ripgrep
+      - tig
+      - yazi
+      - zellij
+      - zoxide
+
+  handlers:
+    - name: Update APT cache
+      ansible.builtin.apt:
+        update_cache: true
+
+  tasks:
+    - name: Install packages
+      become: yes
+      ansible.builtin.package:
+        name: "{{ packages_to_install }}"
+        state: present
+
+    - name: Change default shell to zsh
+      become: yes
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        shell: /bin/zsh
+
+    # Dotfiles and third-party repos (oh-my-zsh, powerlevel10k,
+    # zsh-autosuggestions) are managed by chezmoi: the dot_* files under
+    # home/ plus home/.chezmoiexternal.toml. This playbook only installs the
+    # chezmoi binary; applying the dotfiles is the final interactive step
+    # (see below / README), because `chezmoi init --apply` prompts for git
+    # identity and must not be run non-interactively (it would silently apply
+    # the personal defaults on a work host).
+    - name: Install chezmoi to ~/.local/bin
+      become: no
+      ansible.builtin.shell: |
+        sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "{{ ansible_env.HOME }}/.local/bin"
+      args:
+        creates: "{{ ansible_env.HOME }}/.local/bin/chezmoi"
+
+    - name: How to apply dotfiles
+      become: no
+      ansible.builtin.debug:
+        msg: >-
+          chezmoi installed. Apply your dotfiles with:
+          chezmoi init --apply --source {{ ansible_env.HOME }}/dotfiles/home
+          (you'll be prompted for git name/email/github user; defaults are the
+          personal values — override them on a work host).
+
+    - name: Install pixi to ~/.pixi/bin
+      become: no
+      ansible.builtin.shell: |
+        curl -fsSL https://pixi.sh/install.sh | bash
+      args:
+        creates: "{{ ansible_env.HOME }}/.pixi/bin/pixi"
+      environment:
+        # PATH is managed in dot_zshenv, so don't let the installer edit rc files
+        PIXI_NO_PATH_UPDATE: "1"
+
+    - name: Install user CLIs with pixi
+      become: no
+      ansible.builtin.command:
+        cmd: "{{ ansible_env.HOME }}/.pixi/bin/pixi global install {{ pixi_globals | join(' ') }}"
+
+    - name: Install rustup (rust toolchain + cargo)
+      become: no
+      ansible.builtin.shell: |
+        curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs | sh -s -- -y --no-modify-path
+      args:
+        # dot_zshenv sources ~/.cargo/env, so --no-modify-path keeps rustup out of rc files
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/cargo"
+
+    - name: Install obsidian
+      community.general.flatpak:
+        name: md.obsidian.Obsidian
+        state: present
+      tags: [extras, obsidian]
+
+    - name: Install Syncthing
+      ansible.builtin.include_tasks: syncthing.yml
+      tags: [extras, syncthing]

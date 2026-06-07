@@ -1,0 +1,45 @@
+---
+# This file contains the specific tasks for installing Syncthing.
+# It is meant to be included by a main playbook.
+
+- name: Install prerequisites for adding APT repositories
+  become: true
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+    state: present
+    update_cache: true
+
+- name: Add Syncthing's official GPG key
+  become: true
+  ansible.builtin.get_url:
+    url: https://syncthing.net/release-key.gpg
+    dest: /usr/share/keyrings/syncthing-archive-keyring.gpg
+    mode: '0644'
+  register: gpg_key_result
+
+- name: Add Syncthing's stable repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable"
+    state: present
+    filename: syncthing
+  register: apt_repo_result
+
+# This is a more direct way to update the cache.
+# It runs only if the GPG key or the APT repository file was changed,
+# mimicking handler behavior without using the notification system.
+- name: Update apt cache if repository was added
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: gpg_key_result.changed or apt_repo_result.changed
+
+- name: Install the syncthing package
+  become: true
+  ansible.builtin.apt:
+    name: syncthing
+    state: present
+Q

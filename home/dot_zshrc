@@ -68,29 +68,29 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(ag
-         autojump
-         debian
-         emacs
-         jira
-         python
-         ros
-         command-not-found
-         copyfile
-         copypath
-         dirhistory
-         extract
-         git
-         git-auto-fetch
-         git-extras
-         git-flow
-         history
-         rsync
-         sudo
-         ubuntu
-         web-search
-         zsh-autosuggestions
-        )
+plugins=(
+    # ag
+        debian
+    #  emacs
+    #  jira
+        python
+        ros
+        command-not-found
+        copyfile
+        copypath
+        dirhistory
+        extract
+        git
+        git-auto-fetch
+        git-extras
+        git-flow
+        history
+        rsync
+        sudo
+        ubuntu
+        web-search
+        zsh-autosuggestions
+    )
 
 zstyle :omz:plugins:ssh-agent quiet yes
 # zstyle :omz:plugins:ssh-agent lazy yes
@@ -126,23 +126,15 @@ else
 fi
 
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+eval "$(zoxide init zsh)"
 
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+source "$HOME/.local/bin/env"
