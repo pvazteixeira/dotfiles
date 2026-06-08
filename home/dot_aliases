@@ -3,25 +3,18 @@
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-# emacs - handled by the emacs plugin for oh-my-zsh
-
-#firefox
 if [ -f ~/applications/firefox/firefox ]; then
     alias ffox='~/applications/firefox/firefox'
 fi
 
-# zsh
-alias zshconfig="emacsclient -t ~/.zshrc"
-alias reloadzsh="source ~/.zshrc"
-alias ohmyzsh="emacsclient -t ~/.oh-my-zsh"
-
-# redshift
 if [ -f /usr/bin/redshfit ]; then
     alias day="redshift -O 6500"
     alias sunrise="redshift -O 3200"
     alias night="redshift -O 2300"
     alias rso="redshift -o"
 fi
+
+alias reloadzsh="source ~/.zshrc"
 
 # ls and the like
 alias lash="ls -lash"
@@ -33,14 +26,13 @@ alias sha1list="find . -type f -exec sha1sum {} >> sha1sums \;"
 alias sha1check="sha1sum -c sha1sums"
 
 # places
-
 alias dl='cd ~/Downloads'
 alias ws='cd ~/workspace'
 alias wsl='cd ~/workspace/libraries'
+alias pub='cd ~/workspace/publications'
 alias wsp='cd ~/workspace/projects'
 alias wss='cd ~/workspace/sandbox'
 
-alias pub='cd ~/workspace/publications'
 
 if [ -f /usr/bin/docker ]; then
     alias dps='docker ps'
@@ -57,8 +49,6 @@ if [ -f /usr/local/lcm-gen ]; then
   alias lcm-unmute='noglob export LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1'
 fi
 
-alias howmany="ls -lash | wc -l"
-
 if [ -f /usr/bin/pcl_viewer ]; then
   alias pcv="pcl_viewer -ax 1 -ps 5 -shading phong -use_point_picking -immediate_rendering 1"
   alias pcw="pcl_viewer -ps 5 -shading phong -use_point_picking -immediate_rendering 1 -bc 1,1,1"
@@ -66,13 +56,11 @@ if [ -f /usr/bin/pcl_viewer ]; then
 fi
 
 # misc
-alias probe='ps aux | grep -i'
-alias have='dpkg -l | grep -i'
-alias open="xdg-open"
-
-
-alias myip="curl ipinfo.io/ip"
-
 alias gdbp="gdb -ex  run --args"
-
 alias gsd="git status ."
+alias have='dpkg -l | grep -i'
+alias howmany="ls -lash | wc -l"
+alias myip="curl ipinfo.io/ip"
+alias open="xdg-open"
+alias probe='ps aux | grep -i'
+
