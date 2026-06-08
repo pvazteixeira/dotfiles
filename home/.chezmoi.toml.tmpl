@@ -1,18 +1,7 @@
-{{/*
-   Prompted once per host at `chezmoi init`. Answers are written to
-   ~/.config/chezmoi/chezmoi.toml (OUTSIDE this repo), so work identity and
-   any host-specific values are never committed. Defaults below are the
-   public personal values — on a work host, override them at the prompt.
-*/ -}}
-{{- $gitName    := promptStringOnce . "git_name"    "git user.name"   "pvazteixeira" -}}
-{{- $gitEmail   := promptStringOnce . "git_email"   "git user.email"  "pvazteixeira@gmail.com" -}}
-{{- $githubUser := promptStringOnce . "github_user" "github user"     "pvazteixeira" -}}
-
-# Persist where the source lives so later `chezmoi apply`/`chezmoi update`
-# work without re-passing --source (init still needs it the first time).
+# chezmoi's config template: at `chezmoi init` this is rendered to
+# ~/.config/chezmoi/chezmoi.toml. It must be named *.tmpl for chezmoi to treat
+# it as the config template (the only templated bit is the home dir below).
+#
+# Its job: persist sourceDir so later `chezmoi apply`/`chezmoi update` find the
+# source without re-passing --source (init still needs --source the first time).
 sourceDir = "{{ .chezmoi.homeDir }}/dotfiles/home"
-
-[data]
-    git_name    = {{ $gitName | quote }}
-    git_email   = {{ $gitEmail | quote }}
-    github_user = {{ $githubUser | quote }}

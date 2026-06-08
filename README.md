@@ -19,8 +19,8 @@ ansible-playbook --ask-become-pass ansible/playbook.yml
 chezmoi init --apply --source ~/dotfiles/home
 ```
 
-`chezmoi init` prompts once for git identity (name / email / github user) - defaults are personal, enter work values on a work host. Answers are saved to
-`~/.config/chezmoi/chezmoi.toml`, outside this repo.
+*Note*: git identity is stored in `~/.gitconfig.local`
+
 
 ## update
 

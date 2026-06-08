@@ -27,7 +27,7 @@ echo "### 3/3  verify ###"
 fail=0
 check() { if eval "$2"; then echo "  ok   $1"; else echo "  FAIL $1"; fail=1; fi; }
 check "~/.zshrc present"               '[ -f "$HOME/.zshrc" ]'
-check "~/.gitconfig personal identity" 'grep -q pvazteixeira@gmail.com "$HOME/.gitconfig"'
+check "gitconfig: shared settings + include, no identity" 'grep -q "defaultBranch = main" "$HOME/.gitconfig" && grep -q "gitconfig.local" "$HOME/.gitconfig" && ! grep -qE "^\[user\]" "$HOME/.gitconfig"'
 check "oh-my-zsh external cloned"      '[ -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]'
 check "powerlevel10k external"         '[ -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k/.git" ]'
 check "zsh-autosuggestions external"   '[ -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/.git" ]'

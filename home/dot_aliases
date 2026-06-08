@@ -33,21 +33,17 @@ alias sha1list="find . -type f -exec sha1sum {} >> sha1sums \;"
 alias sha1check="sha1sum -c sha1sums"
 
 # places
-alias dbx='cd ~/Dropbox (MIT)/'
+
 alias dl='cd ~/Downloads'
 alias ws='cd ~/workspace'
 alias wsl='cd ~/workspace/libraries'
 alias wsp='cd ~/workspace/projects'
 alias wss='cd ~/workspace/sandbox'
-alias lib='cd ~/Dropbox (MIT)/Library'
+
 alias pub='cd ~/workspace/publications'
 
 if [ -f /usr/bin/docker ]; then
     alias dps='docker ps'
-fi
-
-if [ -d ~/workspace/focus_ros_ws ]; then
-    alias frw="cd ~/workspace/focus_ros_ws"
 fi
 
 # make
@@ -73,9 +69,10 @@ fi
 alias probe='ps aux | grep -i'
 alias have='dpkg -l | grep -i'
 alias open="xdg-open"
-# alias rm="trash"  # no longer needed with trash-cli
-alias icanhas="sudo apt install --no-install-recommends"
+
 
 alias myip="curl ipinfo.io/ip"
 
 alias gdbp="gdb -ex  run --args"
+
+alias gsd="git status ."

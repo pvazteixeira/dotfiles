@@ -1,96 +1,30 @@
-# do NOT print/echo as it may cause issues when ssh/mosh-ing into a machine
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export EDITOR=vim
 
-######################
-### EXPORT CONTROL ###
-######################
+# ===== PATH ===== (guard each entry so missing dirs don't pile into PATH)
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/dotfiles/bin" ] && export PATH="$HOME/dotfiles/bin:$PATH"
+# pixi-installed tools — in .zshenv (not just .zshrc) so non-interactive ssh
+# shells (e.g. `ssh host -t zellij ...`) find them too
+[ -d "$HOME/.pixi/bin" ] && export PATH="$HOME/.pixi/bin:$PATH"
 
-# bins
-export PATH=~/.local/bin:$PATH
-export PATH=~/dotfiles/bin:$PATH
-export PATH=~/.pixi/bin:$PATH
+[ -d "$HOME/bin/" ]  && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/workspace/libraries/pcl/build/bin" ] && PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH"
+[ -d "/opt/bin" ] && PATH="/opt/bin:$PATH"
 
-# GNU GLOBAL
-# export GTAGSLIBPATH="$HOME/.gtags"
+# cargo
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
-# SSH
-export SSH_KEY_PATH="~/.ssh/id_rsa"
-
-# fuzzy finder (installed via pixi; --zsh emits key-bindings + completion)
-if command -v fzf >/dev/null; then
-    source <(fzf --zsh)
-fi
-
-# ruby/gems
-if [ -d "$HOME/gems/bin:$PATH" ]; then
+# ruby
+if [ -d "$HOME/gems/bin" ]; then
     export GEM_HOME="$HOME/gems"
     export PATH="$HOME/gems/bin:$PATH"
 fi
 
-if [ -d "/opt/bin" ]; then
-    export PATH=/opt/bin:$PATH
-fi
+# non-interactive safety
+case $- in
+  *i*) ;;  # interactive shell continues to .zshrc
+  *) return ;;
+esac
 
-if [ -d "$HOME/workspace/libraries/pcl/build/bin" ]; then
-    export PATH="$HOME/workspace/libraries/pcl/build/bin:$PATH"
-fi
-
-if [ -d "$HOME/bin/" ]; then
-  export PATH="$HOME/bin:$PATH"
-fi
-
-function stm() {
-    # create/attach zellij session "main" locally (remotely via ssh -X if host provided)
-    if (( $# == 1 ))
-    then
-        ssh $1 -X -t zellij attach -c main
-    else
-        zellij attach -c main
-    fi
-}
-
-function dot2png() {
-    sfdp -Tpng $1 -o $2
-}
-
-function roscfg() {
-    printenv | grep ROS
-}
-
-function commands() {
-    awk '{a[$2]++}END{for(i in a){print a[i] " " i}}'
-}
-
-# print the most used commands
-alias topten="history | commands | sort -rn | head -n20"
-
-function mk() {
-    # make dispatcher: catkin_make for ros workspaces, regular make for makefiles, cmake+make for OOS builds
-    if [ -f ".catkin_workspace" ]; then
-        # catkin workspace: run catkin make
-        catkin_make -DCMAKE_BUILD_TYPE=Debug
-    elif [ -f "Makefile" ]; then
-        # run alias for make -j...
-        make -j$nthreads  #&& notify-send 'build succeeded' || notify-send 'build failed' "
-    elif [ -f "CMakeLists.txt" ]; then
-        echo "DANGER ZONE"
-        if ! [ -d "build" ]; then
-            mkdir build
-        fi
-        cd build
-        cmake ..
-        make -j$nthreads
-    else
-        echo "No build info found!\n"
-    fi
-}
-
-# export CC=/usr/bin/clang
-# export CXX=/usr/bin/clang++
-
-function setup_focus() {
-    source "/opt/ros/jazzy/setup.zsh"
-    export RMW_IMPLEMENTATION="rmw_cyclonedds_cpp"
-    export CYCLONEDDS_URI="file:///home/pvt/workspace/focus_ros_ws/cyclonedds.xml"
-    source "/home/pvt/workspace/focus_ros_ws/install/setup.zsh"
-}
-. "$HOME/.cargo/env"
