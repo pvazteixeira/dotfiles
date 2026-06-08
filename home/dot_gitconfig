@@ -1,0 +1,29 @@
+# Git identity is intentionally NOT set here — committing it would override
+# whatever this machine should use. It comes from ~/.gitconfig.local (untracked,
+# silently ignored if absent), so `chezmoi apply` never touches your name/email.
+# Set it per machine, e.g.:
+#     [user]
+#         name = ...
+#         email = ...
+[include]
+	path = ~/.gitconfig.local
+
+[init]
+	defaultBranch = main
+
+[push]
+	default = simple
+	autoSetupRemote = true
+
+[filter "lfs"]
+	process = git-lfs filter-process
+	smudge = git-lfs smudge -- %f
+	required = true
+	clean = git-lfs clean -- %f
+
+[color]
+	ui = auto
+
+[core]
+	editor = hx
+

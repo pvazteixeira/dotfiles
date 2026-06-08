@@ -1,24 +1,27 @@
 # clean shell prompt required for use with emacs tramp
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# this has to run before p10k or it causes issues
+# eval "$(zellij setup --generate-auto-start zsh)"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -63,42 +66,46 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# ====== History settings ======
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_ALL_DUPS SHARE_HISTORY
+zmodload zsh/complist
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(ag
-         autojump
-         debian
-         emacs
-         jira
-         python
-         ros
-         command-not-found
-         copyfile
-         copypath
-         dirhistory
-         extract
-         git
-         git-auto-fetch
-         git-extras
-         git-flow
-         history
-         rsync
-         sudo
-         ubuntu
-         web-search
-         zsh-autosuggestions
-        )
+plugins=(
+    colored-man-pages
+    command-not-found
+    copyfile
+    copypath
+    dirhistory
+    extract
+	  fzf
+    git git-auto-fetch git-extras git-flow
+    history
+    python
+    rsync
+    sudo
+    ubuntu
+    web-search
+    zsh-autosuggestions
+	  z
+)
 
 zstyle :omz:plugins:ssh-agent quiet yes
 # zstyle :omz:plugins:ssh-agent lazy yes
 
 source $ZSH/oh-my-zsh.sh
 
-# ==== user config ====
+# ====== Fast completion ======
+zstyle ':completion:*' rehash true
+autoload -Uz compinit && compinit -C
 
+# ==== user config ====
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -119,30 +126,92 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-if [ -e "$HOME/.aliases" ]; then
-    source $HOME/.aliases
-else
-    # TODO: create symlink from dotfiles
-fi
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+[ -e "$HOME/.aliases" ] && source $HOME/.aliases
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+eval "$(zoxide init zsh)"
+
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+function stm() {
+    # create/attach tmux session 0 locally (remotely via ssh -X if host provided)
+    if (( $# == 1 ))
+    then
+        ssh $1 -X -t tmux new-session -A -s 0
+    else
+        tmux new-session -A -s 0
+    fi
+}
+
+function szm() {
+    if (( $# == 1 )); then
+        ssh "$1" -X -t zellij attach -c 0
+    else
+        zellij attach -c 0
+    fi
+}
+
+function dot2png() {
+    sfdp -Tpng $1 -o $2
+}
+
+function roscfg() {
+    printenv | grep ROS
+}
+
+function commands() {
+    awk '{a[$2]++}END{for(i in a){print a[i] " " i}}'
+}
+
+# print the most used commands
+alias topten="history | commands | sort -rn | head -n20"
+
+function mk() {
+    # make dispatcher: catkin_make for ros workspaces, regular make for makefiles, cmake+make for OOS builds
+    if [ -f ".catkin_workspace" ]; then
+        # catkin workspace: run catkin make
+        catkin_make -DCMAKE_BUILD_TYPE=Debug
+    elif [ -f "Makefile" ]; then
+        # run alias for make -j...
+        make -j$nthreads  #&& notify-send 'build succeeded' || notify-send 'build failed' "
+    elif [ -f "CMakeLists.txt" ]; then
+        echo "DANGER ZONE"
+        if ! [ -d "build" ]; then
+            mkdir build
+        fi
+        cd build
+        cmake ..
+        make -j$nthreads
+    else
+        echo "No build info found!\n"
+    fi
+}
+
+# tmux reset display - this resets the DISPLAY environment variable
+function trd(){
+    export DISPLAY="`tmux show-env | sed -n 's/^DISPLAY=//p'`"
+}
+
+# export CC=/usr/bin/clang
+# export CXX=/usr/bin/clang++
+
+# begin pixi
+[ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
+# (PATH for ~/.pixi/bin lives in .zshenv; compinit already ran via oh-my-zsh)
+eval "$(pixi completion --shell zsh)"
+# end pixi
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 

@@ -1,41 +1,38 @@
 # dotfiles
 
+host provisioning using `ansible`+`chezmoi`+`git`
+
+## try
+
+```sh
+docker compose -f docker/compose.yml run --build --rm dotfiles \
+  bash -lc 'bash ~/dotfiles/docker/bootstrap-test.sh && exec zsh -l'
+```
 
 ## setup
 
-Clone this repo, install `ansible` (`apt install ansible`), and run the playbook:
-
 ```sh
-git clone https://github.com/pvazteixeira/dotfiles.git
-sudo apt install ansible
-cd dotfiles
-ansible-playbook --ask-become-pass playbook.yml
+sudo apt install ansible git
+git clone --depth 1 https://github.com/pvazteixeira/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+ansible-playbook --ask-become-pass ansible/playbook.yml
+chezmoi init --apply --source ~/dotfiles/home
 ```
 
-This sets up most things - the remainder is work-in-progress.
+*Note*: git identity is stored in `~/.gitconfig.local`
 
 
-## notes
-
-### Setting Caps Lock to Escape
-
-To swap the two keys in the current session: 
+## update
 
 ```sh
-setxkbmap -option caps:escape
+chezmoi update   # pull this repo + re-apply (add -R to also refresh externals: oh-my-zsh, p10k, …)
 ```
 
-To make this change persistent:
+## test
+
+Run the bootstrap and verification checks in a throwaway Debian container (this
+repo mounted read-only), from the repo root:
 
 ```sh
-missing command
+docker compose -f docker/compose.yml run --build --rm dotfiles
 ```
-
-To permanently swap escape to caps lock using `dconf-editor`
-([source](https://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc)):
-
-- get it: `sudo apt-get install dconf-tools`
-- open and navigate to: *org* >> *gnome* >> *desktop* >> *input-sources*
-- inside `xkb-options` add: `'caps:swapescape'`
-
-

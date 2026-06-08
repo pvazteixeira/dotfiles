@@ -1,0 +1,33 @@
+# Container test for the dotfiles bootstrap (ansible + chezmoi).
+#
+# Builds the slim Debian image, mounts this working tree read-only at
+# ~/dotfiles (so it tests local, uncommitted changes without pushing), runs
+# the playbook minus the desktop/heavy `extras`, applies the chezmoi source
+# non-interactively, then verifies the result.
+#
+# Run from the repo root:
+#   docker compose -f docker/compose.yml up --build              # full test
+#   docker compose -f docker/compose.yml run --rm dotfiles bash  # poke around
+#
+# Runs as the non-root `pvt` user (passwordless sudo) so ansible actually
+# escalates via sudo, mirroring a real host. The repo is mounted read-only at
+# ~/dotfiles, exactly where the README tells you to clone it.
+#
+# Paths below are relative to this file (docker/): build context is this dir,
+# the bind-mount source ../ is the repo root.
+#
+# Pinned project name so it doesn't default to the parent dir ("docker") and
+# so leftover containers don't collide across runs.
+name: dotfiles-bootstrap
+
+services:
+  dotfiles:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # repo root mounted read-only at ~/dotfiles; chezmoi only writes to $HOME
+    volumes:
+      - ../:/home/pvt/dotfiles:ro
+    environment:
+      ANSIBLE_RETRY_FILES_ENABLED: "False"
+    command: ["bash", "/home/pvt/dotfiles/docker/bootstrap-test.sh"]

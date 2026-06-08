@@ -1,0 +1,31 @@
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export EDITOR=vim
+
+# ===== PATH ===== (guard each entry so missing dirs don't pile into PATH)
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+
+# pixi-installed tools — in .zshenv (not just .zshrc) so non-interactive ssh
+# shells (e.g. `ssh host -t zellij ...`) find them too
+[ -d "$HOME/.pixi/bin" ] && export PATH="$HOME/.pixi/bin:$PATH"
+
+[ -d "$HOME/bin/" ]  && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/dotfiles/bin" ] && export PATH="$HOME/dotfiles/bin:$PATH"
+
+[ -d "/opt/bin" ] && PATH="/opt/bin:$PATH"
+
+# cargo
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+# ruby
+if [ -d "$HOME/gems/bin" ]; then
+    export GEM_HOME="$HOME/gems"
+    export PATH="$HOME/gems/bin:$PATH"
+fi
+
+# non-interactive safety
+case $- in
+  *i*) ;;  # interactive shell continues to .zshrc
+  *) return ;;
+esac
+
