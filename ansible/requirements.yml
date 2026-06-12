@@ -1,0 +1,9 @@
+---
+# Ansible Galaxy role/collection dependencies.
+# Install with: ansible-galaxy install -r ansible/requirements.yml
+roles:
+  - name: geerlingguy.docker
+
+collections:
+  - name: community.general
+

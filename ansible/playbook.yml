@@ -11,6 +11,7 @@
       - ca-certificates      #
       - chrony               # ntp+ptp
       - curl                 #
+      - flatpak              # for obsidian (extras)
       - fonts-powerline      #
       - git                  #
       - mtr                  # 
@@ -50,7 +51,7 @@
     - name: Change default shell to zsh
       become: yes
       ansible.builtin.user:
-        name: "{{ ansible_user_id }}"
+        name: "{{ ansible_facts.user_id }}"
         shell: /bin/zsh
 
     # Dotfiles and third-party repos (oh-my-zsh, powerlevel10k,
@@ -63,16 +64,16 @@
     - name: Install chezmoi to ~/.local/bin
       become: no
       ansible.builtin.shell: |
-        sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "{{ ansible_env.HOME }}/.local/bin"
+        sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "{{ ansible_facts.env.HOME }}/.local/bin"
       args:
-        creates: "{{ ansible_env.HOME }}/.local/bin/chezmoi"
+        creates: "{{ ansible_facts.env.HOME }}/.local/bin/chezmoi"
 
     - name: How to apply dotfiles
       become: no
       ansible.builtin.debug:
         msg: >-
           chezmoi installed. Apply your dotfiles with:
-          chezmoi init --apply --source {{ ansible_env.HOME }}/dotfiles/home
+          chezmoi init --apply --source {{ ansible_facts.env.HOME }}/dotfiles/home
           (you'll be prompted for git name/email/github user; defaults are the
           personal values — override them on a work host).
 
@@ -81,7 +82,7 @@
       ansible.builtin.shell: |
         curl -fsSL https://pixi.sh/install.sh | bash
       args:
-        creates: "{{ ansible_env.HOME }}/.pixi/bin/pixi"
+        creates: "{{ ansible_facts.env.HOME }}/.pixi/bin/pixi"
       environment:
         # PATH is managed in dot_zshenv, so don't let the installer edit rc files
         PIXI_NO_PATH_UPDATE: "1"
@@ -89,7 +90,7 @@
     - name: Install user CLIs with pixi
       become: no
       ansible.builtin.command:
-        cmd: "{{ ansible_env.HOME }}/.pixi/bin/pixi global install {{ pixi_globals | join(' ') }}"
+        cmd: "{{ ansible_facts.env.HOME }}/.pixi/bin/pixi global install {{ pixi_globals | join(' ') }}"
 
     - name: Install rustup (rust toolchain + cargo)
       become: no
@@ -97,11 +98,28 @@
         curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs | sh -s -- -y --no-modify-path
       args:
         # dot_zshenv sources ~/.cargo/env, so --no-modify-path keeps rustup out of rc files
-        creates: "{{ ansible_env.HOME }}/.cargo/bin/cargo"
+        creates: "{{ ansible_facts.env.HOME }}/.cargo/bin/cargo"
+
+    # Standard (rootful) Docker install via the community role. Rootless setup
+    # is done manually afterwards (dockerd-rootless-setuptool.sh install).
+    # Requires: ansible-galaxy install -r ansible/requirements.yml
+    - name: Install Docker engine via geerlingguy.docker
+      ansible.builtin.include_role:
+        name: geerlingguy.docker
+      tags: [extras, docker]
+
+    - name: Add Flathub remote
+      become: yes
+      community.general.flatpak_remote:
+        name: flathub
+        flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+        state: present
+      tags: [extras, obsidian]
 
     - name: Install obsidian
       community.general.flatpak:
         name: md.obsidian.Obsidian
+        remote: flathub
         state: present
       tags: [extras, obsidian]
 
