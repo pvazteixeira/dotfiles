@@ -42,4 +42,3 @@
   ansible.builtin.apt:
     name: syncthing
     state: present
-Q
