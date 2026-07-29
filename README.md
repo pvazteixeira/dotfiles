@@ -15,6 +15,7 @@ docker compose -f docker/compose.yml run --build --rm dotfiles \
 sudo apt install ansible git
 git clone --depth 1 https://github.com/pvazteixeira/dotfiles.git ~/dotfiles
 cd ~/dotfiles
+ansible-galaxy install -r ansible/requirements.yml
 ansible-playbook --ask-become-pass ansible/playbook.yml
 chezmoi init --apply --source ~/dotfiles/home
 ```

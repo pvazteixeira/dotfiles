@@ -13,7 +13,10 @@ cd "$HOME/dotfiles"
 echo "### 0/3  refresh apt cache (slim image ships without lists) ###"
 sudo apt-get update -qq
 
-echo "### 1/3  ansible-playbook (skipping extras) ###"
+echo "### 1/3  ansible-galaxy install requirements ###"
+ansible-galaxy install -r ansible/requirements.yml
+
+echo "### 1b/3  ansible-playbook (skipping extras) ###"
 ansible-playbook ansible/playbook.yml --skip-tags extras
 
 echo "### 2/3  chezmoi init --apply (defaults, non-interactive) ###"
