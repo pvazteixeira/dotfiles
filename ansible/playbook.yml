@@ -100,13 +100,95 @@
         # dot_zshenv sources ~/.cargo/env, so --no-modify-path keeps rustup out of rc files
         creates: "{{ ansible_facts.env.HOME }}/.cargo/bin/cargo"
 
+    # kitty: distro packages are stale (apt 0.32), so install the upstream
+    # binary (same curl|sh + creates idempotency pattern as chezmoi/pixi/rustup
+    # above). GUI app -> gated behind the kitty/extras tags so default
+    # (headless) bootstraps skip it. Used with oh-my-zsh+p10k+zellij; the
+    # MesloLGS NF task below gives p10k its prompt glyphs.
+    - name: Install kitty via the upstream binary installer
+      become: no
+      ansible.builtin.shell: |
+        curl -fsSL https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin launch=n
+      args:
+        # launch=n keeps the installer from opening a kitty window mid-provision
+        creates: "{{ ansible_facts.env.HOME }}/.local/kitty.app/bin/kitty"
+      tags: [extras, kitty]
+
+    - name: Symlink kitty + kitten into ~/.local/bin
+      become: no
+      ansible.builtin.file:
+        # ~/.local/bin is already on PATH (see dot_zshenv)
+        src: "{{ ansible_facts.env.HOME }}/.local/kitty.app/bin/{{ item }}"
+        dest: "{{ ansible_facts.env.HOME }}/.local/bin/{{ item }}"
+        state: link
+        force: true
+      loop:
+        - kitty
+        - kitten
+      tags: [extras, kitty]
+
+    - name: Install kitty desktop launcher
+      become: no
+      ansible.builtin.shell: |
+        cp ~/.local/kitty.app/share/applications/kitty*.desktop ~/.local/share/applications/
+        sed -i "s|Icon=kitty|Icon=$(readlink -f ~)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+        sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+      args:
+        creates: "{{ ansible_facts.env.HOME }}/.local/share/applications/kitty.desktop"
+      tags: [extras, kitty]
+
+    # MesloLGS NF is the Nerd Font p10k's own `configure` wizard recommends;
+    # kitty bundles none, so without this the prompt renders as tofu boxes.
+    - name: Install MesloLGS NF font (for powerlevel10k glyphs in kitty)
+      become: no
+      ansible.builtin.get_url:
+        url: "https://github.com/romkatv/powerlevel10k-media/raw/master/{{ item | urlencode }}"
+        dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/{{ item }}"
+        mode: "0644"
+      loop:
+        - MesloLGS NF Regular.ttf
+        - MesloLGS NF Bold.ttf
+        - MesloLGS NF Italic.ttf
+        - MesloLGS NF Bold Italic.ttf
+      register: meslo_fonts
+      tags: [extras, kitty, fonts]
+
+    # B612 Mono (the monospace cut of Airbus's B612 cockpit font). apt's
+    # fonts-b612 ships only the proportional family, so vendor the Mono TTFs
+    # from upstream — same pattern as MesloLGS NF above.
+    - name: Install B612 Mono font
+      become: no
+      ansible.builtin.get_url:
+        url: "https://github.com/polarsys/b612/raw/master/fonts/ttf/{{ item }}"
+        dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/{{ item }}"
+        mode: "0644"
+      loop:
+        - B612Mono-Regular.ttf
+        - B612Mono-Bold.ttf
+        - B612Mono-Italic.ttf
+        - B612Mono-BoldItalic.ttf
+      register: b612_fonts
+      tags: [extras, fonts, b612]
+
+    - name: Refresh font cache
+      become: no
+      ansible.builtin.command:
+        cmd: fc-cache -f "{{ ansible_facts.env.HOME }}/.local/share/fonts"
+      when: >-
+        (meslo_fonts is defined and meslo_fonts is changed)
+        or (b612_fonts is defined and b612_fonts is changed)
+      tags: [extras, kitty, fonts, b612]
+
     # Standard (rootful) Docker install via the community role. Rootless setup
     # is done manually afterwards (dockerd-rootless-setuptool.sh install).
     # Requires: ansible-galaxy install -r ansible/requirements.yml
     - name: Install Docker engine via geerlingguy.docker
-      ansible.builtin.include_role:
-        name: geerlingguy.docker
+      become: yes
       tags: [extras, docker]
+      block:
+        - name: Include geerlingguy.docker role
+          ansible.builtin.include_role:
+            name: geerlingguy.docker
 
     - name: Add Flathub remote
       become: yes
