@@ -1,0 +1,178 @@
+# Sway config file
+# 
+set $mod Mod4
+set $menu fuzzel
+set $term kitty
+
+
+# Font for window titles.
+font pango:monospace 8
+
+# Push display variables to systemd and D-Bus immediately on startup
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+# Start XDG autostart .desktop files
+exec dex --autostart --environment sway
+
+# Idle configuration (replaces xss-lock and i3lock)
+exec swayidle -w \
+    timeout 300 'swaylock -f -c 000000' \
+    timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -f -c 000000'
+
+# NetworkManager applet
+exec nm-applet --indicator
+
+# swayr
+# exec env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrd > /tmp/swayrd.log 2>&1
+
+# Remove window title bars, retain a 2-pixel border
+default_border pixel 2
+default_floating_border pixel 2
+
+# Use pactl to adjust volume in PulseAudio/PipeWire.
+#bindsym KEY_VOLUMEUP exec wpctl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_SINK@ 0.05+
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_SINK@ 0.05-
+bindsym XF86AudioMute exec wpctl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec wpctl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Hardware Configuration (Adjust values to match your specific hardware)
+# Run `swaymsg -t get_outputs` and `swaymsg -t get_inputs` to find device identifiers
+output * bg #000000 solid_color
+
+
+input type:keyboard {
+    xkb_layout us
+    xkb_options caps:escape
+}
+
+input type:pointer {
+    natural_scroll enabled
+}
+
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+}
+
+# Use Mouse+$mod to drag floating windows
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec $term
+
+# start launcher (replaces X11 rofi)
+bindsym $mod+space exec $menu
+ 
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal/vertical orientation
+bindsym $mod+g split h
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+# bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+
+bindsym $mod+w exec swwayr switch-window
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+d focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# Workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+r reload
+
+
+# kill focused window
+bindsym $mod+Shift+q mode "close?"
+mode "close?" {
+        bindsym y kill, mode "default"
+        bindsym Return kill, mode "default"
+        bindsym n mode "default"
+        bindsym Escape mode "default"
+}        
+
+# exit sway (replaces i3-nagbar and i3-msg)
+bindsym $mod+Shift+e exec "swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'"
+
+# resize window
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# bar {
+#     output *
+#     position "top"
+# }
+# 
+
+# Start Waybar (replaces i3blocks and the standar bar block)
+exec_always pkill -x waybar || true; swaymsg -t get_tree && waybar
